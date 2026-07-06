@@ -161,14 +161,45 @@ export function SkillDisplay({ skill }: Props) {
       {/* Progress */}
 
       <div className="mt-14 flex items-center gap-12">
-
-        <div className="relative">
-
+            
+        <motion.div
+          className="relative"
+          animate={{
+            rotateX: (mouse.y - 320) / -25,
+            rotateY: (mouse.x - 320) / 25,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 140,
+            damping: 18,
+          }}
+          style={{
+            transformStyle: "preserve-3d",
+            perspective: 1000,
+          }}
+        >
+        
+          {/* Glow Behind Circle */}
+        
+          <motion.div
+            animate={{
+              x: (mouse.x - 320) / 18,
+              y: (mouse.y - 320) / 18,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 120,
+              damping: 20,
+            }}
+            className="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ccff00]/10 blur-3xl"
+          />
+      
           <svg
             width={radius * 2}
             height={radius * 2}
+            className="relative z-10"
           >
-
+          
             <circle
               stroke="rgba(255,255,255,.08)"
               fill="transparent"
@@ -177,7 +208,7 @@ export function SkillDisplay({ skill }: Props) {
               cx={radius}
               cy={radius}
             />
-
+      
             <motion.circle
               stroke="#ccff00"
               fill="transparent"
@@ -199,41 +230,50 @@ export function SkillDisplay({ skill }: Props) {
                 duration: 1,
               }}
             />
-
+      
           </svg>
-
-          <div className="absolute inset-0 flex items-center justify-center">
-
+            
+          <div className="absolute inset-0 flex items-center justify-center z-20">
+            
             <div className="text-center">
-
-              <p className="text-3xl font-black text-[#ccff00]">
+            
+              <motion.p
+                animate={{
+                  scale: [1, 1.08, 1],
+                }}
+                transition={{
+                  duration: 2.5,
+                  repeat: Infinity,
+                }}
+                className="text-3xl font-black text-[#ccff00]"
+              >
                 {skill.level}%
-              </p>
-
+              </motion.p>
+              
               <p className="text-xs uppercase tracking-[0.3em] text-white/40">
                 Learning
               </p>
-
+              
             </div>
-
+              
           </div>
-
-        </div>
-
+              
+        </motion.div>
+              
         <div>
-
+              
           <p className="text-xs uppercase tracking-[0.35em] text-white/40">
             STUDENT JOURNEY
           </p>
-
+              
           <p className="mt-5 max-w-md leading-8 text-white/60">
             Every project helps me improve my understanding of software
             engineering, problem solving and modern development tools.
             I'm continuously experimenting, learning and building.
           </p>
-
+              
         </div>
-
+              
       </div>
 
       {/* Tech */}

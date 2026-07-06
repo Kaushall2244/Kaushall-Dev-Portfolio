@@ -61,6 +61,7 @@
     --blur-md: 12px;
     --blur-xl: 24px;
     --blur-2xl: 40px;
+    --blur-3xl: 64px;
     --aspect-video: 16 / 9;
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -247,14 +248,8 @@
   .sticky {
     position: sticky;
   }
-  .-inset-\[1px\] {
-    inset: calc(1px * -1);
-  }
   .inset-0 {
     inset: 0;
-  }
-  .inset-\[1px\] {
-    inset: 1px;
   }
   .-top-6 {
     top: calc(var(--spacing) * -6);
@@ -535,6 +530,9 @@
   .h-40 {
     height: calc(var(--spacing) * 40);
   }
+  .h-44 {
+    height: calc(var(--spacing) * 44);
+  }
   .h-48 {
     height: calc(var(--spacing) * 48);
   }
@@ -615,6 +613,9 @@
   }
   .w-40 {
     width: calc(var(--spacing) * 40);
+  }
+  .w-44 {
+    width: calc(var(--spacing) * 44);
   }
   .w-48 {
     width: calc(var(--spacing) * 48);
@@ -1486,9 +1487,6 @@
   .opacity-20 {
     opacity: 20%;
   }
-  .opacity-40 {
-    opacity: 40%;
-  }
   .opacity-\[0\.04\] {
     opacity: 0.04;
   }
@@ -1521,6 +1519,10 @@
       outline: 2px solid transparent;
       outline-offset: 2px;
     }
+  }
+  .blur-3xl {
+    --tw-blur: blur(var(--blur-3xl));
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
   }
   .blur-\[130px\] {
     --tw-blur: blur(130px);
