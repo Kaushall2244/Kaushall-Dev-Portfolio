@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, animate } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import { Skill } from "../Sections/Skills";
 
 interface Props {
@@ -20,6 +20,19 @@ export function SkillDisplay({ skill }: Props) {
     x: -400,
     y: -400,
   });
+
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    const controls = animate(0, skill.level, {
+      duration: 1.2,
+      onUpdate(value) {
+        setCount(Math.round(value));
+      },
+    });
+  
+    return () => controls.stop();
+  }, [skill.level]);
 
   return (
     <motion.div
@@ -125,9 +138,39 @@ export function SkillDisplay({ skill }: Props) {
 
       {/* Category */}
 
-      <p className="text-xs uppercase tracking-[0.4em] text-[#ccff00]">
-        CURRENT FOCUS
-      </p>
+      <div className="flex items-center gap-4">
+
+        <motion.div
+          animate={{
+            scale: [1, 1.4, 1],
+            opacity: [0.5, 1, 0.5],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+          }}
+          className="relative"
+        >
+        
+          <div className="h-3 w-3 rounded-full bg-[#ccff00]" />
+        
+          <div className="absolute inset-0 rounded-full bg-[#ccff00] blur-md" />
+        
+        </motion.div>
+        
+        <div>
+        
+          <p className="text-[11px] uppercase tracking-[0.45em] text-[#ccff00]">
+            LIVE
+          </p>
+        
+          <p className="text-sm text-white/55">
+            Currently Learning & Building
+          </p>
+        
+        </div>
+        
+      </div>
 
       {/* Title */}
 
@@ -142,7 +185,19 @@ export function SkillDisplay({ skill }: Props) {
 
       {/* Subtitle */}
 
-      <p className="mt-4 text-xl text-white/60">
+      <div className="mt-5 flex flex-wrap gap-3">
+
+        <span className="rounded-full border border-[#ccff00]/20 bg-[#ccff00]/10 px-4 py-2 text-xs uppercase tracking-[0.25em] text-[#ccff00]">
+          Student Developer
+        </span>
+
+        <span className="rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-[0.25em] text-white/50">
+          Open to Learning
+        </span>
+
+      </div>
+
+      <p className="mt-6 text-xl text-white/60">
         {skill.subtitle}
       </p>
 
@@ -247,7 +302,7 @@ export function SkillDisplay({ skill }: Props) {
                 }}
                 className="text-3xl font-black text-[#ccff00]"
               >
-                {skill.level}%
+                {count}%
               </motion.p>
               
               <p className="text-xs uppercase tracking-[0.3em] text-white/40">
@@ -298,10 +353,19 @@ export function SkillDisplay({ skill }: Props) {
                 opacity: 1,
                 y: 0,
               }}
-              transition={{
-                delay: index * .08,
+              whileHover={{
+                y: -8,
+                scale: 1.08,
+                rotateX: 8,
+                rotateY: -8,
               }}
-              className="rounded-full border border-[#ccff00]/20 bg-[#ccff00]/10 px-5 py-3 text-sm text-[#ccff00]"
+              transition={{
+                delay: index * 0.08,
+                type: "spring",
+                stiffness: 260,
+                damping: 16,
+              }}
+              className="rounded-full border border-[#ccff00]/20 bg-[#ccff00]/10 px-5 py-3 text-sm text-[#ccff00] shadow-[0_0_0px_rgba(204,255,0,0)] hover:shadow-[0_0_25px_rgba(204,255,0,.35)] transition-shadow duration-300 cursor-pointer"
             >
               {item}
             </motion.div>

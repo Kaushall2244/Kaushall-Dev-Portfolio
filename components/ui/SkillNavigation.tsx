@@ -17,8 +17,39 @@ export function SkillNavigation({
   return (
     <div className="relative">
 
-      {/* Vertical Line */}
-      <div className="absolute left-5 top-0 bottom-0 w-px bg-white/10" />
+      {/* Skill Roadmap */}
+
+      <div className="mb-10">
+
+        <p className="text-xs uppercase tracking-[0.45em] text-white/35">
+          Skill Roadmap
+        </p>
+
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: 90 }}
+          transition={{ duration: 1 }}
+          className="mt-4 h-[2px] bg-[#ccff00]"
+        />
+
+      </div>
+
+      {/* Base Vertical Line */}
+
+      <div className="absolute left-[7px] top-20 bottom-0 w-[2px] rounded-full bg-white/10" />
+
+      {/* Active Vertical Line */}
+
+      <motion.div
+        animate={{
+          height: `${((selected + 1) / skills.length) * 100}%`,
+        }}
+        transition={{
+          duration: 0.6,
+          ease: "easeInOut",
+        }}
+        className="absolute left-[7px] top-20 w-[2px] rounded-full bg-[#ccff00]"
+      />
 
       <div className="space-y-8">
 
@@ -27,27 +58,45 @@ export function SkillNavigation({
           <motion.button
             key={skill.title}
             onClick={() => setSelected(index)}
-            whileHover={{ x: 8 }}
+            whileHover={{
+              x: 10,
+            }}
             transition={{
               type: "spring",
-              stiffness: 300,
-              damping: 20,
+              stiffness: 280,
+              damping: 18,
             }}
-            className="relative flex items-center gap-6 text-left w-full"
+            className="relative flex items-center gap-6 w-full text-left group"
           >
 
-            {/* Dot */}
+            {/* Connector */}
 
             <motion.div
               animate={{
-                scale: selected === index ? [1, 1.4, 1] : 1,
+                width: selected === index ? 42 : 28,
+                backgroundColor:
+                  selected === index
+                    ? "rgba(204,255,0,.9)"
+                    : "rgba(255,255,255,.15)",
               }}
               transition={{
-                duration: 1.8,
+                duration: 0.35,
+              }}
+              className="absolute left-[8px] top-1/2 h-[2px] -translate-y-1/2"
+            />
+
+            {/* Node */}
+
+            <motion.div
+              animate={{
+                scale: selected === index ? [1, 1.6, 1] : 1,
+                opacity: selected === index ? [0.5, 1, 0.5] : 0.25,
+              }}
+              transition={{
+                duration: 2,
                 repeat: Infinity,
               }}
-              className={`z-10 h-4 w-4 rounded-full border-2 transition-all
-              ${
+              className={`relative z-10 h-4 w-4 rounded-full border-2 transition-all ${
                 selected === index
                   ? "bg-[#ccff00] border-[#ccff00] shadow-[0_0_20px_rgba(204,255,0,.8)]"
                   : "bg-black border-white/30"
@@ -65,7 +114,7 @@ export function SkillNavigation({
                       ? "#ccff00"
                       : "rgba(255,255,255,.45)",
                 }}
-                className="text-xs tracking-[0.35em] uppercase"
+                className="text-xs uppercase tracking-[0.35em]"
               >
                 0{index + 1}
               </motion.p>
@@ -74,14 +123,23 @@ export function SkillNavigation({
                 animate={{
                   x: selected === index ? 8 : 0,
                 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 250,
+                }}
                 className="mt-2 text-2xl font-bold text-white"
               >
                 {skill.title}
               </motion.h3>
 
-              <p className="mt-2 text-sm text-white/45">
+              <motion.p
+                animate={{
+                  opacity: selected === index ? 1 : 0.5,
+                }}
+                className="mt-2 text-sm text-white/45"
+              >
                 {skill.subtitle}
-              </p>
+              </motion.p>
 
             </div>
 
