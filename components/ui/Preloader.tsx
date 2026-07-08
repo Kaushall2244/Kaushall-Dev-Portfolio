@@ -90,6 +90,16 @@ export default function Preloader({
     {!finished && (
 
     <motion.div
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 1 }}
+      exit={{
+        opacity: 0,
+        y: "-100%",
+        transition: {
+          duration: 0.8,
+          ease: [0.76, 0, 0.24, 1],
+        },
+      }}
       className="fixed inset-0 z-[9999] overflow-hidden bg-black"
     >
 
