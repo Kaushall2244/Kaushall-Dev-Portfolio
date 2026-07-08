@@ -238,7 +238,7 @@ export default function Preloader({
           select-none
         "
       >
-        WOLF
+        KAUSHALL
       </h1>
 
       {/* CONTENT */}
@@ -250,7 +250,7 @@ export default function Preloader({
         </p>
 
         <h2 className="mt-6 text-6xl md:text-8xl font-black text-white">
-          WOLF
+          KAUSHALL
         </h2>
 
         <motion.div

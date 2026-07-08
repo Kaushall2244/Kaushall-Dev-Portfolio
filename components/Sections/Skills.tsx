@@ -20,13 +20,10 @@ const skills: Skill[] = [
     subtitle: "Building Strong Foundations",
     description:
       "Learning backend engineering by building Java applications, REST APIs, database systems and solving real-world programming problems.",
-    level: 92,
+    level: 90,
     tech: [
       "Java",
-      "Spring Boot",
       "MySQL",
-      "REST API",
-      "Git",
       "Python",
     ],
   },
@@ -38,7 +35,7 @@ const skills: Skill[] = [
       "Creating modern interfaces using React, Next.js, Tailwind CSS and premium animations with Framer Motion.",
     level: 90,
     tech: [
-      "React",
+      "HTML, CSS",
       "Next.js",
       "Tailwind",
       "Framer Motion",
@@ -69,8 +66,7 @@ const skills: Skill[] = [
     tech: [
       "Blender",
       "UE5",
-      "Lighting",
-      "Rendering",
+      "Adobe Preimier Pro",
     ],
   },
 ];

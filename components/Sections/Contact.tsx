@@ -106,7 +106,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <span className="block font-mono text-[10px] text-foreground/30 uppercase tracking-wider">Secure Email</span>
-                    <span className="text-sm text-foreground/80 font-mono">hello@wolfistudio.com</span>
+                    <span className="text-sm text-foreground/80 font-mono">githeshkaushall@gmail.com</span>
                   </div>
                 </div>
               </a>
@@ -125,7 +125,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <span className="block font-mono text-[10px] text-foreground/30 uppercase tracking-wider">Freelance Terminal</span>
-                    <span className="text-sm text-foreground/80 font-mono">Fiverr // Wolf Studio</span>
+                    <span className="text-sm text-foreground/80 font-mono">Fiverr // S KAUSHALL</span>
                   </div>
                 </div>
               </a>
@@ -247,7 +247,7 @@ export default function Contact() {
         {/* --- FOOTER SCHEMATIC TRACK --- */}
         <div className="w-full flex justify-between items-center text-[9px] font-mono tracking-[0.2em] text-foreground/20 border-t border-white/5 pt-6">
           <span>PORT_STATUS // COMM_READY</span>
-          <span>© 2026 WOLFI_STUDIO</span>
+          <span>© 2026 S KAUSHALL</span>
         </div>
 
       </div>

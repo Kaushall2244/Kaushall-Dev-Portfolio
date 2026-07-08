@@ -140,13 +140,13 @@ export default function About() {
 
                 <p className="text-xs uppercase tracking-[0.4em] text-[#ccff00]">
 
-                  SOFTWARE ENGINEER
+                  CSE STUDENT
 
                 </p>
 
                 <h2 className="mt-4 text-5xl font-black text-white">
 
-                  KAUSHALL
+                  S KAUSHALL
 
                 </h2>
 

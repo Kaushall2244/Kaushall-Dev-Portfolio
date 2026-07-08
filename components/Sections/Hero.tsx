@@ -420,7 +420,7 @@ export default function Hero() {
 
           <MagneticWrapper>
             <a
-              href="/resume.pdf"
+              href="../resume.pdf"
               className="group flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-8 py-4 text-white backdrop-blur-md transition-all duration-300 hover:border-[#ccff00]/40 hover:bg-white/10"
             >
               Resume

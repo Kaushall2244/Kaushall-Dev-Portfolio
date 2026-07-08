@@ -13,10 +13,10 @@ const SYSTEM_LINKS = [
 ];
 
 const MATRIX_LINKS = [
-  { label: "GitHub Core", href: "#" },
-  { label: "LinkedIn Network", href: "#" },
-  { label: "Fiverr Studio", href: "#" },
-  { label: "Instagram Grid", href: "#" },
+  { label: "GitHub Core", href: "https://github.com/Kaushall2244" },
+  { label: "LinkedIn Network", href: "https://www.linkedin.com/in/kaushall22/" },
+  { label: "Fiverr Studio", href: "https://www.fiverr.com/sellers/kaushall_dev" },
+  { label: "Instagram Grid", href: "#" }, 
 ];
 
 export default function Footer() {
