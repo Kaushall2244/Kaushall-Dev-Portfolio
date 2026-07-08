@@ -196,10 +196,10 @@ export default function Preloader({
             }}
             className="absolute rounded-full bg-[#ccff00]"
             style={{
-              width: 2,
-              height: 2,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+                width: "2px",
+                height: "2px",
+                left: `${(i * 17) % 100}%`,
+                top: `${(i * 29) % 100}%`,
             }}
           />
           
