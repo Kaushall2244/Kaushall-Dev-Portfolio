@@ -324,7 +324,7 @@ export function SkillDisplay({ skill }: Props) {
           <p className="mt-5 max-w-md leading-8 text-white/60">
             Every project helps me improve my understanding of software
             engineering, problem solving and modern development tools.
-            I'm continuously experimenting, learning and building.
+            I&apos;m continuously experimenting, learning and building.
           </p>
               
         </div>

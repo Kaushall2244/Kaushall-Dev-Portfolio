@@ -388,7 +388,7 @@ export default function Hero() {
           className="mt-12 max-w-2xl"
         >
           <p className="text-lg md:text-xl text-white/60 leading-9">
-            Hi, I'm{" "}
+            Hi, I&apos;m{" "}
             <span className="text-white font-semibold">
               S Kaushall
             </span>

@@ -182,7 +182,7 @@ export default function About() {
 
                 <p className="mt-6 leading-8 text-white/60">
 
-                  I'm a Computer Science Engineering student who enjoys
+                  I&apos;m a Computer Science Engineering student who enjoys
                   solving real-world problems through software. My work
                   spans full-stack development, UI engineering, 3D design,
                   and immersive digital experiences.
@@ -227,8 +227,8 @@ export default function About() {
 
                 <p className="text-white/70 leading-8">
 
-                  Building software isn't just about writing code.
-                  It's about creating experiences that people enjoy,
+                  Building software isn&apos;t just about writing code.
+                  It&apos;s about creating experiences that people enjoy,
                   products that solve problems, and systems that last.
 
                 </p>

@@ -36,7 +36,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-12 border-b border-white/5">
           <div>
             <h3 className="text-2xl md:text-3xl font-display font-medium text-foreground tracking-tight">
-              Let's build something <span className="text-accent font-light italic">extraordinary</span>.
+              Let&apos;s build something <span className="text-accent font-light italic">extraordinary</span>.
             </h3>
             <p className="text-xs text-foreground/40 font-mono mt-2 uppercase tracking-wider">
               System architecture // Digital asset production // 2026 Engine
