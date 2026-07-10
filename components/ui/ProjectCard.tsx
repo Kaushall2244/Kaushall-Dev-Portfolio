@@ -1,13 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-interface Project {
-  title: string;
-  desc: string;
-  stack: string[];
-  progress: number;
-}
+import { useRef, useState } from "react";
+import { Project } from "../Sections/Projects";
 
 interface Props {
   project: Project;
@@ -15,31 +10,305 @@ interface Props {
 
 export function ProjectCard({ project }: Props) {
 
-  return (
+  const cardRef = useRef<HTMLDivElement>(null);
 
+  const [mouse, setMouse] = useState({
+    x: -400,
+    y: -400,
+  });
+
+  return (
     <motion.div
+      initial={{
+        opacity: 0,
+        y: 60,
+        scale: 0.9,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+      }}
+      viewport={{ once: true }}
+      transition={{
+        duration: 0.7,
+      }}
       whileHover={{
-        y: -12,
+        y: -18,
         scale: 1.03,
       }}
-      transition={{
-        type: "spring",
-        stiffness: 220,
-        damping: 18,
+
+      ref={cardRef}
+
+      onMouseMove={(e) => {
+        if (!cardRef.current) return;
+      
+        const rect = cardRef.current.getBoundingClientRect();
+      
+        setMouse({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+        });
       }}
-      className="relative h-[520px] w-[420px] shrink-0 overflow-hidden rounded-[38px] border border-white/10 bg-white/[0.03] backdrop-blur-2xl"
+
+      onMouseLeave={() =>
+        setMouse({
+          x: -400,
+          y: -400,
+        })
+      }
+
+      className="
+      group
+      relative
+      h-[640px]
+      w-[480px]
+      shrink-0
+      overflow-hidden
+      rounded-[42px]
+      border
+      border-white/10
+      bg-white/[0.03]
+      backdrop-blur-2xl
+      p-8
+      transition-all
+      duration-500
+      "
     >
 
-      {/* Background Glow */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        animate={{
+          background: `radial-gradient(
+            220px circle at ${mouse.x}px ${mouse.y}px,
+            rgba(204,255,0,.14),
+            transparent 75%
+          )`,
+        }}
+        transition={{
+          duration: 0.08,
+        }}
+      />
 
-      <div className="absolute -right-32 -top-32 h-80 w-80 rounded-full bg-[#ccff00]/10 blur-[140px]" />
-          
-      <div className="relative z-10 flex h-full flex-col p-8">
-          
+
+      {/* ========================= */}
+      {/* Background Effects */}
+      {/* ========================= */}
+
+      <div className="absolute inset-0 overflow-hidden">
+
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.12, 0.22, 0.12],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+          }}
+          className="absolute -top-40 -right-32 h-96 w-96 rounded-full bg-[#ccff00] blur-[160px]"
+        />
+
+        <motion.div
+          animate={{
+            x: [-20, 20, -20],
+            y: [20, -20, 20],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+          }}
+          className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-white/5 blur-[130px]"
+        />
+
+      </div>
+
+      {/* ========================= */}
+      {/* Preview */}
+      {/* ========================= */}
+
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 40,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+        viewport={{
+          once: true,
+        }}
+        transition={{
+          duration: 0.7,
+        }}
+        whileHover={{
+          scale: 1.03,
+        }}
+        className="relative mb-8 h-[300px] overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-white/[0.06] to-transparent"
+      >
+
+        {/* Grid */}
+
+        <div
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, rgba(255,255,255,.08) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(255,255,255,.08) 1px, transparent 1px)
+            `,
+            backgroundSize: "30px 30px",
+          }}
+        />
+
+        {/* Glow */}
+
+        <motion.div
+          animate={{
+            scale: [1, 1.15, 1],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+          }}
+          className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ccff00]/20 blur-[90px]"
+        />
+
+        {/* Floating Ring */}
+
+        <motion.div
+          animate={{
+            rotate: 360,
+          }}
+          transition={{
+            duration: 16,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#ccff00]/20"
+        />
+
+        {/* Letter */}
+
+        <div className="absolute inset-0 flex items-center justify-center">
+
+          <div className="text-center">
+
+            <motion.p
+              animate={{
+                scale: [1, 1.05, 1],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+              }}
+              className="text-8xl font-black text-white/10"
+            >
+              {project.title.charAt(0)}
+            </motion.p>
+
+            <p className="mt-3 text-xs uppercase tracking-[0.55em] text-white/30">
+              PROJECT PREVIEW
+            </p>
+
+          </div>
+
+        </div>
+
+      </motion.div>
+
+      {/* ========================= */}
+      {/* Content */}
+      {/* ========================= */}
+
+      <div className="relative z-10 flex h-[270px] flex-col">
+
+        {/* Header */}
+
+        <div className="flex items-center justify-between">
+
+          <div className="rounded-full border border-[#ccff00]/20 bg-[#ccff00]/10 px-4 py-2">
+
+            <p className="text-[10px] uppercase tracking-[0.35em] text-[#ccff00]">
+              FEATURED
+            </p>
+
+          </div>
+
+          <p className="text-xs uppercase tracking-[0.35em] text-white/35">
+            2026
+          </p>
+
+        </div>
+
+        {/* Title */}
+
+        <h3 className="mt-7 text-4xl font-black leading-tight text-white">
+          {project.title}
+        </h3>
+
+        {/* Description */}
+
+        <p className="mt-5 leading-8 text-white/60">
+          {project.description}
+        </p>
+
+        {/* Technologies */}
+
+        <div className="mt-8 flex flex-wrap gap-3">
+
+          {project.tech.map((tech: string) => (
+
+            <motion.div
+              key={tech}
+              whileHover={{
+                y: -4,
+              }}
+              className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs text-white/70"
+            >
+              {tech}
+            </motion.div>
+
+          ))}
+
+        </div>
+
+        {/* Progress */}
+
+        <div className="mt-auto">
+
+          <div className="mb-3 flex justify-between text-xs text-white/40">
+
+            <span>Progress</span>
+
+            <span>{project.progress}%</span>
+
+          </div>
+
+          <div className="h-2 overflow-hidden rounded-full bg-white/10">
+
+            <motion.div
+              initial={{
+                width: 0,
+              }}
+              whileInView={{
+                width: `${project.progress}%`,
+              }}
+              viewport={{
+                once: true,
+              }}
+              transition={{
+                duration: 1.4,
+              }}
+              className="h-full rounded-full bg-[#ccff00]"
+            />
+
+          </div>
+
+        </div>
+
       </div>
 
     </motion.div>
-
   );
-
 }
