@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
+import { Github, ExternalLink } from "lucide-react";
 import { Project } from "../Sections/Projects";
 
 interface Props {
@@ -273,38 +274,41 @@ export function ProjectCard({ project }: Props) {
 
         </div>
 
-        {/* Progress */}
-
-        <div className="mt-auto">
-
-          <div className="mb-3 flex justify-between text-xs text-white/40">
-
-            <span>Progress</span>
-
-            <span>{project.progress}%</span>
-
+        {/* Project Metadata & Actions */}
+        <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
+          <div className="flex flex-col gap-1">
+            <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">
+              Role & Status
+            </span>
+            <span className="text-xs text-white/80 font-medium font-sans">
+              {project.role}
+            </span>
+            <span className="text-[9px] text-[#ccff00] font-mono uppercase tracking-widest flex items-center gap-1.5 mt-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ccff00] animate-pulse" />
+              {project.status}
+            </span>
           </div>
 
-          <div className="h-2 overflow-hidden rounded-full bg-white/10">
-
-            <motion.div
-              initial={{
-                width: 0,
-              }}
-              whileInView={{
-                width: `${project.progress}%`,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                duration: 1.4,
-              }}
-              className="h-full rounded-full bg-[#ccff00]"
-            />
-
+          <div className="flex gap-3">
+            {project.github && (
+              <a
+                href={project.github}
+                className="p-3 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-[#ccff00] hover:border-[#ccff00]/40 transition-colors duration-300 interactive-node"
+                data-cursor-text="CODE"
+              >
+                <Github size={16} />
+              </a>
+            )}
+            {project.demo && (
+              <a
+                href={project.demo}
+                className="p-3 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-[#ccff00] hover:border-[#ccff00]/40 transition-colors duration-300 interactive-node"
+                data-cursor-text="LIVE"
+              >
+                <ExternalLink size={16} />
+              </a>
+            )}
           </div>
-
         </div>
 
       </div>

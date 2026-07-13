@@ -1,18 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
   const [isHovered, setIsHovered] = useState(false);
+  const [hoverText, setHoverText] = useState("");
 
-  // Raw instantaneous mouse positions
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  // Lagged spring physics for the heavy outer reticle ring
-  const ringX = useSpring(mouseX, { stiffness: 400, damping: 28, mass: 0.3 });
-  const ringY = useSpring(mouseY, { stiffness: 400, damping: 28, mass: 0.3 });
+  // Smooth springs for cursor movement
+  const springConfig = { stiffness: 400, damping: 28, mass: 0.1 };
+  const cursorX = useSpring(mouseX, springConfig);
+  const cursorY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -22,17 +23,17 @@ export default function CustomCursor() {
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
+      const interactive = target.closest("a, button, [role='button'], .interactive-node");
       
-      // Scrapes context tree to check if cursor is over interactive zones
-      const isInteractive = 
-        target.tagName === "A" ||
-        target.tagName === "BUTTON" ||
-        target.closest("a") ||
-        target.closest("button") ||
-        target.getAttribute("role") === "button" ||
-        target.classList.contains("interactive-node");
-
-      setIsHovered(!!isInteractive);
+      if (interactive) {
+        setIsHovered(true);
+        // Check if there is specific data-cursor-text
+        const text = interactive.getAttribute("data-cursor-text") || "";
+        setHoverText(text);
+      } else {
+        setIsHovered(false);
+        setHoverText("");
+      }
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -46,33 +47,35 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* 1. INNER CORE TARGET DOT */}
+      {/* Outer Circle & Label */}
       <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 bg-accent rounded-full pointer-events-none z-100 mix-blend-difference hidden md:block"
-        style={{
-          x: mouseX,
-          y: mouseY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      />
-
-      {/* 2. OUTER PHYSICS RUNWAY RETICLE */}
-      <motion.div
-        className="fixed top-0 left-0 border border-accent rounded-full pointer-events-none z-100 mix-blend-difference hidden md:block"
+        className="fixed top-0 left-0 pointer-events-none z-[100] flex items-center justify-center rounded-full overflow-hidden hidden md:flex"
         animate={{
-          width: isHovered ? 48 : 22,
-          height: isHovered ? 48 : 22,
-          backgroundColor: isHovered ? "var(--color-accent, rgba(204, 255, 0, 0.08))" : "rgba(204, 255, 0, 0)",
+          width: isHovered ? (hoverText ? 72 : 48) : 12,
+          height: isHovered ? (hoverText ? 72 : 48) : 12,
+          backgroundColor: isHovered ? "var(--color-accent)" : "rgba(255,255,255,1)",
+          mixBlendMode: isHovered ? "normal" : "difference",
+          border: isHovered ? "none" : "none",
         }}
-        transition={{ type: "spring", stiffness: 350, damping: 22, mass: 0.1 }}
+        transition={{ type: "spring", stiffness: 350, damping: 22, mass: 0.2 }}
         style={{
-          x: ringX,
-          y: ringY,
+          x: cursorX,
+          y: cursorY,
           translateX: "-50%",
           translateY: "-50%",
         }}
-      />
+      >
+        {hoverText && (
+          <motion.span
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            className="text-[10px] font-bold text-black uppercase tracking-wider"
+          >
+            {hoverText}
+          </motion.span>
+        )}
+      </motion.div>
     </>
   );
 }

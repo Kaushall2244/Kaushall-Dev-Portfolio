@@ -1,40 +1,69 @@
 "use client";
-import { useRef, useMemo } from "react"; // Added useMemo here
+
+import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Float, Icosahedron, MeshTransmissionMaterial } from "@react-three/drei";
+import { Float, TorusKnot, MeshTransmissionMaterial } from "@react-three/drei";
 import * as THREE from "three";
 
 export default function HeroScene() {
-  const meshRef = useRef<THREE.Mesh>(null); // Removed duplicate declaration
-  
-  // Initialize the new Timer
-  const timer = useMemo(() => new THREE.Timer(), []);
+  const meshRef = useRef<THREE.Mesh>(null);
 
-  useFrame((state, delta) => {
-    // Update the timer with the delta
-    timer.update(delta);
-    
-    // Get elapsed time
-    const elapsedTime = timer.getElapsed();
+  useFrame((state) => {
+    const { clock, pointer } = state;
+    const elapsedTime = clock.getElapsedTime();
 
     if (meshRef.current) {
-      meshRef.current.rotation.x = Math.sin(elapsedTime * 0.2) * 0.2;
-      meshRef.current.rotation.y = Math.cos(elapsedTime * 0.3) * 0.2;
+      // Rotation: combining automatic kinetic spin and mouse coordinate follow
+      meshRef.current.rotation.x = THREE.MathUtils.lerp(
+        meshRef.current.rotation.x,
+        pointer.y * 0.6 + elapsedTime * 0.15,
+        0.05
+      );
+      meshRef.current.rotation.y = THREE.MathUtils.lerp(
+        meshRef.current.rotation.y,
+        pointer.x * 0.6 + elapsedTime * 0.2,
+        0.05
+      );
+
+      // Slight translational hover based on cursor
+      meshRef.current.position.x = THREE.MathUtils.lerp(
+        meshRef.current.position.x,
+        pointer.x * 0.5,
+        0.05
+      );
+      meshRef.current.position.y = THREE.MathUtils.lerp(
+        meshRef.current.position.y,
+        pointer.y * 0.5,
+        0.05
+      );
     }
   });
 
   return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <Icosahedron ref={meshRef} args={[1.5, 1]}>
-        <MeshTransmissionMaterial 
-          backside 
-          samples={4} 
-          thickness={0.5} 
-          chromaticAberration={0.5} 
-          anisotropy={0.1} 
-          distortion={0.5} 
-        />
-      </Icosahedron>
-    </Float>
+    <>
+      {/* Lighting matrix for premium refractive glass rendering */}
+      <ambientLight intensity={0.4} />
+      <directionalLight position={[10, 10, 5]} intensity={1.5} color="#ffffff" />
+      <pointLight position={[-10, -10, -5]} intensity={2.0} color="#ccff00" />
+      <pointLight position={[5, -5, 5]} intensity={1.2} color="#00ffff" />
+
+      <Float speed={1.5} rotationIntensity={0.8} floatIntensity={1.2}>
+        <TorusKnot ref={meshRef} args={[0.9, 0.28, 150, 20]} scale={1.3}>
+          <MeshTransmissionMaterial
+            backside
+            samples={6}
+            thickness={0.8}
+            chromaticAberration={0.4}
+            anisotropy={0.3}
+            distortion={0.3}
+            distortionScale={0.3}
+            temporalDistortion={0.1}
+            roughness={0.08}
+            transmission={0.95}
+            color="#ffffff"
+          />
+        </TorusKnot>
+      </Float>
+    </>
   );
 }

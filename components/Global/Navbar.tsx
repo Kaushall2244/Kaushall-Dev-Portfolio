@@ -77,6 +77,7 @@ export default function Navbar() {
         <Magnetic range={50} actionFactor={0.3}>
           <motion.button 
             layout
+            data-cursor-text="HI"
             className="ml-2 flex items-center gap-1 bg-accent text-black px-4 py-2 rounded-full text-xs font-medium hover:bg-foreground hover:text-background transition-all duration-300 whitespace-nowrap"
             style={{ cursor: 'none' }}
           >

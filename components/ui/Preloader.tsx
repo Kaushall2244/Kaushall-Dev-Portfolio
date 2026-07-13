@@ -1,346 +1,185 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import gsap from "gsap";
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
+const BOOT_LOGS = [
+  "INITIALIZING VIRTUAL CONTAINER...",
+  "LINKING KINETIC GLOW MATRICES...",
+  "ESTABLISHING COMMS COMPILE UPLINK...",
+  "LOADING CORE ASSETS...",
+  "BOOT COMPLETED SUCCESSFULLY."
+];
 
-export default function Preloader({
-  onComplete,
-}: PreloaderProps) {
-
+export default function Preloader({ onComplete }: PreloaderProps) {
   const [progress, setProgress] = useState(0);
+  const [scrambledText, setScrambledText] = useState("K_______");
+  const [logIndex, setLogIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const curtainsRef = useRef<HTMLDivElement>(null);
 
-  const [status, setStatus] = useState("INITIALIZING");
+  const targetWord = "KAUSHALL";
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
 
-  const [finished, setFinished] = useState(false);
-
+  // Progress Counter logic
   useEffect(() => {
-
-    document.body.style.overflow = "hidden";
-
-    const stages = [
-      "BOOTING CORE",
-      "LOADING COMPONENTS",
-      "COMPILING INTERFACE",
-      "PREPARING EXPERIENCE",
-      "WELCOME",
-    ];
-
     const timer = setInterval(() => {
-
       setProgress((prev) => {
-
         if (prev >= 100) {
-
           clearInterval(timer);
-
-          setFinished(true);
-
-          setTimeout(() => {
-
-            document.body.style.overflow = "";
-
-            onComplete();
-
-          }, 900);
-
           return 100;
-
         }
+        // Realistic step speed
+        const step = Math.floor(Math.random() * 8) + 3;
+        return Math.min(prev + step, 100);
+      });
+    }, 60);
 
-        const next = Math.min(
-          prev + Math.floor(Math.random() * 6) + 2,
-          100
-        );
+    return () => clearInterval(timer);
+  }, []);
 
-        if (next < 20)
-          setStatus(stages[0]);
-        else if (next < 45)
-          setStatus(stages[1]);
-        else if (next < 70)
-          setStatus(stages[2]);
-        else if (next < 95)
-          setStatus(stages[3]);
-        else
-          setStatus(stages[4]);
+  // Boot log sequence
+  useEffect(() => {
+    if (progress < 100) {
+      const idx = Math.min(Math.floor((progress / 100) * BOOT_LOGS.length), BOOT_LOGS.length - 1);
+      setLogIndex(idx);
+    } else {
+      setLogIndex(BOOT_LOGS.length - 1);
+    }
+  }, [progress]);
 
-        return next;
+  // Character scramble decryption logic
+  useEffect(() => {
+    let animationFrameId: number;
+    let iteration = 0;
 
+    const runScramble = () => {
+      // Scale iterations with the progress
+      const targetIter = Math.floor((progress / 100) * targetWord.length);
+      
+      setScrambledText((prev) => {
+        return targetWord
+          .split("")
+          .map((letter, index) => {
+            if (index < targetIter) {
+              return letter; // Decrypted
+            }
+            if (progress === 100) {
+              return letter; // Decrypted fully
+            }
+            // Scrambling character
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join("");
       });
 
-    }, 70);
-
-    return () => {
-
-      clearInterval(timer);
-
-      document.body.style.overflow = "";
-
+      if (progress < 100) {
+        animationFrameId = requestAnimationFrame(runScramble);
+      } else {
+        setScrambledText(targetWord);
+      }
     };
 
-  }, [onComplete]);
-  return (
+    animationFrameId = requestAnimationFrame(runScramble);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [progress]);
 
-    <AnimatePresence>
+  // GSAP Curtain Exit Animation
+  useEffect(() => {
+    if (progress === 100) {
+      const curtains = containerRef.current?.querySelectorAll(".curtain-panel");
+      const title = containerRef.current?.querySelector(".preloader-title");
+      const hud = containerRef.current?.querySelectorAll(".hud-element");
 
-    {!finished && (
+      if (!curtains) return;
 
-    <motion.div
-      initial={{ opacity: 1 }}
-      animate={{ opacity: 1 }}
-      exit={{
+      document.body.style.overflow = "hidden";
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          document.body.style.overflow = "";
+          onComplete();
+        }
+      });
+
+      // Fade out textual elements first
+      tl.to([title, hud], {
         opacity: 0,
+        y: -30,
+        duration: 0.5,
+        stagger: 0.05,
+        ease: "power2.inOut"
+      })
+      // Stagger curtain panels sliding up
+      .to(curtains, {
         y: "-100%",
-        transition: {
-          duration: 0.8,
-          ease: [0.76, 0, 0.24, 1],
-        },
-      }}
-      className="fixed inset-0 z-[9999] overflow-hidden bg-black"
+        duration: 1.1,
+        stagger: 0.12,
+        ease: "power4.inOut"
+      }, "-=0.2");
+    }
+  }, [progress, onComplete]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="fixed inset-0 z-[9999] overflow-hidden bg-transparent select-none"
     >
-
-      {/* Scanner */}
-
-        <motion.div
-          animate={{
-            y: ["-100%", "120vh"],
-          }}
-          transition={{
-            duration: 2.8,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="pointer-events-none absolute left-0 right-0 h-40 bg-gradient-to-b from-transparent via-[#ccff00]/10 to-transparent blur-xl"
-        />
-
-      {/* Animated Background */}
-
-      <div className="absolute inset-0 overflow-hidden">
-
-        {/* Grid */}
-
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(255,255,255,.08) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(255,255,255,.08) 1px, transparent 1px)
-            `,
-            backgroundSize: "70px 70px",
-          }}
-        />
-
-        {/* Ambient Glow */}
-        
-        <motion.div
-          animate={{
-            x: [0, 80, -60, 0],
-            y: [0, -40, 40, 0],
-            scale: [1, 1.2, 0.95, 1],
-          }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ccff00]/6 blur-[220px]"
-        />
-
-        {/* Radar Ring */}
-        
-        <motion.div
-          animate={{
-            rotate: 360,
-          }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#ccff00]/10"
-        />
-
-        {/* Inner Ring */}
-        
-        <motion.div
-          animate={{
-            rotate: -360,
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute left-1/2 top-1/2 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10"
-        />
-
-        {/* Floating Particles */}
-
-        {Array.from({ length: 30 }).map((_, i) => (
-        
-          <motion.div
+      {/* 5 Vertical Curtain Panels */}
+      <div ref={curtainsRef} className="absolute inset-0 grid grid-cols-5 pointer-events-none z-0">
+        {[...Array(5)].map((_, i) => (
+          <div
             key={i}
-            animate={{
-              y: [0, -35, 0],
-              opacity: [0.1, 0.8, 0.1],
-              scale: [1, 1.6, 1],
-            }}
-            transition={{
-              duration: 2 + i * 0.15,
-              repeat: Infinity,
-              delay: i * 0.15,
-            }}
-            className="absolute rounded-full bg-[#ccff00]"
-            style={{
-                width: "2px",
-                height: "2px",
-                left: `${(i * 17) % 100}%`,
-                top: `${(i * 29) % 100}%`,
-            }}
+            className="curtain-panel w-full h-[100vh] bg-black border-r border-white/5 last:border-0"
           />
-          
         ))}
-
       </div>
 
+      {/* Cyber Grid Overlay background */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none z-10" />
 
-      {/* GRID */}
+      {/* Subtle Scanner Line */}
+      <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-[#ccff00]/5 to-transparent blur-md select-none pointer-events-none" />
 
-      <div
-        className="absolute inset-0 opacity-[0.05]"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, rgba(255,255,255,.08) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255,255,255,.08) 1px, transparent 1px)
-          `,
-          backgroundSize: "80px 80px",
-        }}
-      />
+      {/* Centered Decrypting Title */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
+        <div className="preloader-title text-center px-4">
+          <p className="font-mono text-xs text-[#ccff00] tracking-[0.6em] uppercase mb-4 hud-element">
+            DECRYPTING SYSTEM SIGNATURE
+          </p>
+          <h1 className="font-display font-black text-6xl md:text-8xl tracking-tight text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+            {scrambledText}
+          </h1>
+        </div>
+      </div>
 
-      {/* BIG BACKGROUND TEXT */}
-
-      <h1
-        className="
-          pointer-events-none
-          absolute
-          left-1/2
-          top-1/2
-          -translate-x-1/2
-          -translate-y-1/2
-          text-[18vw]
-          font-black
-          tracking-[-0.08em]
-          text-white/[0.03]
-          select-none
-        "
-      >
-        KAUSHALL
-      </h1>
-
-      {/* CONTENT */}
-
-      <div className="relative z-10 flex h-full flex-col items-center justify-center">
-
-        <p className="text-[#ccff00] tracking-[0.45em] text-xs uppercase">
-          Engineering Portfolio
-        </p>
-
-        <h2 className="mt-6 text-6xl md:text-8xl font-black text-white">
-          KAUSHALL
-        </h2>
-
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 12,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            delay: 0.3,
-          }}
-          className="mt-8 space-y-2 font-mono text-[11px] tracking-widest text-white/45"
-        >
-        
-          <p>✓ Loading portfolio modules...</p>
-        
-          <p>✓ Initializing engineering workspace...</p>
-        
-          <p>✓ Preparing interactive experience...</p>
-        
-        </motion.div>
-
-        <p className="mt-5 text-white/50 tracking-[0.25em] uppercase">
-          {status}
-        </p>
-
-        {/* LOADING BAR */}
-
-        <div className="relative z-10 mt-16 w-[420px] max-w-[90vw]">
-
-          <div className="flex items-center gap-3">
-
-            <motion.div
-              animate={{
-                opacity: [1, 0.25, 1],
-              }}
-              transition={{
-                duration: 1,
-                repeat: Infinity,
-              }}
-              className="h-2 w-2 rounded-full bg-[#ccff00]"
-            />
-
-            <span className="font-mono text-sm text-[#ccff00]">
-            
-              {progress}%
-            
-            </span>
-            
-          </div>
-
-          <div className="relative h-[2px] overflow-hidden rounded-full bg-white/10">
-
-            {/* Progress */}
-
-            <motion.div
-              animate={{
-                width: `${progress}%`,
-              }}
-              transition={{
-                ease: "easeOut",
-              }}
-              className="absolute left-0 top-0 h-full bg-[#ccff00]"
-            />
-
-            {/* Moving Shine */}
-            
-            <motion.div
-              animate={{
-                x: ["-120%", "520%"],
-              }}
-              transition={{
-                duration: 1.2,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="absolute top-0 h-full w-20 bg-gradient-to-r from-transparent via-white/80 to-transparent"
-            />
-
-          </div>
-
+      {/* BOTTOM HUD ELEMENTS */}
+      <div className="absolute bottom-16 left-8 right-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 z-20 hud-element">
+        {/* Logs */}
+        <div className="font-mono text-[9px] text-white/40 tracking-widest uppercase flex flex-col gap-1.5 max-w-xs md:max-w-md">
+          <span className="text-[#ccff00] font-semibold">{"// BOOT LOG ENTRY"}</span>
+          <span className="text-white/80 transition-all duration-300">
+            {BOOT_LOGS[logIndex]}
+          </span>
+          <span className="text-white/20">SYS_PORT_READY: 0x89F0A2</span>
         </div>
 
+        {/* Huge Counter */}
+        <div className="flex items-baseline gap-2 font-display text-8xl md:text-[10vw] font-black text-[#ccff00] tracking-tighter leading-none select-none drop-shadow-[0_0_40px_rgba(204,255,0,0.15)]">
+          <span>{String(progress).padStart(3, "0")}</span>
+          <span className="text-xl md:text-3xl font-mono text-white/30 font-normal">%</span>
+        </div>
       </div>
-    </motion.div>
-    )}
 
-    </AnimatePresence>
+      {/* System Decorative Borders */}
+      <div className="absolute top-8 left-8 right-8 flex justify-between items-center z-20 font-mono text-[9px] text-white/25 hud-element">
+        <span>CORE_INIT_SYS // 2026</span>
+        <span>KAUSHALL_DEV_SYSTEMS</span>
+      </div>
+    </div>
   );
 }

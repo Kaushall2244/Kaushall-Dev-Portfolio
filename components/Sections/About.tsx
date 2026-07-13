@@ -1,10 +1,42 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import Reveal from "../ui/Reveal";
 import TextReveal from "../ui/TextReveal";
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function About() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  useGSAP(() => {
+    if (!containerRef.current || !imageRef.current) return;
+
+    gsap.fromTo(
+      imageRef.current,
+      {
+        clipPath: "polygon(18% 12%, 82% 6%, 74% 88%, 26% 94%)",
+        scale: 1.3,
+      },
+      {
+        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        scale: 1.0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top bottom-=15%",
+          end: "bottom center+=10%",
+          scrub: 1,
+        },
+      }
+    );
+  }, { scope: containerRef });
+
   return (
     <Reveal>
       <section
@@ -83,18 +115,23 @@ export default function About() {
 
           <div className="mt-24 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
 
-            {/* LEFT SIDE */}
-
-            <motion.div
-              initial={{ opacity: 0, x: -60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: .8 }}
-              className="group relative h-[700px] overflow-hidden rounded-[36px] border border-white/10 bg-white/[0.03] backdrop-blur-xl transition-all duration-500 hover:border-[#ccff00]/30 hover:shadow-[0_0_70px_rgba(204,255,0,.15)]"
+            {/* LEFT SIDE: PHOTO REVEAL */}
+            <div
+              ref={containerRef}
+              className="relative h-[700px] overflow-hidden rounded-[36px] border border-white/10 bg-white/[0.03] backdrop-blur-xl"
             >
+              {/* Profile Image with GSAP clipPath reveal */}
+              <img
+                ref={imageRef}
+                src="/Images/profile.png"
+                alt="S Kaushall Profile"
+                className="absolute inset-0 h-full w-full object-cover object-center will-change-transform"
+                style={{
+                  clipPath: "polygon(18% 12%, 82% 6%, 74% 88%, 26% 94%)"
+                }}
+              />
 
-              {/* Glow */}
-
+              {/* Ambient Glow inside the card */}
               <motion.div
                 animate={{
                   rotate: [0, 360],
@@ -105,62 +142,27 @@ export default function About() {
                   repeat: Infinity,
                   ease: "linear",
                 }}
-                className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#ccff00]/10 blur-[130px]"
+                className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#ccff00]/10 blur-[130px] pointer-events-none"
               />
 
-              {/* Photo */}
+              {/* Dark Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent pointer-events-none" />
 
-              <motion.img
-                src="/images/profile.png"
-                alt="Kaushal"
-                initial={{
-                  scale: 1.08,
-                  opacity: 0,
-                }}
-                whileInView={{
-                  scale: 1,
-                  opacity: 1,
-                }}
-                whileHover={{
-                  scale: 1.05,
-                }}
-                transition={{
-                  duration: 1.2,
-                }}
-                className="absolute inset-0 h-full w-full object-cover object-center transition-all duration-700"
-              />
-
-              {/* Dark Gradient */}
-
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-
-              {/* Bottom Info */}
-
-              <div className="absolute bottom-0 left-0 right-0 p-10">
-
-                <p className="text-xs uppercase tracking-[0.4em] text-[#ccff00]">
-
+              {/* Bottom Info Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-10 z-10">
+                <p className="text-xs uppercase tracking-[0.4em] text-[#ccff00] font-mono">
                   CSE STUDENT
-
                 </p>
-
                 <h2 className="mt-4 text-5xl font-black text-white">
-
                   S KAUSHALL
-
                 </h2>
-
                 <p className="mt-6 max-w-md leading-8 text-white/70">
-
                   Passionate about creating premium web experiences,
                   immersive interfaces and scalable software through
                   engineering, creativity and continuous learning.
-
                 </p>
-
               </div>
-
-            </motion.div>
+            </div>
 
             {/* RIGHT SIDE */}
 
@@ -244,68 +246,4 @@ export default function About() {
     </Reveal>
   );
 }
-
-
-
-
-{/* <motion.div */ }
-// initial={{
-// opacity: 0,
-// y: -20,
-// }}
-// whileInView={{
-// opacity: 1,
-// y: 0,
-// }}
-// transition={{
-// delay: .5,
-// }}
-// className="absolute top-8 left-8 rounded-full border border-[#ccff00]/20 bg-black/40 backdrop-blur-xl px-5 py-3"
-// >
-{/*  */ }
-{/* <div className="flex items-center gap-3"> */ }
-{/*  */ }
-{/* <div className="h-2.5 w-2.5 rounded-full bg-[#ccff00] animate-pulse" /> */ }
-{/*  */ }
-{/* <span className="text-xs uppercase tracking-[0.3em] text-[#ccff00]"> */ }
-{/*  */ }
-{/* Available for Freelance */ }
-{/*  */ }
-{/* </span> */ }
-{/*  */ }
-{/* </div> */ }
-{/*  */ }
-{/* </motion.div> */ }
-// 
-// <motion.div
-// animate={{
-// y: [0, -10, 0],
-// }}
-// transition={{
-// duration: 5,
-// repeat: Infinity,
-// ease: "easeInOut",
-// }}
-// className="absolute right-8 top-28 rounded-3xl border border-white/10 bg-black/40 backdrop-blur-2xl p-5"
-// >
-{/*  */ }
-{/* <p className="text-xs uppercase tracking-[0.3em] text-[#ccff00]"> */ }
-{/*  */ }
-{/* Stack */ }
-{/*  */ }
-{/* </p> */ }
-{/*  */ }
-{/* <div className="mt-4 flex flex-wrap gap-2"> */ }
-{/*  */ }
-{/* {["React","Next","Java","Spring","Python"].map((item)=>( */ }
-// <span
-// key={item}
-// className="rounded-full border border-white/10 px-3 py-1 text-xs text-white/70"
-// >
-{/* {item} */ }
-{/* </span> */ }
-// ))}
-{/*  */ }
-{/* </div> */ }
-{/*  */ }
-{/* </motion.div> */ }
+

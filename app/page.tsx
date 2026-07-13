@@ -1,39 +1,33 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
-import Preloader from "@/components/ui/Preloader";
-import SmoothScroll from "@/components/ui/SmoothScroll";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import dynamic from "next/dynamic";
+
+const Preloader = dynamic(() => import("@/components/ui/Preloader"), { ssr: false });
+const SmoothScroll = dynamic(() => import("@/components/ui/SmoothScroll"), { ssr: false });
 
 // Section Imports
 import Hero from "@/components/Sections/Hero";
 import About from "@/components/Sections/About";
-import Stats from "@/components/Sections/Skills"; 
-import Projects from "@/components/Sections/Projects";
+import Skills from "@/components/Sections/Skills";
 import Contact from "@/components/Sections/Contact";
+
+// Lazy-load the heavy Projects section with GSAP ScrollTrigger
+const Projects = dynamic(() => import("@/components/Sections/Projects"), { ssr: false });
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
-  const containerRef = useRef(null);
-  
-  // Parallax Logic
-  const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, 300]);
 
   return (
-    <main ref={containerRef} className="relative min-h-screen bg-background text-primary overflow-hidden blueprint-grid">
-      {/* Parallax Grid */}
-      <motion.div 
-        style={{ y }} 
-        className="fixed inset-0 z-0 pointer-events-none bg-grid-pattern grid-mask" 
-      />
+    <main className="relative min-h-screen bg-background text-foreground overflow-hidden">
 
       <AnimatePresence mode="wait">
         {isLoading && (
           <Preloader key="loader" onComplete={() => setIsLoading(false)} />
         )}
       </AnimatePresence>
-      
+
       <SmoothScroll>
         <AnimatePresence>
           {!isLoading && (
@@ -44,7 +38,7 @@ export default function Home() {
             >
               <Hero />
               <About />
-              <Stats />
+              <Skills />
               <Projects />
               <Contact />
             </motion.div>

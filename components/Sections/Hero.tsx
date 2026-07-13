@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion, Variants, useMotionValue, useSpring } from "framer-motion";
+import { useRef } from "react";
+import { motion, Variants } from "framer-motion";
 import { ArrowRight, Download, Terminal } from "lucide-react";
 import MagneticWrapper from "../ui/Magnetic";
 import Reveal from "../ui/Reveal";
+import CanvasWrapper from "../CanvasWrapper";
+import HeroScene from "../Three/HeroScene";
 
 const containerVariants: Variants = {
   hidden: {
@@ -88,33 +90,7 @@ const floatingShapes = [
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
 
-  const smoothX = useSpring(mouseX, {
-    stiffness: 120,
-    damping: 20,
-  });
-
-  const smoothY = useSpring(mouseY, {
-    stiffness: 120,
-    damping: 20,
-  });
-
-  useEffect(() => {
-    const move = (e: MouseEvent) => {
-      if (!heroRef.current) return;
-
-      const rect = heroRef.current.getBoundingClientRect();
-
-      mouseX.set(e.clientX - rect.left);
-      mouseY.set(e.clientY - rect.top);
-    };
-
-    window.addEventListener("mousemove", move);
-
-    return () => window.removeEventListener("mousemove", move);
-  }, [mouseX, mouseY]);
 
 
   return (
@@ -124,14 +100,14 @@ export default function Hero() {
       ref={heroRef}
       className="relative min-h-screen overflow-hidden flex items-center pt-32 md:pt-40 lg:pt-44 px-6 md:px-10 lg:px-20"
     >
+      {/* 3D Canvas Background element */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-full md:w-[45%] h-[600px] md:h-screen pointer-events-none z-0">
+        <CanvasWrapper>
+          <HeroScene />
+        </CanvasWrapper>
+      </div>
 
-      <motion.div
-        style={{
-          left: smoothX,
-          top: smoothY,
-        }}
-        className="absolute w-[500px] h-[500px] rounded-full pointer-events-none bg-[#ccff00]/10 blur-[180px] -translate-x-1/2 -translate-y-1/2 z-0"
-      />
+
       
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden -z-10 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ccff00]/5 blur-[220px]" >
@@ -405,6 +381,7 @@ export default function Hero() {
           <MagneticWrapper>
             <a
               href="#projects"
+              data-cursor-text="VIEW"
               className="group relative overflow-hidden flex items-center gap-3 rounded-full bg-[#ccff00] px-8 py-4 font-semibold text-black transition-all duration-500 hover:scale-105 hover:shadow-[0_0_60px_rgba(204,255,0,.35)]"
             >
               <span className="absolute inset-0 -translate-x-full bg-white/30 blur-xl transition-transform duration-700 group-hover:translate-x-full" />
@@ -421,6 +398,7 @@ export default function Hero() {
           <MagneticWrapper>
             <a
               href="../resume.pdf"
+              data-cursor-text="GET"
               className="group flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-8 py-4 text-white backdrop-blur-md transition-all duration-300 hover:border-[#ccff00]/40 hover:bg-white/10"
             >
               Resume
