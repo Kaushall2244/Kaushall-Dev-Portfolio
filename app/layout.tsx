@@ -34,6 +34,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <GlobalMouseGlow />
         <div className="fixed inset-0 z-0 pointer-events-none bg-grid-pattern opacity-30" />
 
+        {/* Global Background Watermark */}
+        <div className="fixed inset-0 flex items-center justify-center pointer-events-none overflow-hidden z-0 select-none">
+          <h1 className="text-[20vw] font-black uppercase tracking-[-0.08em] text-white/[0.015]">
+            KAUSHALL
+          </h1>
+        </div>
+
         <CustomCursor />
         <Navbar />
 

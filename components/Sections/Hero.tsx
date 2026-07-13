@@ -5,8 +5,8 @@ import { motion, Variants } from "framer-motion";
 import { ArrowRight, Download, Terminal } from "lucide-react";
 import MagneticWrapper from "../ui/Magnetic";
 import Reveal from "../ui/Reveal";
-import CanvasWrapper from "../CanvasWrapper";
-import HeroScene from "../Three/HeroScene";
+import InteractiveWord from "../ui/InteractiveWord";
+import ConstellationBackground from "../ui/ConstellationBackground";
 
 const containerVariants: Variants = {
   hidden: {
@@ -100,12 +100,8 @@ export default function Hero() {
       ref={heroRef}
       className="relative min-h-screen overflow-hidden flex items-center pt-32 md:pt-40 lg:pt-44 px-6 md:px-10 lg:px-20"
     >
-      {/* 3D Canvas Background element */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-full md:w-[45%] h-[600px] md:h-screen pointer-events-none z-0">
-        <CanvasWrapper>
-          <HeroScene />
-        </CanvasWrapper>
-      </div>
+      <ConstellationBackground />
+
 
 
       
@@ -271,29 +267,6 @@ export default function Hero() {
           />
         ))}
 
-        {/* Grid */}
-
-        <div
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            backgroundImage: `
-            linear-gradient(to right, rgba(255,255,255,.1) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(255,255,255,.1) 1px, transparent 1px)
-            `,
-            backgroundSize: "90px 90px",
-          }}
-        />
-
-      </div>
-
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-
-        <h1 className="text-[20vw] font-black uppercase tracking-[-0.08em] text-white/[0.02]">
-              
-          KAUSHALL
-              
-        </h1>
-              
       </div>
 
       <motion.div
@@ -334,27 +307,25 @@ export default function Hero() {
 
         <motion.h1
           variants={itemVariants}
-          whileHover={{
-            rotateX: 2,
-            rotateY: -2,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 100,
-          }}
-          className="font-black uppercase tracking-[-0.06em] leading-[0.82]"
+          className="font-black uppercase tracking-[-0.06em] leading-[0.82] flex flex-col items-start gap-1"
         >
-          <span className="block text-white text-[56px] sm:text-[80px] md:text-[120px] lg:text-[160px]">
-            BUILD.
-          </span>
+          <div className="text-white text-[56px] sm:text-[80px] md:text-[120px] lg:text-[160px] select-none">
+            <MagneticWrapper range={100} actionFactor={0.2}>
+              <InteractiveWord word="BUILD." />
+            </MagneticWrapper>
+          </div>
 
-          <span className="block text-white text-[56px] sm:text-[80px] md:text-[120px] lg:text-[160px]">
-            CREATE.
-          </span>
+          <div className="text-white text-[56px] sm:text-[80px] md:text-[120px] lg:text-[160px] select-none">
+            <MagneticWrapper range={100} actionFactor={0.2}>
+              <InteractiveWord word="CREATE." />
+            </MagneticWrapper>
+          </div>
 
-          <span className="block text-[#ccff00] text-[56px] sm:text-[80px] md:text-[120px] lg:text-[160px]">
-            EVOLVE.
-          </span>
+          <div className="text-[#ccff00] text-[56px] sm:text-[80px] md:text-[120px] lg:text-[160px] select-none">
+            <MagneticWrapper range={100} actionFactor={0.2}>
+              <InteractiveWord word="EVOLVE." isAccent />
+            </MagneticWrapper>
+          </div>
         </motion.h1>
 
         {/* Description */}
