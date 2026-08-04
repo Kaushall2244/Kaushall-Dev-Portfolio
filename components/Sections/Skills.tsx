@@ -2,7 +2,6 @@
 
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import Reveal from "../ui/Reveal";
 import TextReveal from "../ui/TextReveal";
 
 export interface Skill {
@@ -128,60 +127,67 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
 
 export default function Skills() {
   return (
-    <Reveal>
-      <section
-        id="skills"
-        className="relative overflow-hidden py-36 px-6 md:px-10 lg:px-20 bg-background"
-      >
-        {/* Background Ambient Glow */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            animate={{
-              x: [0, -60, 40, 0],
-              y: [0, 50, -30, 0],
-            }}
-            transition={{
-              duration: 22,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute left-1/3 top-1/4 h-[600px] w-[600px] rounded-full bg-[#ccff00]/3 blur-[180px]"
+    <section
+      id="skills"
+      aria-label="Skills & Capabilities"
+      className="relative overflow-hidden py-36 px-6 md:px-10 lg:px-20 bg-background border-t border-white/5"
+    >
+      {/* Background Ambient Glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <motion.div
+          animate={{
+            x: [0, -60, 40, 0],
+            y: [0, 50, -30, 0],
+          }}
+          transition={{
+            duration: 22,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute left-1/3 top-1/4 h-[600px] w-[600px] rounded-full bg-[#ccff00]/3 blur-[180px]"
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex items-center gap-3"
+        >
+          <div className="w-2.5 h-2.5 rounded-full bg-[#ccff00] animate-pulse" />
+          <span className="font-mono text-xs uppercase tracking-[0.4em] text-[#ccff00]">
+            02 // SKILLS & ARCHITECTURE
+          </span>
+        </motion.div>
+
+        <div className="mt-5 max-w-5xl">
+          <TextReveal
+            text="Learning by building. Improving with every project."
+            variant="h2"
+            className="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-tight"
           />
         </div>
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <p className="text-xs uppercase tracking-[0.45em] text-[#ccff00] font-mono">
-            02 / SKILLS
-          </p>
+        <motion.div
+          initial={{ width: 0 }}
+          whileInView={{ width: 140 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="mt-8 h-[2px] bg-gradient-to-r from-[#ccff00] via-[#ccff00]/60 to-transparent"
+        />
 
-          <div className="mt-5 max-w-5xl">
-            <TextReveal
-              text="Learning by building. Improving with every project."
-              variant="h2"
-              className="text-5xl md:text-7xl font-black text-white"
+        {/* Skill Cards Grid */}
+        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+          {skills.map((skill, index) => (
+            <SkillCard
+              key={skill.title}
+              index={index}
+              skill={skill}
             />
-          </div>
-
-          <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: 140 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="mt-8 h-[2px] bg-[#ccff00]"
-          />
-
-          {/* New Grid Layout (Progress removed) */}
-          <div className="mt-24 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-            {skills.map((skill, index) => (
-              <SkillCard
-                key={skill.title}
-                index={index}
-                skill={skill}
-              />
-            ))}
-          </div>
+          ))}
         </div>
-      </section>
-    </Reveal>
+      </div>
+    </section>
   );
 }

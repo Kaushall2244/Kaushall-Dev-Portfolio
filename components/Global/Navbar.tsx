@@ -21,6 +21,7 @@ export default function Navbar() {
 
   return (
     <motion.nav
+      aria-label="Primary Navigation"
       className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 select-none pointer-events-auto"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -40,8 +41,6 @@ export default function Navbar() {
           KAUSHALL
         </motion.span>
 
-        {/* Instead of AnimatePresence, we use animate on the wrapper. 
-            This keeps elements in the DOM so layout animation stays smooth. */}
         <motion.div 
           animate={{ 
             opacity: isCollapsed ? 0 : 1,
@@ -75,15 +74,15 @@ export default function Navbar() {
         </motion.div>
 
         <Magnetic range={50} actionFactor={0.3}>
-          <motion.button 
-            layout
+          <a 
+            href="#contact"
             data-cursor-text="HI"
-            className="ml-2 flex items-center gap-1 bg-accent text-black px-4 py-2 rounded-full text-xs font-medium hover:bg-foreground hover:text-background transition-all duration-300 whitespace-nowrap"
+            className="ml-2 flex items-center gap-1 bg-[#ccff00] text-black px-4 py-2 rounded-full text-xs font-semibold hover:bg-white transition-all duration-300 whitespace-nowrap"
             style={{ cursor: 'none' }}
           >
             <span>Get in Touch</span>
             <ArrowUpRight size={14} />
-          </motion.button>
+          </a>
         </Magnetic>
       </motion.div>
     </motion.nav>

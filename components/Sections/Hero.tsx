@@ -1,10 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, Variants } from "framer-motion";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { ArrowRight, Download, Terminal } from "lucide-react";
 import MagneticWrapper from "../ui/Magnetic";
-import Reveal from "../ui/Reveal";
 import InteractiveWord from "../ui/InteractiveWord";
 import ConstellationBackground from "../ui/ConstellationBackground";
 
@@ -90,17 +89,40 @@ const floatingShapes = [
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
 
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
 
-
+  const scale = useTransform(scrollYProgress, [0, 0.45, 1], [1, 0.82, 0.72]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.75, 1], [1, 0.95, 0.2]);
+  const borderRadius = useTransform(scrollYProgress, [0, 0.4, 1], ["0px", "28px", "44px"]);
+  const boxShadow = useTransform(
+    scrollYProgress,
+    [0, 0.4, 1],
+    [
+      "0px 0px 0px rgba(204,255,0,0)",
+      "0px 20px 60px rgba(0,0,0,0.8)",
+      "0px 30px 90px rgba(204,255,0,0.2)",
+    ]
+  );
 
   return (
-    <Reveal>
-    <section
-      id="home"
-      ref={heroRef}
-      className="relative min-h-screen overflow-hidden flex items-center pt-32 md:pt-40 lg:pt-44 px-6 md:px-10 lg:px-20"
-    >
-      <ConstellationBackground />
+    <div ref={heroRef} className="relative w-full">
+      <motion.section
+        id="home"
+        style={{
+          scale,
+          y,
+          opacity,
+          borderRadius,
+          boxShadow,
+          transformOrigin: "center center",
+        }}
+        className="relative min-h-screen overflow-hidden flex items-center pt-32 md:pt-40 lg:pt-44 px-6 md:px-10 lg:px-20 border border-white/10 transition-all duration-300 origin-center bg-black/40 backdrop-blur-[2px] transform-gpu"
+      >
+        <ConstellationBackground />
 
 
 
@@ -482,7 +504,7 @@ export default function Hero() {
           </div>
         </motion.div>
       </motion.div>
-    </section>
-    </Reveal>
-  );
+    </motion.section>
+  </div>
+);
 }

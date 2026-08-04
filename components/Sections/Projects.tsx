@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import Reveal from "../ui/Reveal";
 import TextReveal from "../ui/TextReveal";
 import { ProjectCard } from "../ui/ProjectCard";
 
@@ -116,75 +115,84 @@ export default function Projects() {
   }, { scope: sectionRef });
 
   return (
-    <Reveal>
-      <section
-        id="projects"
-        ref={sectionRef}
-        className="relative overflow-hidden h-screen bg-transparent flex flex-col justify-center"
-      >
-        {/* ================= Background ================= */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Main Glow */}
-          <motion.div
-            animate={{
-              x: [0, 90, -70, 0],
-              y: [0, -40, 45, 0],
-              scale: [1, 1.15, 0.95, 1],
-            }}
-            transition={{
-              duration: 24,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute left-1/2 top-1/2 h-[850px] w-[850px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ccff00]/5 blur-[240px]"
-          />
-        </div>
+    <section
+      id="projects"
+      ref={sectionRef}
+      aria-label="Featured Projects"
+      className="relative overflow-hidden h-screen bg-transparent flex flex-col justify-center border-t border-white/5"
+    >
+      {/* ================= Background ================= */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        {/* Main Glow */}
+        <motion.div
+          animate={{
+            x: [0, 90, -70, 0],
+            y: [0, -40, 45, 0],
+            scale: [1, 1.15, 0.95, 1],
+          }}
+          transition={{
+            duration: 24,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute left-1/2 top-1/2 h-[850px] w-[850px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ccff00]/5 blur-[240px]"
+        />
+      </div>
 
-        {/* ================= Huge Background Title ================= */}
-        <motion.h1
-          initial={{ opacity: 0, y: 80 }}
+      {/* ================= Background Watermark Title ================= */}
+      <motion.div
+        initial={{ opacity: 0, y: 80 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-white/[0.025] select-none"
+        aria-hidden="true"
+      >
+        PROJECTS
+      </motion.div>
+
+      {/* ================= Header Content ================= */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 lg:px-20 w-full mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-white/[0.025]"
+          className="flex items-center gap-3"
         >
-          PROJECTS
-        </motion.h1>
-
-        {/* ================= Header Content ================= */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 lg:px-20 w-full mb-12">
-          <p className="text-xs uppercase tracking-[0.45em] text-[#ccff00]">
-            03 / PROJECTS
-          </p>
-          <div className="mt-5 max-w-5xl">
-            <TextReveal
-              text="Building ideas into real products, one project at a time."
-              variant="h2"
-              className="text-5xl md:text-7xl font-black leading-tight text-white"
-            />
-          </div>
-          <motion.div
-            initial={{ width: 0 }}
-            whileInView={{ width: 140 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="mt-8 h-[2px] bg-[#ccff00]"
+          <div className="w-2.5 h-2.5 rounded-full bg-[#ccff00] animate-pulse" />
+          <span className="font-mono text-xs uppercase tracking-[0.4em] text-[#ccff00]">
+            03 // FEATURED PROJECTS
+          </span>
+        </motion.div>
+        
+        <div className="mt-5 max-w-5xl">
+          <TextReveal
+            text="Building ideas into real products, one project at a time."
+            variant="h2"
+            className="text-4xl sm:text-5xl md:text-7xl font-black leading-tight text-white"
           />
         </div>
+        <motion.div
+          initial={{ width: 0 }}
+          whileInView={{ width: 140 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="mt-8 h-[2px] bg-gradient-to-r from-[#ccff00] via-[#ccff00]/60 to-transparent"
+        />
+      </div>
 
-        {/* ================= Horizontal Scroll Wrapper ================= */}
-        <div className="relative z-10 flex items-center w-full overflow-hidden">
-          <div ref={scrollWrapperRef} className="flex gap-16 px-6 md:px-20 flex-nowrap w-max" data-cursor-text="DRAG">
-            {projects.map((project) => (
-              <div key={project.title} className="w-[480px] shrink-0 interactive-node" data-cursor-text="VIEW">
-                <ProjectCard project={project} />
-              </div>
-            ))}
-            {/* Spacer for the end */}
-            <div className="w-[10vw] shrink-0"></div>
-          </div>
+      {/* ================= Horizontal Scroll Wrapper ================= */}
+      <div className="relative z-10 flex items-center w-full overflow-hidden">
+        <div ref={scrollWrapperRef} className="flex gap-16 px-6 md:px-20 flex-nowrap w-max" data-cursor-text="DRAG">
+          {projects.map((project) => (
+            <div key={project.title} className="w-[480px] shrink-0 interactive-node" data-cursor-text="VIEW">
+              <ProjectCard project={project} />
+            </div>
+          ))}
+          {/* Spacer for the end */}
+          <div className="w-[10vw] shrink-0"></div>
         </div>
-      </section>
-    </Reveal>
+      </div>
+    </section>
   );
 }

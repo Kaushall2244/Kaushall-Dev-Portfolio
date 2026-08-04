@@ -5,7 +5,6 @@ import { useState, FormEvent } from "react";
 import { Send, Terminal, Mail, FileText, ArrowRight } from "lucide-react";
 import TextReveal from "../ui/TextReveal";
 import Magnetic from "../ui/Magnetic";
-import Reveal from "../ui/Reveal";
 
 const containerVariants: Variants = {
   hidden: {},
@@ -45,11 +44,11 @@ export default function Contact() {
   };
 
   return (
-    <Reveal>
-      <section 
-        id="contact" 
-        className="relative min-h-screen flex items-center justify-center px-8 md:px-16 py-32 overflow-hidden bg-background"
-      >
+    <section 
+      id="contact"
+      aria-label="Contact & Uplink"
+      className="relative min-h-screen flex items-center justify-center px-8 md:px-16 py-32 overflow-hidden bg-background border-t border-white/5"
+    >
         {/* Structural vertical guides */}
         <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
         <div className="absolute right-4 sm:right-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
@@ -257,6 +256,5 @@ export default function Contact() {
 
         </div>
       </section>
-    </Reveal>
   );
 }
