@@ -9,6 +9,8 @@ import SystemStatus from "@/components/Global/SystemStatus";
 import GlobalMouseGlow from "@/components/ui/GlobalMouseGlow";
 import "./globals.css";
 
+import { Analytics } from "@vercel/analytics/next"
+
 const displayFont = Syne({
   subsets: ["latin"],
   weight: ["500", "700", "800"],
