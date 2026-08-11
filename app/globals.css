@@ -74,10 +74,12 @@
 }
 
 /* =====================================================
-   SYSTEM CURSOR SUPPRESSION
+   SYSTEM CURSOR SUPPRESSION (Desktop/Mouse Devices Only)
    ===================================================== */
-*, *::before, *::after {
-  cursor: none !important;
+@media (hover: hover) and (pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
 }
 
 /* =====================================================

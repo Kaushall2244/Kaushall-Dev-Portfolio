@@ -147,19 +147,19 @@ export default function Hero() {
             variants={itemVariants}
             className="font-black uppercase tracking-[-0.06em] leading-[0.82] flex flex-col items-start gap-1 select-none"
           >
-            <div className="text-white text-[56px] sm:text-[80px] md:text-[120px] lg:text-[160px]">
+            <div className="text-white text-[44px] xs:text-[54px] sm:text-[80px] md:text-[110px] lg:text-[140px] xl:text-[160px] 2xl:text-[180px]">
               <MagneticWrapper range={80} actionFactor={0.2}>
                 <InteractiveWord word="DREAM." />
               </MagneticWrapper>
             </div>
 
-            <div className="text-white text-[56px] sm:text-[80px] md:text-[120px] lg:text-[160px]">
+            <div className="text-white text-[44px] xs:text-[54px] sm:text-[80px] md:text-[110px] lg:text-[140px] xl:text-[160px] 2xl:text-[180px]">
               <MagneticWrapper range={80} actionFactor={0.2}>
                 <InteractiveWord word="BUILD." />
               </MagneticWrapper>
             </div>
 
-            <div className="text-[#ffe880] text-[56px] sm:text-[80px] md:text-[120px] lg:text-[160px]">
+            <div className="text-[#ffe880] text-[44px] xs:text-[54px] sm:text-[80px] md:text-[110px] lg:text-[140px] xl:text-[160px] 2xl:text-[180px]">
               <MagneticWrapper range={80} actionFactor={0.2}>
                 <InteractiveWord word="PLAY." isAccent />
               </MagneticWrapper>

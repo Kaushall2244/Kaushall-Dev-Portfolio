@@ -8,11 +8,11 @@ interface PreloaderProps {
 }
 
 const BOOT_LOGS = [
-  "SPARKING CREATIVITY ✨",
+  "INITIALIZING DIGITAL PLAYGROUND ✨",
   "BREWING FRESH CODE & COFFEE ☕",
-  "TUNING PLAYFUL ANIMATIONS 🎨",
-  "POLISHING PIXELS & 3D WORLDS 🚀",
-  "WELCOME TO MY PORTFOLIO! 🎉"
+  "CHARGING 60FPS SPRING MOTION ⚡",
+  "POLISHING GLASS & 3D SHADERS 🎨",
+  "WELCOME, HUMAN! LET'S BUILD 🚀"
 ];
 
 export default function Preloader({ onComplete }: PreloaderProps) {
@@ -25,7 +25,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const targetWord = "KAUSHALL";
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
 
-  // Fast, snappy progress counter
+  // Snappy progress counter
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prev) => {
@@ -33,10 +33,10 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           clearInterval(timer);
           return 100;
         }
-        const step = Math.floor(Math.random() * 10) + 6;
+        const step = Math.floor(Math.random() * 12) + 7;
         return Math.min(prev + step, 100);
       });
-    }, 35);
+    }, 32);
 
     return () => clearInterval(timer);
   }, []);
@@ -100,7 +100,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         {
           scale: 1.08,
           opacity: 0,
-          filter: "blur(8px)",
+          filter: "blur(10px)",
           duration: 0.45,
           ease: "power2.inOut",
         },
@@ -132,58 +132,78 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] flex flex-col justify-between bg-black select-none pointer-events-auto"
-      style={{ cursor: "none" }}
+      className="fixed inset-0 z-[100] flex flex-col justify-between bg-black select-none pointer-events-auto overflow-hidden"
     >
       {/* 5-Column Split Curtain Animation Panels */}
       <div
         ref={curtainsRef}
         className="absolute inset-0 grid grid-cols-5 pointer-events-none z-0"
       >
-        <div className="bg-[#050505] w-full h-full border-r border-white/5 origin-top" />
-        <div className="bg-[#080808] w-full h-full border-r border-white/5 origin-top" />
-        <div className="bg-[#050505] w-full h-full border-r border-white/5 origin-top" />
-        <div className="bg-[#080808] w-full h-full border-r border-white/5 origin-top" />
-        <div className="bg-[#050505] w-full h-full origin-top" />
+        <div className="bg-[#050608] w-full h-full border-r border-white/5 origin-top" />
+        <div className="bg-[#08090d] w-full h-full border-r border-white/5 origin-top" />
+        <div className="bg-[#050608] w-full h-full border-r border-white/5 origin-top" />
+        <div className="bg-[#08090d] w-full h-full border-r border-white/5 origin-top" />
+        <div className="bg-[#050608] w-full h-full origin-top" />
       </div>
 
       {/* Cyber Grid Overlay background */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none z-10" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none z-10" />
 
-      {/* Centered Title */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
-        <div className="preloader-title text-center px-4">
-          <p className="font-mono text-xs text-[#ccff00] tracking-[0.4em] uppercase mb-4 hud-element">
-            ✨ WELCOME TO MY CREATIVE SPACE
-          </p>
-          <h1 className="font-display font-black text-6xl md:text-8xl tracking-tight text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+      {/* Top Header Information Bar */}
+      <div className="relative z-20 pt-6 sm:pt-8 px-6 sm:px-10 flex justify-between items-center font-mono text-[9px] sm:text-[10px] text-white/50 hud-element tracking-widest">
+        <span className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#bf0039] animate-pulse" />
+          <strong className="text-white">S KAUSHALL</strong> {"// CREATIVE LAB"}
+        </span>
+        <span className="hidden sm:inline-block text-[#ffe880] font-bold">
+          [ SYSTEM BOOT v2.6 ]
+        </span>
+      </div>
+
+      {/* Centered Scramble Decoding Title */}
+      <div className="relative z-20 my-auto flex flex-col items-center justify-center px-4 text-center">
+        <div className="preloader-title max-w-4xl">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#bf0039]/40 bg-[#bf0039]/15 backdrop-blur-xl mb-4 sm:mb-6 hud-element">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#ffe880] animate-pulse" />
+            <span className="font-mono text-[10px] sm:text-xs text-[#ffe880] tracking-[0.3em] uppercase font-bold">
+              WELCOME TO MY CREATIVE SPACE
+            </span>
+          </div>
+
+          <h1 className="font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight text-white drop-shadow-[0_0_40px_rgba(255,232,128,0.2)]">
             {scrambledText}
           </h1>
+
+          {/* Glowing Energy Progress Bar */}
+          <div className="mt-6 sm:mt-8 w-48 sm:w-72 md:w-96 mx-auto h-[3px] bg-white/10 rounded-full overflow-hidden relative hud-element">
+            <div
+              className="h-full bg-gradient-to-r from-[#ffe880] to-[#bf0039] transition-all duration-100 ease-out relative"
+              style={{ width: `${progress}%` }}
+            >
+              <span className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#ffe880] shadow-[0_0_10px_#ffe880]" />
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* BOTTOM HUD ELEMENTS */}
-      <div className="absolute bottom-16 left-8 right-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 z-20 hud-element">
-        {/* Logs */}
-        <div className="font-mono text-[10px] text-white/50 tracking-wider flex flex-col gap-1.5 max-w-xs md:max-w-md">
-          <span className="text-[#ccff00] font-semibold">{"// CREATIVE ENGINE"}</span>
-          <span className="text-white/90 transition-all duration-300 font-medium">
+      {/* Bottom HUD Metrics & Telemetry */}
+      <div className="relative z-20 pb-8 sm:pb-12 px-6 sm:px-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 hud-element">
+        {/* Animated Boot Logs */}
+        <div className="font-mono text-[10px] sm:text-xs text-white/50 tracking-wider flex flex-col gap-1.5 max-w-sm">
+          <span className="text-[#bf0039] font-bold">{"// INITIALIZING MODULES"}</span>
+          <span className="text-white/90 font-medium transition-all duration-200">
             {BOOT_LOGS[logIndex]}
           </span>
-          <span className="text-white/30 text-[9px]">READY FOR EXPLORATION 🚀</span>
+          <span className="text-white/30 text-[9px] uppercase tracking-widest">
+            NEXT.JS 15 • REACT 19 • THREE.JS • 60FPS
+          </span>
         </div>
 
-        {/* Counter */}
-        <div className="flex items-baseline gap-2 font-display text-8xl md:text-[10vw] font-black text-[#ccff00] tracking-tighter leading-none select-none drop-shadow-[0_0_40px_rgba(204,255,0,0.15)]">
+        {/* Massive Dynamic Numerical Counter */}
+        <div className="flex items-baseline gap-1.5 font-display text-6xl sm:text-8xl md:text-9xl font-black text-[#ffe880] tracking-tighter leading-none select-none drop-shadow-[0_0_35px_rgba(255,232,128,0.3)]">
           <span>{String(progress).padStart(3, "0")}</span>
-          <span className="text-xl md:text-3xl font-mono text-white/30 font-normal">%</span>
+          <span className="text-xl sm:text-3xl font-mono text-[#bf0039] font-bold">%</span>
         </div>
-      </div>
-
-      {/* Top Friendly Header */}
-      <div className="absolute top-8 left-8 right-8 flex justify-between items-center z-20 font-mono text-[9px] text-white/40 hud-element tracking-widest">
-        <span>S KAUSHALL // PORTFOLIO</span>
-        <span>LET&apos;S BUILD SOMETHING AWESOME 💡</span>
       </div>
     </div>
   );
