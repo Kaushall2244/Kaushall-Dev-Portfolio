@@ -49,41 +49,25 @@ export default function Contact() {
     <section
       id="contact"
       aria-label="Contact and Collaboration"
-      className="relative min-h-screen flex items-center justify-center px-8 md:px-16 py-32 overflow-hidden bg-background border-t border-white/5"
+      className="relative min-h-screen flex items-center justify-center px-8 md:px-16 py-32 overflow-hidden bg-transparent border-t border-white/5"
     >
       {/* Structural vertical guides */}
       <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
       <div className="absolute right-4 sm:right-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
 
-      {/* Dual ambient glow */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 select-none">
-        <div
-          className="absolute left-1/4 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full transform-gpu"
-          style={{
-            background: isDark
-              ? "radial-gradient(circle, rgba(255,232,128,0.07) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(191,0,57,0.07) 0%, transparent 70%)",
-          }}
-        />
-        <div
-          className="absolute right-1/4 bottom-10 h-[400px] w-[400px] rounded-full transform-gpu"
-          style={{
-            background: isDark
-              ? "radial-gradient(circle, rgba(191,0,57,0.07) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(234,179,8,0.07) 0%, transparent 70%)",
-          }}
-        />
+      {/* Watermark Title */}
+      <div
+        className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-white/[0.04] select-none"
+        aria-hidden="true"
+      >
+        CONNECT
       </div>
 
       <div className="max-w-5xl w-full flex flex-col gap-16 relative z-10">
         {/* Header Panel */}
         <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
           <div className="flex flex-col">
-            <span
-              className={`text-xs uppercase tracking-[0.25em] block mb-4 font-mono font-bold ${
-                isDark ? "text-[#ffe880]" : "text-[#bf0039]"
-              }`}
-            >
+            <span className="text-xs uppercase tracking-[0.25em] block mb-4 font-mono font-bold text-[#bf0039]">
               <TextReveal text="04 // LET'S CHAT 💬" variant="p" delayOffset={0} />
             </span>
             <h2 className="text-4xl md:text-6xl font-display font-black tracking-tight text-white flex flex-col md:flex-row flex-wrap gap-x-4">
@@ -92,7 +76,7 @@ export default function Contact() {
             </h2>
           </div>
           <div className="flex items-center gap-2 font-mono text-[10px] text-white/70 uppercase tracking-wider glass-pill px-4 py-2 rounded-full font-bold">
-            <MessageSquare size={13} className={`animate-pulse ${isDark ? "text-[#ffe880]" : "text-[#bf0039]"}`} />
+            <MessageSquare size={13} className="animate-pulse text-[#bf0039]" />
             <span>Always happy to connect! ✨</span>
           </div>
         </div>
@@ -108,7 +92,7 @@ export default function Contact() {
             className="lg:col-span-5 flex flex-col gap-8"
           >
             <motion.div variants={itemVariants}>
-              <h3 className="font-mono text-[11px] uppercase tracking-widest text-white/50 mb-3 font-bold">
+              <h3 className="font-mono text-[11px] uppercase tracking-widest text-[#bf0039] mb-3 font-bold">
                 [ DIRECT REACH OUT ]
               </h3>
               <p className="text-sm text-white/70 leading-relaxed">
@@ -121,14 +105,14 @@ export default function Contact() {
               <a
                 href="mailto:githeshkaushall@gmail.com"
                 data-cursor-text="EMAIL"
-                className="group flex items-center justify-between p-5 rounded-2xl glass-card hover:border-[#ffe880]/50 hover:translate-x-2 transition-all duration-300 cursor-none shadow-xl"
+                className="group flex items-center justify-between p-5 rounded-2xl glass-card hover:border-[#ffe880]/60 hover:translate-x-2 transition-all duration-300 cursor-none shadow-xl"
               >
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-xl bg-white/5 text-white/60 group-hover:text-[#ffe880] group-hover:bg-[#ffe880]/10 transition-colors">
+                  <div className="p-3 rounded-xl bg-white/5 text-[#ffe880] group-hover:bg-[#ffe880]/10 transition-colors">
                     <Mail size={16} />
                   </div>
                   <div>
-                    <span className="block font-mono text-[9px] text-white/40 uppercase tracking-widest font-semibold">Direct Email</span>
+                    <span className="block font-mono text-[9px] text-[#bf0039] uppercase tracking-widest font-bold">Direct Email</span>
                     <span className="text-sm text-white/90 font-mono font-medium">githeshkaushall@gmail.com</span>
                   </div>
                 </div>
@@ -141,14 +125,14 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor-text="STUDIO"
-                className="group flex items-center justify-between p-5 rounded-2xl glass-card hover:border-[#ffe880]/50 hover:translate-x-2 transition-all duration-300 cursor-none shadow-xl"
+                className="group flex items-center justify-between p-5 rounded-2xl glass-card hover:border-[#ffe880]/60 hover:translate-x-2 transition-all duration-300 cursor-none shadow-xl"
               >
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-xl bg-white/5 text-white/60 group-hover:text-[#ffe880] group-hover:bg-[#ffe880]/10 transition-colors">
+                  <div className="p-3 rounded-xl bg-white/5 text-[#ffe880] group-hover:bg-[#ffe880]/10 transition-colors">
                     <FileText size={16} />
                   </div>
                   <div>
-                    <span className="block font-mono text-[9px] text-white/40 uppercase tracking-widest font-semibold">Fiverr Studio</span>
+                    <span className="block font-mono text-[9px] text-[#bf0039] uppercase tracking-widest font-bold">Fiverr Studio</span>
                     <span className="text-sm text-white/90 font-mono font-medium">Fiverr // S KAUSHALL</span>
                   </div>
                 </div>
@@ -170,7 +154,7 @@ export default function Contact() {
               <div className="relative group flex flex-col gap-2 p-4 rounded-2xl bg-black/40 border border-white/10 focus-within:border-[#ffe880]/50 transition-all duration-300 shadow-inner">
                 <label
                   className={`font-mono text-[10px] uppercase tracking-wider font-bold transition-colors duration-300 ${
-                    focusedField === "name" ? (isDark ? "text-[#ffe880]" : "text-[#bf0039]") : "text-white/40"
+                    focusedField === "name" ? "text-[#ffe880]" : "text-white/40"
                   }`}
                 >
                   Your Name ✨
@@ -189,9 +173,7 @@ export default function Contact() {
                 <motion.div
                   initial={false}
                   animate={{ scaleX: focusedField === "name" ? 1 : 0 }}
-                  className={`absolute bottom-0 left-4 right-4 h-[2px] origin-left pointer-events-none ${
-                    isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"
-                  }`}
+                  className="absolute bottom-0 left-4 right-4 h-[2px] origin-left pointer-events-none bg-[#ffe880]"
                 />
               </div>
 
@@ -199,7 +181,7 @@ export default function Contact() {
               <div className="relative group flex flex-col gap-2 p-4 rounded-2xl bg-black/40 border border-white/10 focus-within:border-[#ffe880]/50 transition-all duration-300 shadow-inner">
                 <label
                   className={`font-mono text-[10px] uppercase tracking-wider font-bold transition-colors duration-300 ${
-                    focusedField === "email" ? (isDark ? "text-[#ffe880]" : "text-[#bf0039]") : "text-white/40"
+                    focusedField === "email" ? "text-[#ffe880]" : "text-white/40"
                   }`}
                 >
                   Your Email ✉️
@@ -218,9 +200,7 @@ export default function Contact() {
                 <motion.div
                   initial={false}
                   animate={{ scaleX: focusedField === "email" ? 1 : 0 }}
-                  className={`absolute bottom-0 left-4 right-4 h-[2px] origin-left pointer-events-none ${
-                    isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"
-                  }`}
+                  className="absolute bottom-0 left-4 right-4 h-[2px] origin-left pointer-events-none bg-[#ffe880]"
                 />
               </div>
 
@@ -228,7 +208,7 @@ export default function Contact() {
               <div className="relative group flex flex-col gap-2 p-4 rounded-2xl bg-black/40 border border-white/10 focus-within:border-[#ffe880]/50 transition-all duration-300 shadow-inner">
                 <label
                   className={`font-mono text-[10px] uppercase tracking-wider font-bold transition-colors duration-300 ${
-                    focusedField === "message" ? (isDark ? "text-[#ffe880]" : "text-[#bf0039]") : "text-white/40"
+                    focusedField === "message" ? "text-[#ffe880]" : "text-white/40"
                   }`}
                 >
                   Your Message 💬
@@ -247,13 +227,11 @@ export default function Contact() {
                 <motion.div
                   initial={false}
                   animate={{ scaleX: focusedField === "message" ? 1 : 0 }}
-                  className={`absolute bottom-0 left-4 right-4 h-[2px] origin-left pointer-events-none ${
-                    isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"
-                  }`}
+                  className="absolute bottom-0 left-4 right-4 h-[2px] origin-left pointer-events-none bg-[#ffe880]"
                 />
               </div>
 
-              {/* Submit row */}
+              {/* Submit row: Solid Distinct Gold Button */}
               <div className="flex items-center justify-between pt-2">
                 <div className="text-[11px] font-mono text-white/50">
                   <AnimatePresence mode="wait">
@@ -275,25 +253,15 @@ export default function Contact() {
                   <button
                     type="submit"
                     disabled={isSubmitting || isSent}
-                    className={`flex items-center gap-2 font-mono text-xs font-bold px-7 py-4 rounded-full hover:scale-105 active:scale-95 transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none cursor-none shadow-xl ${
-                      isDark
-                        ? "bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_25px_rgba(255,232,128,0.5)]"
-                        : "bg-[#bf0039] text-white hover:bg-black hover:shadow-[0_0_25px_rgba(191,0,57,0.35)]"
-                    }`}
+                    className="flex items-center gap-2 font-mono text-xs font-black px-8 py-4 rounded-full hover:scale-105 active:scale-95 transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none cursor-none shadow-xl bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_25px_#ffe880]"
                   >
                     <span>Send Message</span>
-                    <Send size={13} className={isSubmitting ? "animate-ping" : ""} />
+                    <Send size={13} className={isSubmitting ? "animate-ping" : "text-black"} />
                   </button>
                 </Magnetic>
               </div>
             </form>
           </motion.div>
-        </div>
-
-        {/* Bottom footer note */}
-        <div className="w-full flex justify-between items-center text-[10px] font-mono tracking-wider text-white/40 border-t border-white/10 pt-6">
-          <span>BUILT WITH PASSION & CURIOSITY</span>
-          <span>© 2026 S KAUSHALL</span>
         </div>
       </div>
     </section>

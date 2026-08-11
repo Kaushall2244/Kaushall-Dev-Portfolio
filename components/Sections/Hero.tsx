@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import { ArrowRight, Download, Sparkles } from "lucide-react";
 import MagneticWrapper from "../ui/Magnetic";
 import InteractiveWord from "../ui/InteractiveWord";
-import ConstellationBackground from "../ui/ConstellationBackground";
 import { useTheme } from "../Global/ThemeProvider";
 
 const containerVariants: Variants = {
@@ -70,26 +69,20 @@ export default function Hero() {
           borderRadius,
           transformOrigin: "center center",
         }}
-        className="relative min-h-screen overflow-hidden flex items-center pt-32 md:pt-40 lg:pt-44 px-6 md:px-10 lg:px-20 border border-white/10 transition-all duration-300 origin-center bg-black/40 backdrop-blur-md transform-gpu"
+        className="relative min-h-screen overflow-hidden flex items-center pt-32 md:pt-40 lg:pt-44 px-6 md:px-10 lg:px-20 border-b border-white/5 transition-all duration-300 origin-center bg-transparent transform-gpu"
       >
-        <ConstellationBackground />
-
-        {/* Dual-Tone Ambient Glows: Gold (#ffe880) & Ruby Crimson (#bf0039) */}
+        {/* Subtle Ambient Radial Highlights */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 select-none">
           <div
             className="absolute left-1/2 top-20 h-[600px] w-[600px] -translate-x-1/2 rounded-full transform-gpu"
             style={{
-              background: isDark
-                ? "radial-gradient(circle, rgba(255,232,128,0.12) 0%, rgba(191,0,57,0.06) 45%, transparent 70%)"
-                : "radial-gradient(circle, rgba(191,0,57,0.1) 0%, rgba(234,179,8,0.08) 50%, transparent 70%)",
+              background: "radial-gradient(circle, rgba(255,232,128,0.08) 0%, transparent 70%)",
             }}
           />
           <div
             className="absolute right-0 bottom-0 h-[450px] w-[450px] rounded-full transform-gpu"
             style={{
-              background: isDark
-                ? "radial-gradient(circle, rgba(191,0,57,0.08) 0%, transparent 70%)"
-                : "radial-gradient(circle, rgba(255,232,128,0.1) 0%, transparent 70%)",
+              background: "radial-gradient(circle, rgba(191,0,57,0.08) 0%, transparent 70%)",
             }}
           />
 
@@ -117,8 +110,8 @@ export default function Hero() {
               }}
               className={`absolute rounded-full pointer-events-none ${
                 shape.border
-                  ? isDark ? "border border-[#ffe880]/20 shadow-[0_0_20px_rgba(255,232,128,0.05)]" : "border border-[#bf0039]/20 shadow-[0_0_20px_rgba(191,0,57,0.05)]"
-                  : isDark ? "bg-[#bf0039]/6 blur-xl" : "bg-[#ffe880]/10 blur-xl"
+                  ? "border border-[#ffe880]/20 shadow-[0_0_20px_rgba(255,232,128,0.05)]"
+                  : "bg-[#bf0039]/8 blur-xl"
               }`}
             />
           ))}
@@ -135,13 +128,14 @@ export default function Hero() {
             variants={itemVariants}
             className="flex items-center gap-3 mb-8 flex-wrap"
           >
-            <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#ffe880] dark:text-[#ffe880] font-bold">
+            <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#ffe880] font-bold">
               <Sparkles size={16} className="animate-spin text-[#ffe880]" style={{ animationDuration: "6s" }} />
               <span>👋 HELLO THERE! • FULL-STACK & CREATIVE BUILDER</span>
             </div>
 
-            <div className="hidden sm:flex items-center gap-2 rounded-full border border-[#ffe880]/30 bg-[#ffe880]/10 px-4 py-1.5 backdrop-blur-xl shadow-lg">
-              <div className="w-2 h-2 rounded-full bg-[#ffe880] animate-pulse" />
+            {/* Distinct Crimson Badge */}
+            <div className="hidden sm:flex items-center gap-2 rounded-full border border-[#bf0039]/40 bg-[#bf0039]/15 px-4 py-1.5 backdrop-blur-xl shadow-lg">
+              <div className="w-2 h-2 rounded-full bg-[#bf0039] animate-pulse" />
               <span className="text-[11px] font-mono uppercase tracking-wider text-[#ffe880] font-bold">
                 🟢 Ready for fun projects & ideas
               </span>
@@ -174,7 +168,7 @@ export default function Hero() {
 
           {/* Description */}
           <motion.div variants={itemVariants} className="mt-10 max-w-2xl">
-            <p className="text-lg md:text-xl text-white/75 leading-9">
+            <p className="text-lg md:text-xl text-white/80 leading-9">
               Hi! I&apos;m{" "}
               <span className="text-white font-bold underline decoration-[#ffe880] decoration-2 underline-offset-4">
                 S Kaushall
@@ -183,36 +177,34 @@ export default function Hero() {
             </p>
           </motion.div>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons: Separate Distinct Colors */}
           <motion.div variants={itemVariants} className="mt-12 flex flex-wrap gap-4 items-center">
+            {/* Distinct Gold Main CTA */}
             <MagneticWrapper>
               <a
                 href="#projects"
                 data-cursor-text="EXPLORE"
-                className={`group relative overflow-hidden flex items-center gap-3 rounded-full px-8 py-4 font-bold transition-all duration-300 hover:scale-105 shadow-xl ${
-                  isDark
-                    ? "bg-gradient-to-r from-[#ffe880] via-[#ffe880] to-[#ffd700] text-black hover:shadow-[0_0_35px_rgba(255,232,128,0.5)]"
-                    : "bg-[#bf0039] text-white hover:bg-black hover:shadow-[0_0_35px_rgba(191,0,57,0.4)]"
-                }`}
+                className="group relative overflow-hidden flex items-center gap-3 rounded-full px-8 py-4 font-bold transition-all duration-300 hover:scale-105 shadow-2xl bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_30px_#ffe880]"
               >
-                <span>Explore My Work ✨</span>
+                <span className="font-extrabold tracking-wide">Explore My Work ✨</span>
                 <ArrowRight
                   size={18}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  className="transition-transform duration-300 group-hover:translate-x-1 text-black"
                 />
               </a>
             </MagneticWrapper>
 
+            {/* Distinct Crimson Secondary CTA */}
             <MagneticWrapper>
               <a
                 href="../resume.pdf"
                 data-cursor-text="RESUME"
-                className="group flex items-center gap-3 rounded-full border border-white/20 bg-white/[0.06] backdrop-blur-2xl px-8 py-4 text-white font-semibold transition-all duration-300 hover:border-[#ffe880]/50 hover:bg-white/10 shadow-lg"
+                className="group flex items-center gap-3 rounded-full border border-[#bf0039]/50 bg-[#bf0039]/10 backdrop-blur-2xl px-8 py-4 text-white font-semibold transition-all duration-300 hover:border-[#bf0039] hover:bg-[#bf0039]/20 shadow-lg"
               >
                 <span>Grab My Resume 📄</span>
                 <Download
                   size={18}
-                  className="transition-transform duration-300 group-hover:translate-y-0.5"
+                  className="transition-transform duration-300 group-hover:translate-y-0.5 text-[#bf0039]"
                 />
               </a>
             </MagneticWrapper>
@@ -226,10 +218,10 @@ export default function Hero() {
             transition={{ y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
             className="absolute right-8 top-32 hidden xl:block pointer-events-auto"
           >
-            <div className="glass-frosted rounded-3xl p-7 w-80 shadow-2xl hover:border-[#ffe880]/50 transition-all duration-300">
+            <div className="glass-frosted rounded-3xl p-7 w-80 shadow-2xl hover:border-[#ffe880]/60 transition-all duration-300">
               <div className="flex items-center gap-2.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#ffe880] animate-pulse" />
-                <span className="text-xs font-mono uppercase tracking-wider text-white/80 font-bold">
+                <div className="w-2.5 h-2.5 rounded-full bg-[#bf0039] animate-pulse" />
+                <span className="text-xs font-mono uppercase tracking-wider text-[#ffe880] font-bold">
                   Currently Crafting ✨
                 </span>
               </div>
@@ -242,7 +234,7 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* Bottom Info Metrics */}
+          {/* Bottom Info Metrics: Separate Gold & Crimson */}
           <motion.div
             variants={itemVariants}
             className="mt-20 grid gap-8 border-t border-white/10 pt-10 md:grid-cols-3"
@@ -258,8 +250,11 @@ export default function Hero() {
             </div>
 
             <div>
-              <p className="text-[#ffe880] text-4xl font-bold">100%</p>
-              <p className="mt-2 text-white/70 font-medium">Love for Crafting Joyful UI ❤️</p>
+              <p className="text-[#ffe880] text-4xl font-bold flex items-center gap-2">
+                <span>100%</span>
+                <span className="text-[#bf0039] text-3xl">❤️</span>
+              </p>
+              <p className="mt-2 text-white/70 font-medium">Love for Crafting Joyful UI</p>
             </div>
           </motion.div>
 

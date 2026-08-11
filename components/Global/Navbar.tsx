@@ -40,13 +40,13 @@ export default function Navbar() {
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
         className={`flex items-center gap-2 backdrop-blur-2xl rounded-full transition-all duration-500 border shadow-2xl ${
           isDark
-            ? "bg-[#090b12]/80 border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.3)]"
+            ? "bg-[#090b12]/85 border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.3)]"
             : "bg-white/85 border-black/10 shadow-[0_16px_40px_rgba(0,0,0,0.08),inset_0_1px_1px_rgba(255,255,255,0.9)]"
         }`}
         style={{ cursor: "none" }}
       >
         <motion.span layout className="font-bold text-foreground tracking-tight px-3 whitespace-nowrap flex items-center gap-2">
-          <span className={`w-2 h-2 rounded-full animate-pulse ${isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"}`} />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#ffe880] ring-2 ring-[#bf0039] animate-pulse" />
           KAUSHALL
         </motion.span>
 
@@ -72,9 +72,7 @@ export default function Navbar() {
                 {hoveredLink === item && (
                   <motion.div
                     layoutId="nav-pill"
-                    className={`absolute inset-0 rounded-full ${
-                      isDark ? "bg-white/10" : "bg-black/5"
-                    }`}
+                    className="absolute inset-0 rounded-full bg-white/10 border border-white/10"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
@@ -88,11 +86,7 @@ export default function Navbar() {
           <a
             href="#contact"
             data-cursor-text="HI"
-            className={`ml-2 flex items-center gap-1 px-4 py-2 rounded-full text-xs font-bold font-mono transition-all duration-300 whitespace-nowrap shadow-lg ${
-              isDark
-                ? "bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_20px_rgba(255,232,128,0.45)]"
-                : "bg-[#bf0039] text-white hover:bg-black hover:shadow-[0_0_20px_rgba(191,0,57,0.35)]"
-            }`}
+            className="ml-2 flex items-center gap-1 px-4 py-2 rounded-full text-xs font-bold font-mono transition-all duration-300 whitespace-nowrap shadow-lg bg-gradient-to-r from-[#ffe880] to-[#bf0039] text-black hover:opacity-90 hover:shadow-[0_0_20px_rgba(255,232,128,0.5)]"
             style={{ cursor: "none" }}
           >
             <span>Get in Touch</span>

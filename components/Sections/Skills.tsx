@@ -54,7 +54,7 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const glowColor = isDark ? "rgba(255, 232, 128, 0.12)" : "rgba(191, 0, 57, 0.1)";
+  const glowColor = "rgba(255, 232, 128, 0.14)";
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current) return;
@@ -78,11 +78,7 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 1, 0.5, 1] }}
-      className={`group relative overflow-hidden rounded-[32px] p-8 md:p-10 flex flex-col h-full transition-all duration-500 shadow-2xl ${
-        isDark
-          ? "glass-frosted hover:border-[#ffe880]/60 hover:shadow-[0_0_60px_rgba(255,232,128,0.15)]"
-          : "glass-card hover:border-[#bf0039]/50 hover:shadow-[0_15px_45px_rgba(191,0,57,0.1)]"
-      }`}
+      className="group relative overflow-hidden rounded-[32px] p-8 md:p-10 flex flex-col h-full transition-all duration-500 shadow-2xl glass-frosted hover:border-[#ffe880]/60 hover:shadow-[0_0_60px_rgba(255,232,128,0.15)]"
     >
       {/* Interactive mouse glow */}
       <motion.div
@@ -100,28 +96,22 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
       {/* Decorative Grid Lines Inside Card */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.04] z-0 pointer-events-none" />
 
-      {/* Header Panel */}
+      {/* Header Panel: Distinct Gold Number + Distinct Crimson Tag */}
       <div className="relative z-10 flex items-center justify-between mb-8">
-        <span
-          className={`font-mono text-xs uppercase tracking-widest rounded-xl px-3.5 py-1 border font-bold ${
-            isDark
-              ? "text-[#ffe880] bg-[#ffe880]/10 border-[#ffe880]/30 shadow-[0_0_15px_rgba(255,232,128,0.2)]"
-              : "text-[#bf0039] bg-[#bf0039]/10 border-[#bf0039]/20"
-          }`}
-        >
+        <span className="font-mono text-xs uppercase tracking-widest rounded-xl px-3.5 py-1 border font-bold text-[#ffe880] bg-[#ffe880]/10 border-[#ffe880]/30 shadow-[0_0_15px_rgba(255,232,128,0.2)]">
           {String(index + 1).padStart(2, "0")}
         </span>
-        <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest font-semibold">
+        <span className="font-mono text-[10px] text-[#bf0039] uppercase tracking-widest font-bold px-2 py-0.5 rounded bg-[#bf0039]/10 border border-[#bf0039]/20">
           {"// "}{skill.tag}
         </span>
       </div>
 
       {/* Body Content */}
       <div className="relative z-10 flex-grow">
-        <h3 className="font-display font-black text-2xl md:text-3xl text-white group-hover:text-[#ffe880] dark:group-hover:text-[#ffe880] transition-colors duration-300">
+        <h3 className="font-display font-black text-2xl md:text-3xl text-white group-hover:text-[#ffe880] transition-colors duration-300">
           {skill.title}
         </h3>
-        <p className="font-mono text-[10px] uppercase tracking-widest text-white/50 mt-1.5 font-bold">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-[#ffe880]/80 mt-1.5 font-bold">
           {skill.subtitle}
         </p>
         <p className="text-sm text-white/70 leading-relaxed mt-6">
@@ -138,7 +128,7 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
               y: -3,
               scale: 1.05,
             }}
-            className="font-mono text-[10px] text-white/80 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 transition-all duration-300 font-medium hover:border-[#ffe880]/40 hover:text-[#ffe880]"
+            className="font-mono text-[10px] text-white/80 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 transition-all duration-300 font-medium hover:border-[#bf0039] hover:text-[#ffe880]"
           >
             {tech}
           </motion.span>
@@ -149,44 +139,27 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
 }
 
 export default function Skills() {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
   return (
     <section
       id="skills"
       aria-label="Skills and Superpowers"
-      className="relative overflow-hidden py-36 px-6 md:px-10 lg:px-20 bg-background border-t border-white/5"
+      className="relative overflow-hidden py-36 px-6 md:px-10 lg:px-20 bg-transparent border-t border-white/5"
     >
-      {/* Background Ambient Glow */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <div
-          className="absolute left-1/3 top-1/4 h-[550px] w-[550px] rounded-full transform-gpu"
-          style={{
-            background: isDark
-              ? "radial-gradient(circle, rgba(255,232,128,0.08) 0%, rgba(191,0,57,0.04) 40%, transparent 70%)"
-              : "radial-gradient(circle, rgba(191,0,57,0.08) 0%, rgba(234,179,8,0.05) 50%, transparent 70%)",
-          }}
-        />
+      {/* Watermark Backdrop Title */}
+      <div className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 text-[20vw] font-black tracking-[-0.08em] text-white/[0.04] select-none" aria-hidden="true">
+        SKILLS
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
+        {/* Section Indicator Badge in Distinct Crimson */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="flex items-center gap-3"
         >
-          <div
-            className={`w-2.5 h-2.5 rounded-full animate-pulse ${
-              isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"
-            }`}
-          />
-          <span
-            className={`font-mono text-xs uppercase tracking-[0.4em] font-bold ${
-              isDark ? "text-[#ffe880]" : "text-[#bf0039]"
-            }`}
-          >
+          <div className="w-2.5 h-2.5 rounded-full animate-pulse bg-[#bf0039]" />
+          <span className="font-mono text-xs uppercase tracking-[0.4em] font-bold text-[#bf0039]">
             02 // MY SUPERPOWERS ⚡
           </span>
         </motion.div>
@@ -199,16 +172,13 @@ export default function Skills() {
           />
         </div>
 
+        {/* Distinct Gold Accent Line */}
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: 140 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.3 }}
-          className={`mt-8 h-[2px] ${
-            isDark
-              ? "bg-gradient-to-r from-[#ffe880] via-[#bf0039]/60 to-transparent"
-              : "bg-gradient-to-r from-[#bf0039] via-[#ffe880]/60 to-transparent"
-          }`}
+          className="mt-8 h-[2px] bg-[#ffe880]"
         />
 
         {/* Skill Cards Grid */}

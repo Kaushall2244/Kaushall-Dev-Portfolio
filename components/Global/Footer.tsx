@@ -29,7 +29,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-background border-t border-white/10 px-8 md:px-16 py-20 overflow-hidden select-none">
+    <footer className="relative bg-transparent border-t border-white/10 px-8 md:px-16 py-20 overflow-hidden select-none">
       {/* Structural alignment lines */}
       <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
       <div className="absolute right-4 sm:right-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
@@ -40,7 +40,7 @@ export default function Footer() {
           <div>
             <h3 className="text-3xl md:text-4xl font-display font-black text-white tracking-tight leading-tight">
               <TextReveal text="Let's make something" variant="h3" delayOffset={0} />{" "}
-              <span className={`font-light italic font-sans block md:inline-block ${isDark ? "text-[#ffe880]" : "text-[#bf0039]"}`}>
+              <span className="font-light italic font-sans block md:inline-block text-[#ffe880]">
                 awesome.
               </span>
             </h3>
@@ -53,14 +53,10 @@ export default function Footer() {
             <button
               onClick={scrollToTop}
               data-cursor-text="APEX"
-              className={`flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider px-6 py-3.5 rounded-full border transition-all duration-300 cursor-none font-bold shadow-xl ${
-                isDark
-                  ? "bg-white/5 border-white/15 text-white/80 hover:text-[#ffe880] hover:border-[#ffe880]/50 hover:bg-white/10"
-                  : "bg-black/5 border-black/15 text-black/80 hover:text-[#bf0039] hover:border-[#bf0039]/40 hover:bg-black/10"
-              }`}
+              className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider px-6 py-3.5 rounded-full border transition-all duration-300 cursor-none font-extrabold shadow-xl bg-white/5 border-white/15 text-white/80 hover:text-[#ffe880] hover:border-[#ffe880]/60 hover:bg-white/10"
             >
               <span>[ Back to Top 🚀 ]</span>
-              <ArrowUpRight size={13} className="-rotate-45" />
+              <ArrowUpRight size={13} className="-rotate-45 text-[#ffe880]" />
             </button>
           </Magnetic>
         </div>
@@ -86,8 +82,8 @@ export default function Footer() {
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[10px] uppercase tracking-wider text-white/50 flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
-              <Navigation size={11} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
+              <Navigation size={11} className="text-[#bf0039]" />
               Explore
             </span>
             <div className="flex flex-col gap-2">
@@ -95,7 +91,7 @@ export default function Footer() {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-sm text-white/70 hover:text-white hover:translate-x-1 transition-all duration-300 max-w-max cursor-none font-medium"
+                  className="text-sm text-white/70 hover:text-[#ffe880] hover:translate-x-1 transition-all duration-300 max-w-max cursor-none font-medium"
                 >
                   {link.label}
                 </a>
@@ -111,8 +107,8 @@ export default function Footer() {
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[10px] uppercase tracking-wider text-white/50 flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
-              <Sparkles size={11} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
+              <Sparkles size={11} className="text-[#bf0039]" />
               Connect
             </span>
             <div className="flex flex-col gap-2">
@@ -122,12 +118,10 @@ export default function Footer() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`text-sm text-white/70 hover:translate-x-1 transition-all duration-300 flex items-center gap-1 max-w-max group cursor-none font-medium ${
-                    isDark ? "hover:text-[#ffe880]" : "hover:text-[#bf0039]"
-                  }`}
+                  className="text-sm text-white/70 hover:text-[#ffe880] hover:translate-x-1 transition-all duration-300 flex items-center gap-1 max-w-max group cursor-none font-medium"
                 >
                   <span>{link.label}</span>
-                  <ArrowUpRight size={11} className="opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                  <ArrowUpRight size={11} className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-[#ffe880]" />
                 </a>
               ))}
             </div>
@@ -141,8 +135,8 @@ export default function Footer() {
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[10px] uppercase tracking-wider text-white/50 flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
-              <Globe size={11} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
+              <Globe size={11} className="text-[#bf0039]" />
               Location
             </span>
             <div className="text-sm text-white/70 leading-relaxed font-sans">
@@ -159,8 +153,8 @@ export default function Footer() {
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[10px] uppercase tracking-wider text-white/50 flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
-              <Heart size={11} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
+              <Heart size={11} className="text-[#bf0039]" />
               Crafted With
             </span>
             <div className="text-xs text-white/60 flex flex-col gap-1 font-mono">

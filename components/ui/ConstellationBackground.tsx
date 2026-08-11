@@ -17,8 +17,9 @@ export default function ConstellationBackground() {
 
     let animationFrameId: number;
     let particles: Particle[] = [];
-    const mouse = { x: -1000, y: -1000, active: false, radiusSq: 160 * 160 };
+    const mouse = { x: -2000, y: -2000, active: false, radiusSq: 220 * 220 };
     let isVisible = true;
+    let dpr = 1;
 
     class Particle {
       x: number;
@@ -26,64 +27,87 @@ export default function ConstellationBackground() {
       vx: number;
       vy: number;
       radius: number;
-      isAccentGold: boolean;
-      isAccentCrimson: boolean;
+      baseRadius: number;
+      type: "gold" | "crimson";
+      pulseSpeed: number;
+      pulseAngle: number;
 
-      constructor(x: number, y: number) {
-        this.x = x;
-        this.y = y;
-        this.vx = (Math.random() - 0.5) * 0.35;
-        this.vy = (Math.random() - 0.5) * 0.35;
-        this.radius = Math.random() * 1.8 + 1;
-        const rand = Math.random();
-        this.isAccentGold = rand > 0.65 && rand <= 0.85;
-        this.isAccentCrimson = rand > 0.85;
+      constructor(w: number, h: number) {
+        this.x = Math.random() * w;
+        this.y = Math.random() * h;
+        this.vx = (Math.random() - 0.5) * 0.7;
+        this.vy = (Math.random() - 0.5) * 0.7;
+        this.baseRadius = Math.random() * 2.2 + 2; // Noticeably visible particles
+        this.radius = this.baseRadius;
+        this.type = Math.random() > 0.5 ? "gold" : "crimson";
+        this.pulseSpeed = 0.03 + Math.random() * 0.03;
+        this.pulseAngle = Math.random() * Math.PI * 2;
       }
 
-      update(width: number, height: number) {
+      update(w: number, h: number) {
         this.x += this.vx;
         this.y += this.vy;
 
-        if (this.x < 0) this.x = width;
-        if (this.x > width) this.x = 0;
-        if (this.y < 0) this.y = height;
-        if (this.y > height) this.y = 0;
+        // Wrap around screen
+        if (this.x < -20) this.x = w + 20;
+        if (this.x > w + 20) this.x = -20;
+        if (this.y < -20) this.y = h + 20;
+        if (this.y > h + 20) this.y = -20;
 
+        // Subtle breathing pulse
+        this.pulseAngle += this.pulseSpeed;
+        this.radius = this.baseRadius + Math.sin(this.pulseAngle) * 0.6;
+
+        // Interactive mouse attraction
         if (mouse.active) {
           const dx = mouse.x - this.x;
           const dy = mouse.y - this.y;
           const distSq = dx * dx + dy * dy;
-          if (distSq < mouse.radiusSq && distSq > 1) {
-            const force = (160 - Math.sqrt(distSq)) / 160;
-            this.x += (dx / 160) * force * 0.35;
-            this.y += (dy / 160) * force * 0.35;
+          if (distSq < mouse.radiusSq && distSq > 4) {
+            const dist = Math.sqrt(distSq);
+            const force = (220 - dist) / 220;
+            this.x += (dx / dist) * force * 1.5;
+            this.y += (dy / dist) * force * 1.5;
           }
         }
       }
 
-      draw(context: CanvasRenderingContext2D, dark: boolean) {
+      draw(context: CanvasRenderingContext2D) {
+        context.save();
         context.beginPath();
         context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        if (dark) {
-          if (this.isAccentGold) context.fillStyle = "rgba(255, 232, 128, 0.85)";
-          else if (this.isAccentCrimson) context.fillStyle = "rgba(191, 0, 57, 0.85)";
-          else context.fillStyle = "rgba(255, 255, 255, 0.5)";
+
+        if (this.type === "gold") {
+          context.fillStyle = "#ffe880";
+          context.shadowColor = "#ffe880";
+          context.shadowBlur = 12;
         } else {
-          if (this.isAccentGold) context.fillStyle = "rgba(234, 179, 8, 0.85)";
-          else if (this.isAccentCrimson) context.fillStyle = "rgba(191, 0, 57, 0.85)";
-          else context.fillStyle = "rgba(30, 41, 59, 0.35)";
+          context.fillStyle = "#bf0039";
+          context.shadowColor = "#bf0039";
+          context.shadowBlur = 12;
         }
+
         context.fill();
+        context.restore();
       }
     }
 
     const init = () => {
-      const width = (canvas.width = window.innerWidth);
-      const height = (canvas.height = window.innerHeight);
-      const count = width < 768 ? 20 : 36;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      ctx.scale(dpr, dpr);
+
+      const count = width < 768 ? 40 : 85; // Rich particle density
       particles = [];
       for (let i = 0; i < count; i++) {
-        particles.push(new Particle(Math.random() * width, Math.random() * height));
+        particles.push(new Particle(width, height));
       }
     };
 
@@ -99,6 +123,8 @@ export default function ConstellationBackground() {
 
     const handleMouseLeave = () => {
       mouse.active = false;
+      mouse.x = -2000;
+      mouse.y = -2000;
     };
 
     const handleVisibility = () => {
@@ -112,7 +138,7 @@ export default function ConstellationBackground() {
 
     init();
 
-    const maxDist = 110;
+    const maxDist = 140;
     const maxDistSq = maxDist * maxDist;
 
     const animate = () => {
@@ -121,16 +147,16 @@ export default function ConstellationBackground() {
         return;
       }
 
-      const width = canvas.width;
-      const height = canvas.height;
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
       ctx.clearRect(0, 0, width, height);
 
-      const strokeGold = isDark ? "255, 232, 128" : "191, 0, 57";
-
+      // 1. Draw particle-to-particle constellation lines
       for (let i = 0; i < particles.length; i++) {
         const p1 = particles[i];
         p1.update(width, height);
-        p1.draw(ctx, isDark);
+        p1.draw(ctx);
 
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
@@ -139,29 +165,57 @@ export default function ConstellationBackground() {
           const distSq = dx * dx + dy * dy;
 
           if (distSq < maxDistSq) {
-            const alpha = (1 - Math.sqrt(distSq) / maxDist) * (isDark ? 0.14 : 0.16);
+            const dist = Math.sqrt(distSq);
+            const alpha = (1 - dist / maxDist) * 0.35;
+
+            ctx.save();
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(${strokeGold}, ${alpha})`;
-            ctx.lineWidth = 0.55;
+
+            // Separate distinct colors for lines based on the connecting particle
+            if (p1.type === "gold" && p2.type === "gold") {
+              ctx.strokeStyle = `rgba(255, 232, 128, ${alpha * 1.2})`;
+            } else if (p1.type === "crimson" && p2.type === "crimson") {
+              ctx.strokeStyle = `rgba(191, 0, 57, ${alpha * 1.2})`;
+            } else {
+              ctx.strokeStyle = `rgba(255, 232, 128, ${alpha * 0.7})`;
+            }
+
+            ctx.lineWidth = 0.9;
             ctx.stroke();
+            ctx.restore();
           }
         }
 
+        // 2. Draw mouse-to-particle interactive beams
         if (mouse.active) {
           const dx = p1.x - mouse.x;
           const dy = p1.y - mouse.y;
           const distSq = dx * dx + dy * dy;
 
           if (distSq < mouse.radiusSq) {
-            const alpha = (1 - Math.sqrt(distSq) / 160) * 0.35;
+            const dist = Math.sqrt(distSq);
+            const alpha = (1 - dist / 220) * 0.75;
+
+            ctx.save();
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = `rgba(${strokeGold}, ${alpha})`;
-            ctx.lineWidth = 0.75;
+
+            if (p1.type === "gold") {
+              ctx.strokeStyle = `rgba(255, 232, 128, ${alpha})`;
+              ctx.shadowColor = "#ffe880";
+              ctx.shadowBlur = 8;
+            } else {
+              ctx.strokeStyle = `rgba(191, 0, 57, ${alpha})`;
+              ctx.shadowColor = "#bf0039";
+              ctx.shadowBlur = 8;
+            }
+
+            ctx.lineWidth = 1.3;
             ctx.stroke();
+            ctx.restore();
           }
         }
       }
@@ -183,8 +237,11 @@ export default function ConstellationBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none z-0 will-change-transform"
-      style={{ mixBlendMode: isDark ? "screen" : "normal" }}
+      className="fixed inset-0 w-full h-full pointer-events-none z-[1] will-change-transform"
+      style={{
+        display: "block",
+        mixBlendMode: isDark ? "screen" : "normal",
+      }}
     />
   );
 }

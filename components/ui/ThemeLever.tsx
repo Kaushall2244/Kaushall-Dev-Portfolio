@@ -20,12 +20,12 @@ export default function ThemeLever() {
   const isDark = theme === "dark";
 
   const triggerSparks = () => {
-    const sparkColor = isDark ? "#bf0039" : "#ffe880";
-    const newSparks: Spark[] = Array.from({ length: 8 }).map((_, i) => ({
+    const colors = ["#ffe880", "#bf0039", "#ffd700", "#ff2a6d"];
+    const newSparks: Spark[] = Array.from({ length: 12 }).map((_, i) => ({
       id: Date.now() + i,
-      x: (Math.random() - 0.5) * 60,
-      y: (Math.random() - 0.5) * 60,
-      color: sparkColor,
+      x: (Math.random() - 0.5) * 80,
+      y: (Math.random() - 0.5) * 80,
+      color: colors[i % colors.length],
     }));
     setSparks(newSparks);
     setTimeout(() => setSparks([]), 600);
@@ -48,8 +48,8 @@ export default function ThemeLever() {
           whileTap={{ scale: 0.96 }}
           className={`relative flex flex-col items-center p-2.5 rounded-2xl cursor-pointer backdrop-blur-2xl border transition-all duration-500 shadow-2xl ${
             isDark
-              ? "bg-[#0c0d14]/85 border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.25)] hover:border-[#ffe880]/50"
-              : "bg-white/90 border-black/10 shadow-[0_12px_40px_rgba(0,0,0,0.1),inset_0_1px_1px_rgba(255,255,255,0.9)] hover:border-[#bf0039]/40"
+              ? "bg-[#0c0d14]/85 border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.25)] hover:border-[#ffe880]/60"
+              : "bg-white/90 border-black/10 shadow-[0_12px_40px_rgba(0,0,0,0.1),inset_0_1px_1px_rgba(255,255,255,0.9)] hover:border-[#bf0039]/50"
           }`}
           style={{ cursor: "none" }}
         >
@@ -65,7 +65,7 @@ export default function ThemeLever() {
               className={`font-mono text-[8px] font-bold tracking-widest uppercase transition-colors duration-300 ${
                 isDark
                   ? "text-[#ffe880] drop-shadow-[0_0_8px_rgba(255,232,128,0.8)]"
-                  : "text-black/30"
+                  : "text-black/40"
               }`}
             >
               DRK
@@ -182,14 +182,14 @@ export default function ThemeLever() {
               className={`font-mono text-[8px] font-bold tracking-widest uppercase transition-colors duration-300 ${
                 !isDark
                   ? "text-[#bf0039] drop-shadow-[0_0_8px_rgba(191,0,57,0.8)]"
-                  : "text-white/30"
+                  : "text-white/40"
               }`}
             >
               LGT
             </span>
           </div>
 
-          {/* Electrical Burst Particle FX on Flick */}
+          {/* Electrical Burst Particle FX on Flick (Combined Gold & Crimson) */}
           <AnimatePresence>
             {sparks.map((spark) => (
               <motion.div
@@ -217,7 +217,7 @@ export default function ThemeLever() {
           {/* Telemetry Tag */}
           <span
             className={`font-mono text-[6px] tracking-[0.2em] uppercase mt-1 transition-colors duration-300 ${
-              isDark ? "text-white/25" : "text-black/35"
+              isDark ? "text-white/30" : "text-black/40"
             }`}
           >
             PWR // SW

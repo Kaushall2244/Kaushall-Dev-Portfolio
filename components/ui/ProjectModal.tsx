@@ -66,11 +66,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           exit={{ opacity: 0, scale: 0.92, y: 30 }}
           transition={{ type: "spring", stiffness: 350, damping: 28 }}
           onClick={(e) => e.stopPropagation()}
-          className={`relative w-full max-w-4xl max-h-[88vh] overflow-y-auto rounded-[36px] border p-6 sm:p-10 backdrop-blur-3xl shadow-2xl ${
-            isDark
-              ? "bg-[#090b14]/95 border-white/20 shadow-[0_25px_70px_rgba(0,0,0,0.95),inset_0_1px_1px_rgba(255,255,255,0.3)]"
-              : "bg-white/95 border-black/10 shadow-[0_25px_70px_rgba(0,0,0,0.15),inset_0_1px_1px_rgba(255,255,255,0.9)]"
-          }`}
+          className="relative w-full max-w-4xl max-h-[88vh] overflow-y-auto rounded-[36px] border p-6 sm:p-10 backdrop-blur-3xl shadow-2xl bg-[#090b14]/95 border-white/20 shadow-[0_25px_70px_rgba(0,0,0,0.95),inset_0_1px_1px_rgba(255,255,255,0.3)]"
         >
           {/* Close Button Top Right */}
           <div className="absolute top-6 right-6 z-20">
@@ -78,42 +74,24 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               <button
                 onClick={onClose}
                 data-cursor-text="CLOSE"
-                className={`p-3 rounded-full border transition-all duration-300 ${
-                  isDark
-                    ? "bg-white/5 border-white/15 text-white/70 hover:text-white hover:border-[#ffe880] hover:bg-white/10"
-                    : "bg-black/5 border-black/15 text-black/70 hover:text-black hover:border-[#bf0039] hover:bg-black/10"
-                }`}
+                className="p-3 rounded-full border transition-all duration-300 bg-white/5 border-white/15 text-white/70 hover:text-white hover:border-[#ffe880] hover:bg-white/10"
               >
                 <X size={18} />
               </button>
             </MagneticWrapper>
           </div>
 
-          {/* Modal Header */}
+          {/* Modal Header: Distinct Crimson Badge & Gold Highlights */}
           <div className="flex flex-col gap-3 pr-14">
             <div className="flex items-center gap-3 flex-wrap">
-              <span
-                className={`px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border ${
-                  isDark
-                    ? "border-[#ffe880]/40 bg-[#ffe880]/15 text-[#ffe880]"
-                    : "border-[#bf0039]/30 bg-[#bf0039]/10 text-[#bf0039]"
-                }`}
-              >
+              <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/20 text-[#ffe880]">
                 {project.category}
               </span>
               <span className="font-mono text-xs text-white/40">
                 {"// "} {project.year}
               </span>
-              <span
-                className={`flex items-center gap-1.5 text-xs font-mono font-semibold ${
-                  isDark ? "text-[#ffe880]" : "text-[#bf0039]"
-                }`}
-              >
-                <span
-                  className={`w-2 h-2 rounded-full animate-pulse ${
-                    isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"
-                  }`}
-                />
+              <span className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[#ffe880]">
+                <span className="w-2 h-2 rounded-full animate-pulse bg-[#bf0039]" />
                 {project.status}
               </span>
             </div>
@@ -126,7 +104,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             </p>
           </div>
 
-          {/* Tab Navigation */}
+          {/* Tab Navigation: Solid Distinct Gold for Active Tab */}
           <div className="mt-8 flex gap-2 border-b border-white/10 pb-4">
             {[
               { id: "overview", label: "Overview ✨", icon: Sparkles },
@@ -141,9 +119,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   onClick={() => setActiveTab(tab.id as typeof activeTab)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all duration-300 ${
                     active
-                      ? isDark
-                        ? "bg-[#ffe880] text-black shadow-md"
-                        : "bg-[#bf0039] text-white shadow-md"
+                      ? "bg-[#ffe880] text-black font-extrabold shadow-md"
                       : "text-white/60 hover:text-white hover:bg-white/5"
                   }`}
                 >
@@ -163,7 +139,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 className="flex flex-col gap-6"
               >
                 <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md">
-                  <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-white/50 mb-2">
+                  <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-[#bf0039] mb-2">
                     Project Story & Inspiration
                   </h4>
                   <p className="text-base text-white/80 leading-relaxed">
@@ -173,7 +149,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="p-5 rounded-2xl border border-white/5 bg-white/[0.02]">
-                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest block font-bold">
+                    <span className="font-mono text-[10px] text-[#bf0039] uppercase tracking-widest block font-bold">
                       My Role
                     </span>
                     <span className="text-sm font-bold text-white mt-1 block">
@@ -181,7 +157,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     </span>
                   </div>
                   <div className="p-5 rounded-2xl border border-white/5 bg-white/[0.02]">
-                    <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest block font-bold">
+                    <span className="font-mono text-[10px] text-[#bf0039] uppercase tracking-widest block font-bold">
                       Tagline
                     </span>
                     <span className="text-sm font-medium text-white/80 mt-1 block">
@@ -201,9 +177,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 {project.features.map((feat, idx) => (
                   <div
                     key={idx}
-                    className="p-5 rounded-2xl border border-white/10 bg-white/[0.02] flex items-start gap-3 hover:border-[#ffe880]/40 transition-colors duration-300"
+                    className="p-5 rounded-2xl border border-white/10 bg-white/[0.02] flex items-start gap-3 hover:border-[#ffe880]/50 transition-colors duration-300"
                   >
-                    <div className="p-2 rounded-lg bg-white/5 text-[#ffe880] mt-0.5">
+                    <div className="p-2 rounded-lg bg-[#bf0039]/20 text-[#ffe880] mt-0.5 border border-[#bf0039]/40">
                       <CheckCircle2 size={16} />
                     </div>
                     <span className="text-sm text-white/80 leading-relaxed font-medium">
@@ -221,14 +197,14 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 className="flex flex-col gap-6"
               >
                 <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.02]">
-                  <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-white/50 mb-4">
+                  <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-[#bf0039] mb-4">
                     Technologies & Libraries Used
                   </h4>
                   <div className="flex flex-wrap gap-2.5">
                     {project.tech.map((t) => (
                       <span
                         key={t}
-                        className="px-4 py-2 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/5 text-white/80 shadow-sm"
+                        className="px-4 py-2 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/5 text-white/80 shadow-sm hover:border-[#ffe880]/50 hover:text-[#ffe880]"
                       >
                         {t}
                       </span>
@@ -239,7 +215,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             )}
           </div>
 
-          {/* Modal Action Links Footer */}
+          {/* Modal Action Links Footer: Distinct Solid Gold CTA */}
           <div className="mt-10 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
             <span className="font-mono text-xs text-white/40">
               Press <kbd className="px-2 py-0.5 rounded bg-white/10 text-white font-mono text-[10px]">ESC</kbd> or click outside to close
@@ -253,9 +229,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     data-cursor-text="CODE"
-                    className="flex items-center gap-2 px-5 py-3 rounded-full border border-white/15 bg-white/5 text-white text-xs font-mono font-bold hover:border-[#ffe880]/50 hover:bg-white/10 transition-all duration-300"
+                    className="flex items-center gap-2 px-5 py-3 rounded-full border border-[#bf0039]/50 bg-[#bf0039]/10 text-white text-xs font-mono font-bold hover:border-[#bf0039] hover:bg-[#bf0039]/20 transition-all duration-300"
                   >
-                    <Github size={15} />
+                    <Github size={15} className="text-[#bf0039]" />
                     <span>Source Code</span>
                   </a>
                 </MagneticWrapper>
@@ -268,11 +244,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     data-cursor-text="LAUNCH"
-                    className={`flex items-center gap-2 px-6 py-3 rounded-full text-xs font-mono font-bold transition-all duration-300 shadow-lg ${
-                      isDark
-                        ? "bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_25px_rgba(255,232,128,0.5)]"
-                        : "bg-[#bf0039] text-white hover:bg-black hover:shadow-[0_0_25px_rgba(191,0,57,0.35)]"
-                    }`}
+                    className="flex items-center gap-2 px-6 py-3 rounded-full text-xs font-mono font-extrabold transition-all duration-300 shadow-lg bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_25px_#ffe880]"
                   >
                     <span>Live Preview 🚀</span>
                     <ExternalLink size={14} />

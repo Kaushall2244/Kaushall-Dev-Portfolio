@@ -6,6 +6,7 @@ import Footer from "@/components/Global/Footer";
 import CustomCursor from "@/components/ui/CustomCursor";
 import SystemStatus from "@/components/Global/SystemStatus";
 import GlobalMouseGlow from "@/components/ui/GlobalMouseGlow";
+import ConstellationBackground from "@/components/ui/ConstellationBackground";
 import ThemeLever from "@/components/ui/ThemeLever";
 import { ThemeProvider } from "@/components/Global/ThemeProvider";
 import "./globals.css";
@@ -161,30 +162,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="antialiased bg-background text-foreground selection:bg-accent selection:text-black overflow-x-hidden transition-colors duration-500">
+      <body className="antialiased bg-background text-foreground selection:bg-[#ffe880] selection:text-black overflow-x-hidden transition-colors duration-500">
         <ThemeProvider>
           <GlobalMouseGlow />
-          {/* Global High-Tech Background Grid System */}
+          
+          {/* Layer 1: Global Background Grid System */}
           <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-            {/* Base Grid Pattern */}
-            <div className="absolute inset-0 bg-grid-pattern opacity-40" />
-            {/* Accent Glowing Grid Points */}
-            <div className="absolute inset-0 bg-grid-glow opacity-30" />
-            {/* Radial Dark/Light Vignette Mask for Focus */}
-            <div
-              className="absolute inset-0 transition-opacity duration-500"
-              style={{
-                background: "radial-gradient(ellipse at center, transparent 20%, var(--vignette-color) 90%)",
-              }}
-            />
+            <div className="absolute inset-0 bg-grid-pattern opacity-25" />
+            <div className="absolute inset-0 bg-grid-glow opacity-15" />
           </div>
 
-          {/* Global Background Watermark */}
+          {/* Layer 2: Global Background Watermark "KAUSHALL" */}
           <div className="fixed inset-0 flex items-center justify-center pointer-events-none overflow-hidden z-0 select-none" aria-hidden="true">
-            <div className="text-[20vw] font-black uppercase tracking-[-0.08em] text-white/[0.015]">
+            <div className="text-[20vw] font-black uppercase tracking-[-0.08em] text-white/[0.04] select-none">
               KAUSHALL
             </div>
           </div>
+
+          {/* Layer 3: Global Interactive Constellation Particles */}
+          <ConstellationBackground />
 
           <CustomCursor />
           
@@ -196,8 +192,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* Global Floating Layout Elements */}
           <SidebarDecorations />
 
-          {/* Full-width main viewport layout container */}
-          <main className="relative w-full min-h-screen">
+          {/* Layer 4: Main Content Viewport (Transparent so particles & letters shine through!) */}
+          <main className="relative w-full min-h-screen z-10 bg-transparent">
             {children}
           </main>
           <SystemStatus />

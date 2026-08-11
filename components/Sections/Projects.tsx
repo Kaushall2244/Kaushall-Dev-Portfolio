@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Sparkles,
   ArrowUpRight,
@@ -142,40 +142,15 @@ export default function Projects() {
     setTasks(tasks.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
   };
 
-  const filteredProjects =
-    activeCategory === "All"
-      ? PROJECTS_DATA
-      : PROJECTS_DATA.filter((p) => p.category === activeCategory);
-
   return (
     <section
       id="projects"
       aria-label="Projects and Creations"
-      className="relative overflow-hidden py-32 md:py-44 px-6 md:px-10 lg:px-20 bg-background border-t border-white/5"
+      className="relative overflow-hidden py-32 md:py-44 px-6 md:px-10 lg:px-20 bg-transparent border-t border-white/5"
     >
-      {/* Background Ambient Dual Glow */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 select-none">
-        <div
-          className="absolute left-1/2 top-1/3 h-[600px] w-[600px] -translate-x-1/2 rounded-full transform-gpu"
-          style={{
-            background: isDark
-              ? "radial-gradient(circle, rgba(255,232,128,0.09) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(191,0,57,0.08) 0%, transparent 70%)",
-          }}
-        />
-        <div
-          className="absolute right-10 bottom-1/4 h-[450px] w-[450px] rounded-full transform-gpu"
-          style={{
-            background: isDark
-              ? "radial-gradient(circle, rgba(191,0,57,0.07) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(234,179,8,0.07) 0%, transparent 70%)",
-          }}
-        />
-      </div>
-
       {/* Watermark Title */}
       <div
-        className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-white/[0.015] select-none"
+        className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-white/[0.04] select-none"
         aria-hidden="true"
       >
         WORKS
@@ -191,16 +166,8 @@ export default function Projects() {
               viewport={{ once: true }}
               className="flex items-center gap-3"
             >
-              <div
-                className={`w-2.5 h-2.5 rounded-full animate-pulse ${
-                  isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"
-                }`}
-              />
-              <span
-                className={`font-mono text-xs uppercase tracking-[0.4em] font-bold ${
-                  isDark ? "text-[#ffe880]" : "text-[#bf0039]"
-                }`}
-              >
+              <div className="w-2.5 h-2.5 rounded-full animate-pulse bg-[#bf0039]" />
+              <span className="font-mono text-xs uppercase tracking-[0.4em] font-bold text-[#bf0039]">
                 03 // BENTO PLAYGROUND 🚀
               </span>
             </motion.div>
@@ -214,7 +181,7 @@ export default function Projects() {
             </div>
           </div>
 
-          {/* Category Filter Pills */}
+          {/* Category Filter Pills: Solid Distinct Gold for Active */}
           <div className="flex flex-wrap gap-2 glass-panel p-2 rounded-2xl border border-white/15 self-start md:self-auto shadow-xl">
             {CATEGORIES.map((cat) => {
               const active = activeCategory === cat;
@@ -225,9 +192,7 @@ export default function Projects() {
                   data-cursor-text="FILTER"
                   className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all duration-300 ${
                     active
-                      ? isDark
-                        ? "bg-[#ffe880] text-black shadow-[0_0_20px_rgba(255,232,128,0.4)]"
-                        : "bg-[#bf0039] text-white shadow-md"
+                      ? "bg-[#ffe880] text-black font-extrabold shadow-[0_0_20px_#ffe880]"
                       : "text-white/60 hover:text-white hover:bg-white/5"
                   }`}
                 >
@@ -253,33 +218,20 @@ export default function Projects() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
               whileHover={{ y: -6 }}
-              className="md:col-span-12 lg:col-span-7 glass-frosted rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#ffe880]/50 transition-all duration-500 shadow-2xl"
+              className="md:col-span-12 lg:col-span-7 glass-frosted rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#ffe880]/60 transition-all duration-500 shadow-2xl"
             >
-              {/* Card Ambient Glow */}
-              <div
-                className={`absolute -right-20 -top-20 w-80 h-80 rounded-full blur-[100px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-                  isDark ? "bg-[#ffe880]/12" : "bg-[#bf0039]/10"
-                }`}
-              />
-
               <div>
-                {/* Header Row */}
+                {/* Header Row: Distinct Gold Pill & Distinct Crimson Streak */}
                 <div className="flex items-center justify-between gap-4 flex-wrap mb-6">
                   <div className="flex items-center gap-2">
-                    <span
-                      className={`px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border ${
-                        isDark
-                          ? "border-[#ffe880]/40 bg-[#ffe880]/15 text-[#ffe880]"
-                          : "border-[#bf0039]/30 bg-[#bf0039]/10 text-[#bf0039]"
-                      }`}
-                    >
+                    <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#ffe880]/40 bg-[#ffe880]/15 text-[#ffe880]">
                       🌟 Featured Web App
                     </span>
                     <span className="text-xs font-mono text-white/40">{"// 2026"}</span>
                   </div>
 
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 font-mono text-xs font-bold">
-                    <Flame size={14} className="animate-pulse" />
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#bf0039]/15 border border-[#bf0039]/40 text-[#ffe880] font-mono text-xs font-bold">
+                    <Flame size={14} className="text-[#bf0039] animate-pulse" />
                     <span>14-Day Streak</span>
                   </div>
                 </div>
@@ -295,8 +247,8 @@ export default function Projects() {
                 {/* Live Interactive Task Widget Simulation */}
                 <div className="mt-8 p-5 rounded-2xl border border-white/15 bg-black/50 backdrop-blur-2xl shadow-inner max-w-lg">
                   <div className="flex items-center justify-between mb-3 text-xs font-mono text-white/50 border-b border-white/10 pb-2">
-                    <span className="font-bold flex items-center gap-1.5">
-                      <Sparkles size={12} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+                    <span className="font-bold flex items-center gap-1.5 text-[#ffe880]">
+                      <Sparkles size={12} className="text-[#ffe880]" />
                       TODAY&apos;S FOCUS
                     </span>
                     <span>
@@ -312,17 +264,12 @@ export default function Projects() {
                         data-cursor-text="TOGGLE"
                         className={`flex items-center gap-3 p-3 rounded-xl border transition-all duration-300 cursor-pointer ${
                           task.done
-                            ? isDark
-                              ? "bg-[#ffe880]/15 border-[#ffe880]/40 text-white/90"
-                              : "bg-[#bf0039]/10 border-[#bf0039]/30 text-black/90"
+                            ? "bg-[#ffe880]/15 border-[#ffe880]/40 text-white/95"
                             : "bg-white/[0.03] border-white/10 text-white/60 hover:bg-white/10 hover:border-white/25"
                         }`}
                       >
                         {task.done ? (
-                          <CheckCircle2
-                            size={17}
-                            className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"}
-                          />
+                          <CheckCircle2 size={17} className="text-[#ffe880]" />
                         ) : (
                           <Circle size={17} className="text-white/30" />
                         )}
@@ -339,7 +286,7 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Bottom Actions Row */}
+              {/* Bottom Actions Row: Solid Distinct Gold Button */}
               <div className="mt-10 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
                 <div className="flex flex-wrap gap-2">
                   {["React 19", "Next.js 15", "TypeScript", "Spring Boot"].map((t) => (
@@ -357,11 +304,7 @@ export default function Projects() {
                     <button
                       onClick={() => setSelectedProject(PROJECTS_DATA[0])}
                       data-cursor-text="DETAILS"
-                      className={`px-5 py-2.5 rounded-full text-xs font-mono font-bold transition-all duration-300 shadow-md ${
-                        isDark
-                          ? "bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_25px_rgba(255,232,128,0.4)]"
-                          : "bg-[#bf0039] text-white hover:bg-black hover:shadow-[0_0_25px_rgba(191,0,57,0.3)]"
-                      }`}
+                      className="px-6 py-2.5 rounded-full text-xs font-mono font-extrabold transition-all duration-300 shadow-lg bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_25px_#ffe880]"
                     >
                       Explore Deep Dive ✨
                     </button>
@@ -386,13 +329,7 @@ export default function Projects() {
             >
               <div>
                 <div className="flex items-center justify-between gap-4 mb-6">
-                  <span
-                    className={`px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border ${
-                      isDark
-                        ? "border-[#ffe880]/40 bg-[#ffe880]/15 text-[#ffe880]"
-                        : "border-[#bf0039]/30 bg-[#bf0039]/10 text-[#bf0039]"
-                    }`}
-                  >
+                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#ffe880]">
                     🤖 AI & Vision Assistant
                   </span>
                   <span className="text-xs font-mono text-white/40">{"// 2026"}</span>
@@ -407,24 +344,19 @@ export default function Projects() {
 
                 {/* Animated Real-Time Radar Scanner Viewport */}
                 <div className="mt-6 p-4 rounded-2xl border border-white/15 bg-black/60 backdrop-blur-2xl relative overflow-hidden h-44 flex flex-col justify-between shadow-inner">
-                  {/* Grid Lines */}
                   <div className="absolute inset-0 bg-grid-pattern opacity-25 pointer-events-none" />
 
-                  {/* Real-Time Scan Line */}
+                  {/* Real-Time Scan Line in Crimson */}
                   <motion.div
                     animate={{ y: [0, 150, 0] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    className={`absolute inset-x-0 h-[2px] shadow-lg pointer-events-none ${
-                      isDark
-                        ? "bg-[#ffe880] shadow-[0_0_15px_#ffe880]"
-                        : "bg-[#bf0039] shadow-[0_0_15px_#bf0039]"
-                    }`}
+                    className="absolute inset-x-0 h-[2px] bg-[#bf0039] shadow-[0_0_15px_#bf0039] pointer-events-none"
                   />
 
                   {/* Header in scanner */}
                   <div className="relative z-10 flex justify-between items-center text-[10px] font-mono text-white/40">
-                    <span className="flex items-center gap-1">
-                      <Scan size={12} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+                    <span className="flex items-center gap-1 text-[#bf0039] font-bold">
+                      <Scan size={12} className="text-[#bf0039]" />
                       YOLOv8 CAMERA FEED
                     </span>
                     <span className="flex items-center gap-1 text-green-400 font-bold">
@@ -433,12 +365,12 @@ export default function Projects() {
                     </span>
                   </div>
 
-                  {/* Detected Object Floating Chips */}
+                  {/* Detected Object Floating Chips in Distinct Gold */}
                   <div className="relative z-10 flex flex-wrap gap-2">
                     <motion.span
                       animate={{ scale: [1, 1.05, 1] }}
                       transition={{ duration: 2, repeat: Infinity }}
-                      className="px-2.5 py-1 rounded-md bg-[#ffe880]/20 border border-[#ffe880]/40 text-[#ffe880] font-mono text-[10px] font-bold"
+                      className="px-2.5 py-1 rounded-md bg-[#ffe880]/20 border border-[#ffe880]/50 text-[#ffe880] font-mono text-[10px] font-bold"
                     >
                       [ Laptop: 98% ]
                     </motion.span>
@@ -452,7 +384,7 @@ export default function Projects() {
 
                   {/* Speech synthesis footer */}
                   <div className="relative z-10 flex items-center gap-2 text-[10px] font-mono text-white/60">
-                    <Volume2 size={13} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+                    <Volume2 size={13} className="text-[#ffe880]" />
                     <span className="italic truncate">&ldquo;Laptop detected 1.2m ahead on desk&rdquo;</span>
                   </div>
                 </div>
@@ -464,7 +396,7 @@ export default function Projects() {
                   <button
                     onClick={() => setSelectedProject(PROJECTS_DATA[1])}
                     data-cursor-text="VIEW"
-                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-white hover:text-[#ffe880] transition-colors"
+                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#ffe880] hover:underline transition-all"
                   >
                     <span>Details</span>
                     <ArrowUpRight size={14} />
@@ -489,13 +421,7 @@ export default function Projects() {
             >
               <div>
                 <div className="flex items-center justify-between gap-4 mb-6">
-                  <span
-                    className={`px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border ${
-                      isDark
-                        ? "border-[#ffe880]/40 bg-[#ffe880]/15 text-[#ffe880]"
-                        : "border-[#bf0039]/30 bg-[#bf0039]/10 text-[#bf0039]"
-                    }`}
-                  >
+                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#ffe880]">
                     📱 Real-Time Location App
                   </span>
                   <span className="text-xs font-mono text-white/40">{"// 2026"}</span>
@@ -510,21 +436,14 @@ export default function Projects() {
 
                 {/* Smartphone Radar Mockup Box */}
                 <div className="mt-6 p-5 rounded-2xl border border-white/15 bg-black/60 backdrop-blur-2xl relative overflow-hidden flex flex-col items-center justify-center min-h-[170px] shadow-inner">
-                  {/* Pulsing Radar Ring */}
+                  {/* Pulsing Radar Ring in Gold */}
                   <motion.div
                     animate={{ scale: [1, 2.2], opacity: [0.6, 0] }}
                     transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
-                    className={`absolute w-20 h-20 rounded-full border ${
-                      isDark ? "border-[#ffe880]" : "border-[#bf0039]"
-                    }`}
+                    className="absolute w-20 h-20 rounded-full border border-[#ffe880]"
                   />
-                  <div
-                    className={`relative z-10 p-3 rounded-full shadow-lg ${
-                      isDark
-                        ? "bg-[#ffe880] text-black shadow-[0_0_20px_#ffe880]"
-                        : "bg-[#bf0039] text-white shadow-[0_0_20px_#bf0039]"
-                    }`}
-                  >
+                  {/* Distinct Crimson Beacon Pin */}
+                  <div className="relative z-10 p-3 rounded-full bg-[#bf0039] text-white shadow-[0_0_20px_#bf0039]">
                     <MapPin size={20} />
                   </div>
 
@@ -545,7 +464,7 @@ export default function Projects() {
                   <button
                     onClick={() => setSelectedProject(PROJECTS_DATA[2])}
                     data-cursor-text="VIEW"
-                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-white hover:text-[#ffe880] transition-colors"
+                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#ffe880] hover:underline transition-all"
                   >
                     <span>Details</span>
                     <ArrowUpRight size={14} />
@@ -570,13 +489,7 @@ export default function Projects() {
             >
               <div>
                 <div className="flex items-center justify-between gap-4 mb-6">
-                  <span
-                    className={`px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border ${
-                      isDark
-                        ? "border-[#ffe880]/40 bg-[#ffe880]/15 text-[#ffe880]"
-                        : "border-[#bf0039]/30 bg-[#bf0039]/10 text-[#bf0039]"
-                    }`}
-                  >
+                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#ffe880]">
                     🎨 3D & Shaders Lab
                   </span>
                   <span className="text-xs font-mono text-white/40">{"// 2026"}</span>
@@ -589,23 +502,19 @@ export default function Projects() {
                   Interactive WebGL shaders, refractive glass transmission, and kinetic GPU particles.
                 </p>
 
-                {/* Interactive 3D Sphere Representation */}
+                {/* Interactive 3D Sphere Representation in Gold & Crimson */}
                 <div className="mt-6 p-5 rounded-2xl border border-white/15 bg-black/60 backdrop-blur-2xl relative overflow-hidden flex items-center justify-center min-h-[170px] shadow-inner">
                   <motion.div
                     animate={{ rotate: 360, scale: [1, 1.08, 1] }}
                     transition={{ rotate: { duration: 18, repeat: Infinity, ease: "linear" }, scale: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
-                    className={`w-28 h-28 rounded-full border border-dashed flex items-center justify-center ${
-                      isDark ? "border-[#ffe880]/40" : "border-[#bf0039]/40"
-                    }`}
+                    className="w-28 h-28 rounded-full border border-dashed border-[#ffe880]/50 flex items-center justify-center"
                   >
                     <motion.div
                       animate={{ rotate: -360 }}
                       transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                      className={`w-16 h-16 rounded-full border flex items-center justify-center ${
-                        isDark ? "border-[#ffe880]/70 bg-[#ffe880]/10" : "border-[#bf0039]/70 bg-[#bf0039]/10"
-                      }`}
+                      className="w-16 h-16 rounded-full border border-[#bf0039] bg-[#bf0039]/20 flex items-center justify-center shadow-[0_0_20px_#bf0039]"
                     >
-                      <Compass size={24} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+                      <Compass size={24} className="text-[#ffe880]" />
                     </motion.div>
                   </motion.div>
                 </div>
@@ -617,7 +526,7 @@ export default function Projects() {
                   <button
                     onClick={() => setSelectedProject(PROJECTS_DATA[3])}
                     data-cursor-text="VIEW"
-                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-white hover:text-[#ffe880] transition-colors"
+                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#ffe880] hover:underline transition-all"
                   >
                     <span>Details</span>
                     <ArrowUpRight size={14} />

@@ -177,49 +177,29 @@ export default function About() {
       id="about"
       ref={sectionRef}
       aria-label="About S Kaushall"
-      className="relative overflow-hidden bg-background py-32 md:py-44 px-6 md:px-10 lg:px-20 border-t border-white/5"
+      className="relative overflow-hidden bg-transparent py-32 md:py-44 px-6 md:px-10 lg:px-20 border-t border-white/5"
     >
-      {/* Dual-Tone Ambient Glows */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 select-none">
-        <div
-          className="absolute -left-40 top-1/3 h-[600px] w-[600px] rounded-full transform-gpu"
-          style={{
-            background: isDark
-              ? "radial-gradient(circle, rgba(255,232,128,0.08) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(191,0,57,0.08) 0%, transparent 70%)",
-          }}
-        />
-        <div
-          className="absolute -right-40 bottom-1/3 h-[500px] w-[500px] rounded-full transform-gpu"
-          style={{
-            background: isDark
-              ? "radial-gradient(circle, rgba(191,0,57,0.07) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(234,179,8,0.08) 0%, transparent 70%)",
-          }}
-        />
-      </div>
-
       {/* Watermark Backdrop Title */}
-      <div className="pointer-events-none absolute left-1/2 top-12 -translate-x-1/2 text-[22vw] font-black tracking-[-0.08em] text-white/[0.015] select-none">
+      <div className="pointer-events-none absolute left-1/2 top-12 -translate-x-1/2 text-[22vw] font-black tracking-[-0.08em] text-white/[0.04] select-none">
         STORY
       </div>
 
       {/* Main Section Header */}
       <motion.div style={{ scale: sectionScale }} className="relative z-10 max-w-7xl mx-auto">
-        {/* Section Indicator Badge */}
+        {/* Section Indicator Badge in Distinct Crimson */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="flex items-center gap-3"
         >
-          <div className="w-2.5 h-2.5 rounded-full bg-[#ffe880] animate-pulse" />
-          <span className="font-mono text-xs uppercase tracking-[0.4em] text-[#ffe880] font-bold">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#bf0039] animate-pulse" />
+          <span className="font-mono text-xs uppercase tracking-[0.4em] text-[#bf0039] font-bold">
             01 // GET TO KNOW ME 👋
           </span>
         </motion.div>
 
-        {/* Section Title */}
+        {/* Section Title with Distinct Gold Glow */}
         <div className="mt-6 max-w-4xl">
           <TextReveal
             text="Crafting digital experiences that feel effortless, exciting, and full of life."
@@ -228,18 +208,18 @@ export default function About() {
           />
         </div>
 
-        {/* Accent Line */}
+        {/* Accent Line in Gold */}
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: 180 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="mt-8 h-[2px] bg-gradient-to-r from-[#ffe880] via-[#bf0039]/60 to-transparent"
+          className="mt-8 h-[2px] bg-[#ffe880]"
         />
 
         {/* DUAL SIDE PARALLEL SCROLL GRID CONTAINER */}
         <div className="mt-20 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* LEFT COLUMN: Slides from LEFT */}
+          {/* LEFT COLUMN */}
           <motion.div
             style={{ y: yLeft }}
             initial={{ opacity: 0, x: -60 }}
@@ -256,13 +236,13 @@ export default function About() {
               viewport={{ once: true, margin: "-40px" }}
               className="group relative"
             >
-              <div className="glass-frosted rounded-[32px] p-8 flex flex-col justify-between overflow-hidden transition-all duration-500 hover:border-[#ffe880]/50 shadow-2xl">
+              <div className="glass-frosted rounded-[32px] p-8 flex flex-col justify-between overflow-hidden transition-all duration-500 hover:border-[#ffe880]/60 shadow-2xl">
                 <div>
-                  {/* Status Pill */}
-                  <div className="inline-flex items-center gap-2.5 rounded-full border border-[#ffe880]/40 bg-[#ffe880]/10 px-4 py-1.5 backdrop-blur-xl">
+                  {/* Status Pill: Distinct Crimson Badge */}
+                  <div className="inline-flex items-center gap-2.5 rounded-full border border-[#bf0039]/40 bg-[#bf0039]/15 px-4 py-1.5 backdrop-blur-xl">
                     <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ffe880] opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ffe880]" />
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#bf0039] opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#bf0039]" />
                     </span>
                     <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-[#ffe880] font-bold">
                       Full-Stack & Creative Explorer
@@ -288,7 +268,7 @@ export default function About() {
                           S KAUSHALL
                         </span>
                       </div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-[#ffe880]/30 bg-[#ffe880]/20 text-[#ffe880] font-bold">
+                      <span className="text-[10px] font-mono px-2.5 py-0.5 rounded border border-[#bf0039]/40 bg-[#bf0039]/20 text-[#ffe880] font-bold">
                         OPEN FOR WORK
                       </span>
                     </div>
@@ -333,7 +313,7 @@ export default function About() {
               <div className="glass-card rounded-[32px] p-8 transition-all duration-500 hover:border-[#ffe880]/50 shadow-2xl">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-2.5">
-                    <FolderGit2 size={18} className="text-[#ffe880]" />
+                    <FolderGit2 size={18} className="text-[#bf0039]" />
                     <h4 className="font-mono text-xs uppercase tracking-[0.25em] text-[#ffe880] font-bold">
                       My Toolkit & Playground 🛠️
                     </h4>
@@ -348,9 +328,7 @@ export default function About() {
                       onClick={() => setActiveFilter(cat)}
                       className={`text-[11px] font-mono px-3.5 py-1 rounded-full transition-all duration-300 ${
                         activeFilter === cat
-                          ? isDark
-                            ? "bg-[#ffe880] text-black font-bold shadow-[0_0_15px_rgba(255,232,128,0.4)]"
-                            : "bg-[#bf0039] text-white font-bold shadow-md"
+                          ? "bg-[#ffe880] text-black font-bold shadow-[0_0_15px_rgba(255,232,128,0.4)]"
                           : "border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-white/25"
                       }`}
                     >
@@ -369,9 +347,9 @@ export default function About() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
                       transition={{ duration: 0.2 }}
-                      className="inline-flex items-center gap-1.5 text-xs font-mono px-3.5 py-1.5 rounded-xl border border-white/10 bg-white/[0.04] text-white/80 transition-colors hover:border-[#ffe880]/40 hover:text-[#ffe880] hover:bg-white/10 font-medium"
+                      className="inline-flex items-center gap-1.5 text-xs font-mono px-3.5 py-1.5 rounded-xl border border-white/10 bg-white/[0.04] text-white/80 transition-colors hover:border-[#ffe880]/60 hover:text-[#ffe880] hover:bg-white/10 font-medium"
                     >
-                      <CheckCircle2 size={12} className="text-[#ffe880]" />
+                      <CheckCircle2 size={12} className="text-[#bf0039]" />
                       {tech.name}
                     </motion.span>
                   ))}
@@ -380,7 +358,7 @@ export default function About() {
             </motion.div>
           </motion.div>
 
-          {/* RIGHT COLUMN: Slides from RIGHT */}
+          {/* RIGHT COLUMN */}
           <motion.div
             style={{ y: yRight }}
             initial={{ opacity: 0, x: 60 }}
@@ -399,7 +377,7 @@ export default function About() {
             >
               <div className="glass-frosted rounded-[32px] p-8 transition-all duration-500 hover:border-[#ffe880]/50 shadow-2xl">
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl border border-white/15 bg-white/5 text-[#ffe880]">
+                  <div className="p-2.5 rounded-xl border border-[#bf0039]/30 bg-[#bf0039]/10 text-[#bf0039]">
                     <Sparkles size={18} />
                   </div>
                   <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ffe880] font-bold">
@@ -422,11 +400,11 @@ export default function About() {
                     return (
                       <div
                         key={i}
-                        className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:border-[#ffe880]/40 hover:bg-white/[0.08]"
+                        className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 transition-all duration-300 hover:border-[#ffe880]/50 hover:bg-white/[0.08]"
                       >
                         <div className="flex items-center justify-between">
                           <Icon size={18} className="text-[#ffe880]" />
-                          <span className="text-[10px] font-mono text-[#ffe880] px-2 py-0.5 rounded bg-[#ffe880]/10 border border-[#ffe880]/30 font-semibold">
+                          <span className="text-[10px] font-mono text-[#ffe880] px-2 py-0.5 rounded bg-[#bf0039]/20 border border-[#bf0039]/40 font-semibold">
                             {cap.tag}
                           </span>
                         </div>
@@ -468,9 +446,7 @@ export default function About() {
                         onClick={() => setActiveTab(idx)}
                         className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-mono text-xs transition-all ${
                           activeTab === idx
-                            ? isDark
-                              ? "bg-[#ffe880] text-black font-bold shadow-sm"
-                              : "bg-[#bf0039] text-white font-bold shadow-sm"
+                            ? "bg-[#ffe880] text-black font-bold shadow-sm"
                             : "text-white/60 hover:text-white hover:bg-white/5"
                         }`}
                       >
@@ -535,7 +511,7 @@ export default function About() {
                           <span className="text-3xl font-black text-[#ffe880] tracking-tight drop-shadow-[0_0_10px_rgba(255,232,128,0.2)]">
                             {m.value}
                           </span>
-                          <Icon size={16} className="text-white/40 group-hover:text-[#ffe880] transition-colors" />
+                          <Icon size={16} className="text-[#bf0039]" />
                         </div>
                         <div>
                           <p className="text-xs font-bold text-white">
