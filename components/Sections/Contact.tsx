@@ -2,9 +2,10 @@
 
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import { useState, FormEvent } from "react";
-import { Send, Terminal, Mail, FileText, ArrowRight } from "lucide-react";
+import { Send, Mail, FileText, ArrowRight, MessageSquare } from "lucide-react";
 import TextReveal from "../ui/TextReveal";
 import Magnetic from "../ui/Magnetic";
+import { useTheme } from "../Global/ThemeProvider";
 
 const containerVariants: Variants = {
   hidden: {},
@@ -27,234 +28,274 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate transaction delay
-    await new Promise((resolve) => setTimeout(resolve, 1600));
-    
+
+    // Simulate snappy transaction
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     setIsSubmitting(false);
     setIsSent(true);
     setFormState({ name: "", email: "", message: "" });
 
-    // Reset feedback notice
     setTimeout(() => setIsSent(false), 4000);
   };
 
   return (
-    <section 
+    <section
       id="contact"
-      aria-label="Contact & Uplink"
+      aria-label="Contact and Collaboration"
       className="relative min-h-screen flex items-center justify-center px-8 md:px-16 py-32 overflow-hidden bg-background border-t border-white/5"
     >
-        {/* Structural vertical guides */}
-        <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
-        <div className="absolute right-4 sm:right-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
+      {/* Structural vertical guides */}
+      <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
+      <div className="absolute right-4 sm:right-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
 
-        <div className="max-w-5xl w-full flex flex-col gap-16 relative z-10">
-          
-          {/* Header Panel */}
-          <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
-            <div className="flex flex-col">
-              <span className="text-xs uppercase tracking-[0.25em] text-[#ccff00] block mb-4 font-mono">
-                <TextReveal text="04 // SIGNAL TRANSMISSION" variant="p" delayOffset={0} />
-              </span>
-              <h2 className="text-4xl md:text-6xl font-display font-black tracking-tight text-white flex flex-col md:flex-row flex-wrap gap-x-4">
-                <TextReveal text="Initiate" variant="h2" delayOffset={0.1} />
-                <TextReveal text="Connection." className="text-white/30" delayOffset={0.25} />
-              </h2>
-            </div>
-            <div className="flex items-center gap-2 font-mono text-[9px] text-white/40 uppercase tracking-widest bg-white/5 border border-white/10 px-4 py-2 rounded-full">
-              <Terminal size={11} className="animate-pulse text-[#ccff00]" />
-              Comms uplink // online
-            </div>
-          </div>
+      {/* Dual ambient glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 select-none">
+        <div
+          className="absolute left-1/4 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full transform-gpu"
+          style={{
+            background: isDark
+              ? "radial-gradient(circle, rgba(255,232,128,0.07) 0%, transparent 70%)"
+              : "radial-gradient(circle, rgba(191,0,57,0.07) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute right-1/4 bottom-10 h-[400px] w-[400px] rounded-full transform-gpu"
+          style={{
+            background: isDark
+              ? "radial-gradient(circle, rgba(191,0,57,0.07) 0%, transparent 70%)"
+              : "radial-gradient(circle, rgba(234,179,8,0.07) 0%, transparent 70%)",
+          }}
+        />
+      </div>
 
-          {/* Grid Container */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            
-            {/* Left Column: Direct Nodes */}
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="lg:col-span-5 flex flex-col gap-8"
+      <div className="max-w-5xl w-full flex flex-col gap-16 relative z-10">
+        {/* Header Panel */}
+        <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
+          <div className="flex flex-col">
+            <span
+              className={`text-xs uppercase tracking-[0.25em] block mb-4 font-mono font-bold ${
+                isDark ? "text-[#ffe880]" : "text-[#bf0039]"
+              }`}
             >
-              <motion.div variants={itemVariants}>
-                <h3 className="font-mono text-[10px] uppercase tracking-widest text-white/30 mb-3">
-                  [ DIRECT UPLINK PATHS ]
-                </h3>
-                <p className="text-sm text-white/55 leading-relaxed">
-                  Have an interesting project, engineering proposal, or looking for contract/freelance work? Drop a line directly or use the secure form transmission.
-                </p>
-              </motion.div>
-
-              <motion.div variants={itemVariants} className="flex flex-col gap-4">
-                {/* Node 1: Email */}
-                <a 
-                  href="mailto:githeshkaushall@gmail.com" 
-                  className="group flex items-center justify-between p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-[#ccff00]/30 hover:bg-white/[0.04] hover:translate-x-2 transition-all duration-300 cursor-none"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="p-3 rounded-xl bg-white/5 text-white/40 group-hover:text-[#ccff00] group-hover:bg-[#ccff00]/10 transition-colors">
-                      <Mail size={16} />
-                    </div>
-                    <div>
-                      <span className="block font-mono text-[9px] text-white/30 uppercase tracking-widest">Secure Email</span>
-                      <span className="text-sm text-white/80 font-mono">githeshkaushall@gmail.com</span>
-                    </div>
-                  </div>
-                  <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 text-[#ccff00] transition-all duration-300" />
-                </a>
-
-                {/* Node 2: Fiverr */}
-                <a 
-                  href="https://www.fiverr.com/sellers/kaushall_dev" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-[#ccff00]/30 hover:bg-white/[0.04] hover:translate-x-2 transition-all duration-300 cursor-none"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="p-3 rounded-xl bg-white/5 text-white/40 group-hover:text-[#ccff00] group-hover:bg-[#ccff00]/10 transition-colors">
-                      <FileText size={16} />
-                    </div>
-                    <div>
-                      <span className="block font-mono text-[9px] text-white/30 uppercase tracking-widest">Fiverr Terminal</span>
-                      <span className="text-sm text-white/80 font-mono">Fiverr // S KAUSHALL</span>
-                    </div>
-                  </div>
-                  <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 text-[#ccff00] transition-all duration-300" />
-                </a>
-              </motion.div>
-            </motion.div>
-
-            {/* Right Column: Sci-Fi Input Fields Form */}
-            <motion.div 
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ type: "spring", stiffness: 80, damping: 15, delay: 0.2 }}
-              className="lg:col-span-7 bg-white/[0.02] border border-white/5 p-8 md:p-10 rounded-3xl relative overflow-hidden"
-            >
-              {/* Background ambient lighting */}
-              <div className="absolute top-0 right-0 w-36 h-36 rounded-full bg-[#ccff00]/5 blur-[70px] pointer-events-none" />
-
-              <form onSubmit={handleSubmit} className="flex flex-col gap-6 relative z-10">
-                
-                {/* Field 1: Name */}
-                <div className="relative group flex flex-col gap-2 p-4 rounded-xl bg-white/[0.01] border border-white/5 focus-within:border-[#ccff00]/30 focus-within:bg-white/[0.02] focus-within:shadow-[0_0_20px_rgba(204,255,0,0.04)] transition-all duration-500">
-                  <label className={`font-mono text-[9px] uppercase tracking-widest transition-colors duration-300 ${focusedField === "name" ? "text-[#ccff00]" : "text-white/30"}`}>
-                    01 // Identification / Name
-                  </label>
-                  <input 
-                    type="text" 
-                    required
-                    value={formState.name}
-                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    onFocus={() => setFocusedField("name")}
-                    onBlur={() => setFocusedField(null)}
-                    placeholder="Enter alias or entity name..."
-                    className="bg-transparent text-sm text-white placeholder:text-white/20 py-1 outline-hidden"
-                    style={{ cursor: "none" }}
-                  />
-                  <motion.div 
-                    initial={false}
-                    animate={{ scaleX: focusedField === "name" ? 1 : 0 }}
-                    className="absolute bottom-0 left-4 right-4 h-[2px] bg-[#ccff00] origin-left pointer-events-none"
-                  />
-                </div>
-
-                {/* Field 2: Email */}
-                <div className="relative group flex flex-col gap-2 p-4 rounded-xl bg-white/[0.01] border border-white/5 focus-within:border-[#ccff00]/30 focus-within:bg-white/[0.02] focus-within:shadow-[0_0_20px_rgba(204,255,0,0.04)] transition-all duration-500">
-                  <label className={`font-mono text-[9px] uppercase tracking-widest transition-colors duration-300 ${focusedField === "email" ? "text-[#ccff00]" : "text-white/30"}`}>
-                    02 // Return Coordinate / Email
-                  </label>
-                  <input 
-                    type="email" 
-                    required
-                    value={formState.email}
-                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    onFocus={() => setFocusedField("email")}
-                    onBlur={() => setFocusedField(null)}
-                    placeholder="name@domain.com"
-                    className="bg-transparent text-sm text-white placeholder:text-white/20 py-1 outline-hidden"
-                    style={{ cursor: "none" }}
-                  />
-                  <motion.div 
-                    initial={false}
-                    animate={{ scaleX: focusedField === "email" ? 1 : 0 }}
-                    className="absolute bottom-0 left-4 right-4 h-[2px] bg-[#ccff00] origin-left pointer-events-none"
-                  />
-                </div>
-
-                {/* Field 3: Message */}
-                <div className="relative group flex flex-col gap-2 p-4 rounded-xl bg-white/[0.01] border border-white/5 focus-within:border-[#ccff00]/30 focus-within:bg-white/[0.02] focus-within:shadow-[0_0_20px_rgba(204,255,0,0.04)] transition-all duration-500">
-                  <label className={`font-mono text-[9px] uppercase tracking-widest transition-colors duration-300 ${focusedField === "message" ? "text-[#ccff00]" : "text-white/30"}`}>
-                    03 // Payload Data / Message Description
-                  </label>
-                  <textarea 
-                    rows={4}
-                    required
-                    value={formState.message}
-                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                    onFocus={() => setFocusedField("message")}
-                    onBlur={() => setFocusedField(null)}
-                    placeholder="Provide details about your project timeline and requirements..."
-                    className="bg-transparent text-sm text-white placeholder:text-white/20 py-1 outline-hidden resize-none"
-                    style={{ cursor: "none" }}
-                  />
-                  <motion.div 
-                    initial={false}
-                    animate={{ scaleX: focusedField === "message" ? 1 : 0 }}
-                    className="absolute bottom-0 left-4 right-4 h-[2px] bg-[#ccff00] origin-left pointer-events-none"
-                  />
-                </div>
-
-                {/* Submit row */}
-                <div className="flex items-center justify-between pt-4 mt-2">
-                  <div className="text-[10px] font-mono text-white/30 uppercase tracking-widest">
-                    <AnimatePresence mode="wait">
-                      {isSubmitting ? (
-                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-[#ccff00] animate-pulse">
-                          Encrypting payload streams...
-                        </motion.span>
-                      ) : isSent ? (
-                        <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-green-400 font-semibold">
-                          ✓ Signal packet successfully routed.
-                        </motion.span>
-                      ) : (
-                        <span>Comms: ready to transmit</span>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  <Magnetic range={30} actionFactor={0.25}>
-                    <button
-                      type="submit"
-                      disabled={isSubmitting || isSent}
-                      className="flex items-center gap-2 bg-[#ccff00] text-black font-mono text-xs font-bold px-6 py-3.5 rounded-xl hover:bg-white hover:shadow-[0_0_30px_rgba(204,255,0,0.2)] hover:scale-105 active:scale-95 transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none cursor-none"
-                    >
-                      <span>Transmit Signal</span>
-                      <Send size={12} className={isSubmitting ? "animate-ping text-black" : "text-black"} />
-                    </button>
-                  </Magnetic>
-                </div>
-
-              </form>
-            </motion.div>
-
+              <TextReveal text="04 // LET'S CHAT 💬" variant="p" delayOffset={0} />
+            </span>
+            <h2 className="text-4xl md:text-6xl font-display font-black tracking-tight text-white flex flex-col md:flex-row flex-wrap gap-x-4">
+              <TextReveal text="Got an idea?" variant="h2" delayOffset={0.1} />
+              <TextReveal text="Let's make it happen." className="text-white/40" delayOffset={0.25} />
+            </h2>
           </div>
-
-          {/* Bottom telemetry line */}
-          <div className="w-full flex justify-between items-center text-[9px] font-mono tracking-[0.2em] text-white/20 border-t border-white/5 pt-6">
-            <span>PORT_STATUS // COMM_ESTABLISHED</span>
-            <span>© 2026 S KAUSHALL</span>
+          <div className="flex items-center gap-2 font-mono text-[10px] text-white/70 uppercase tracking-wider glass-pill px-4 py-2 rounded-full font-bold">
+            <MessageSquare size={13} className={`animate-pulse ${isDark ? "text-[#ffe880]" : "text-[#bf0039]"}`} />
+            <span>Always happy to connect! ✨</span>
           </div>
-
         </div>
-      </section>
+
+        {/* Grid Container */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Left Column: Direct Reach Out */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="lg:col-span-5 flex flex-col gap-8"
+          >
+            <motion.div variants={itemVariants}>
+              <h3 className="font-mono text-[11px] uppercase tracking-widest text-white/50 mb-3 font-bold">
+                [ DIRECT REACH OUT ]
+              </h3>
+              <p className="text-sm text-white/70 leading-relaxed">
+                Have an exciting project, contract/freelance opportunity, or just want to chat about tech and creative ideas? Drop me a line directly or use the message form!
+              </p>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="flex flex-col gap-4">
+              {/* Node 1: Email */}
+              <a
+                href="mailto:githeshkaushall@gmail.com"
+                data-cursor-text="EMAIL"
+                className="group flex items-center justify-between p-5 rounded-2xl glass-card hover:border-[#ffe880]/50 hover:translate-x-2 transition-all duration-300 cursor-none shadow-xl"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="p-3 rounded-xl bg-white/5 text-white/60 group-hover:text-[#ffe880] group-hover:bg-[#ffe880]/10 transition-colors">
+                    <Mail size={16} />
+                  </div>
+                  <div>
+                    <span className="block font-mono text-[9px] text-white/40 uppercase tracking-widest font-semibold">Direct Email</span>
+                    <span className="text-sm text-white/90 font-mono font-medium">githeshkaushall@gmail.com</span>
+                  </div>
+                </div>
+                <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 text-[#ffe880] transition-all duration-300" />
+              </a>
+
+              {/* Node 2: Fiverr */}
+              <a
+                href="https://www.fiverr.com/sellers/kaushall_dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor-text="STUDIO"
+                className="group flex items-center justify-between p-5 rounded-2xl glass-card hover:border-[#ffe880]/50 hover:translate-x-2 transition-all duration-300 cursor-none shadow-xl"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="p-3 rounded-xl bg-white/5 text-white/60 group-hover:text-[#ffe880] group-hover:bg-[#ffe880]/10 transition-colors">
+                    <FileText size={16} />
+                  </div>
+                  <div>
+                    <span className="block font-mono text-[9px] text-white/40 uppercase tracking-widest font-semibold">Fiverr Studio</span>
+                    <span className="text-sm text-white/90 font-mono font-medium">Fiverr // S KAUSHALL</span>
+                  </div>
+                </div>
+                <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 text-[#ffe880] transition-all duration-300" />
+              </a>
+            </motion.div>
+          </motion.div>
+
+          {/* Right Column: Friendly Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ type: "spring", stiffness: 80, damping: 15, delay: 0.2 }}
+            className="lg:col-span-7 glass-frosted p-8 md:p-10 rounded-[32px] relative overflow-hidden shadow-2xl"
+          >
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6 relative z-10">
+              {/* Field 1: Name */}
+              <div className="relative group flex flex-col gap-2 p-4 rounded-2xl bg-black/40 border border-white/10 focus-within:border-[#ffe880]/50 transition-all duration-300 shadow-inner">
+                <label
+                  className={`font-mono text-[10px] uppercase tracking-wider font-bold transition-colors duration-300 ${
+                    focusedField === "name" ? (isDark ? "text-[#ffe880]" : "text-[#bf0039]") : "text-white/40"
+                  }`}
+                >
+                  Your Name ✨
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formState.name}
+                  onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                  onFocus={() => setFocusedField("name")}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder="What should I call you?"
+                  className="bg-transparent text-sm text-white placeholder:text-white/20 py-1 outline-hidden"
+                  style={{ cursor: "none" }}
+                />
+                <motion.div
+                  initial={false}
+                  animate={{ scaleX: focusedField === "name" ? 1 : 0 }}
+                  className={`absolute bottom-0 left-4 right-4 h-[2px] origin-left pointer-events-none ${
+                    isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"
+                  }`}
+                />
+              </div>
+
+              {/* Field 2: Email */}
+              <div className="relative group flex flex-col gap-2 p-4 rounded-2xl bg-black/40 border border-white/10 focus-within:border-[#ffe880]/50 transition-all duration-300 shadow-inner">
+                <label
+                  className={`font-mono text-[10px] uppercase tracking-wider font-bold transition-colors duration-300 ${
+                    focusedField === "email" ? (isDark ? "text-[#ffe880]" : "text-[#bf0039]") : "text-white/40"
+                  }`}
+                >
+                  Your Email ✉️
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={formState.email}
+                  onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                  onFocus={() => setFocusedField("email")}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder="name@domain.com"
+                  className="bg-transparent text-sm text-white placeholder:text-white/20 py-1 outline-hidden"
+                  style={{ cursor: "none" }}
+                />
+                <motion.div
+                  initial={false}
+                  animate={{ scaleX: focusedField === "email" ? 1 : 0 }}
+                  className={`absolute bottom-0 left-4 right-4 h-[2px] origin-left pointer-events-none ${
+                    isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"
+                  }`}
+                />
+              </div>
+
+              {/* Field 3: Message */}
+              <div className="relative group flex flex-col gap-2 p-4 rounded-2xl bg-black/40 border border-white/10 focus-within:border-[#ffe880]/50 transition-all duration-300 shadow-inner">
+                <label
+                  className={`font-mono text-[10px] uppercase tracking-wider font-bold transition-colors duration-300 ${
+                    focusedField === "message" ? (isDark ? "text-[#ffe880]" : "text-[#bf0039]") : "text-white/40"
+                  }`}
+                >
+                  Your Message 💬
+                </label>
+                <textarea
+                  rows={4}
+                  required
+                  value={formState.message}
+                  onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                  onFocus={() => setFocusedField("message")}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder="Tell me about your project, idea, or just say hello!..."
+                  className="bg-transparent text-sm text-white placeholder:text-white/20 py-1 outline-hidden resize-none"
+                  style={{ cursor: "none" }}
+                />
+                <motion.div
+                  initial={false}
+                  animate={{ scaleX: focusedField === "message" ? 1 : 0 }}
+                  className={`absolute bottom-0 left-4 right-4 h-[2px] origin-left pointer-events-none ${
+                    isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"
+                  }`}
+                />
+              </div>
+
+              {/* Submit row */}
+              <div className="flex items-center justify-between pt-2">
+                <div className="text-[11px] font-mono text-white/50">
+                  <AnimatePresence mode="wait">
+                    {isSubmitting ? (
+                      <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-[#ffe880] animate-pulse font-bold">
+                        Sending your note... 🚀
+                      </motion.span>
+                    ) : isSent ? (
+                      <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-green-400 font-bold">
+                        ✓ Message sent! Thanks for reaching out 🎉
+                      </motion.span>
+                    ) : (
+                      <span>Ready when you are!</span>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                <Magnetic range={30} actionFactor={0.25}>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting || isSent}
+                    className={`flex items-center gap-2 font-mono text-xs font-bold px-7 py-4 rounded-full hover:scale-105 active:scale-95 transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none cursor-none shadow-xl ${
+                      isDark
+                        ? "bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_25px_rgba(255,232,128,0.5)]"
+                        : "bg-[#bf0039] text-white hover:bg-black hover:shadow-[0_0_25px_rgba(191,0,57,0.35)]"
+                    }`}
+                  >
+                    <span>Send Message</span>
+                    <Send size={13} className={isSubmitting ? "animate-ping" : ""} />
+                  </button>
+                </Magnetic>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+
+        {/* Bottom footer note */}
+        <div className="w-full flex justify-between items-center text-[10px] font-mono tracking-wider text-white/40 border-t border-white/10 pt-6">
+          <span>BUILT WITH PASSION & CURIOSITY</span>
+          <span>© 2026 S KAUSHALL</span>
+        </div>
+      </div>
+    </section>
   );
 }

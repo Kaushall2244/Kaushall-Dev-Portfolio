@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Syne, Geist_Mono } from "next/font/google";
 import SidebarDecorations from "@/components/ui/SidebarDecorations";
 import Navbar from "@/components/Global/Navbar";
@@ -16,42 +16,54 @@ const displayFont = Syne({
   subsets: ["latin"],
   weight: ["500", "700", "800"],
   variable: "--font-display",
+  display: "swap",
 });
 
 const monoFont = Geist_Mono({
   subsets: ["latin"],
   weight: ["300", "400", "500"],
   variable: "--font-mono",
+  display: "swap",
 });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f8fb" },
+  ],
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://skaushall.dev"),
-  title: "S Kaushall | Full-Stack Developer & UI Engineer Portfolio",
+  title: "S Kaushall | Full-Stack Developer & Creative UI Engineer",
   description:
-    "Portfolio of S Kaushall - Computer Science Engineering Student, Full-Stack Developer, and UI Engineer crafting high-performance digital products, 3D web applications, and interactive user experiences.",
+    "Portfolio of S Kaushall - Full-Stack Developer, Computer Science Student, and Creative UI Engineer building fast, beautiful, and interactive web applications with Next.js, React, Three.js, and Framer Motion.",
   keywords: [
     "S Kaushall",
     "Kaushall",
     "Full-Stack Developer",
     "Software Engineer",
+    "Creative Developer",
     "Computer Science Student",
-    "Next.js Developer",
+    "Next.js 15 Developer",
     "React Developer",
     "Three.js 3D Web",
     "Frontend Engineer",
-    "Cinematic UI",
-    "Portfolio",
+    "Interactive UI Portfolio",
+    "Web Developer Coimbatore India",
   ],
-  authors: [{ name: "S Kaushall" }],
+  authors: [{ name: "S Kaushall", url: "https://skaushall.dev" }],
   creator: "S Kaushall",
   publisher: "S Kaushall",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "S Kaushall | Full-Stack Developer & UI Engineer",
+    title: "S Kaushall | Full-Stack Developer & Creative UI Engineer",
     description:
-      "Engineering cinematic web experiences with React, Next.js, Framer Motion, and Three.js.",
+      "Crafting fast, beautiful, and playful web experiences with Next.js, React, Three.js, and modern creative technology.",
     url: "https://skaushall.dev",
     siteName: "S Kaushall Portfolio",
     locale: "en_US",
@@ -67,9 +79,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "S Kaushall | Full-Stack Developer & UI Engineer",
+    title: "S Kaushall | Full-Stack Developer & Creative UI Engineer",
     description:
-      "Engineering cinematic web experiences with React, Next.js, Framer Motion, and Three.js.",
+      "Crafting fast, beautiful, and playful web experiences with Next.js, React, Three.js, and modern creative technology.",
     creator: "@skaushall",
     images: ["/Images/profile.png"],
   },
@@ -93,11 +105,13 @@ const jsonLd = {
       "@type": "Person",
       "@id": "https://skaushall.dev/#person",
       name: "S Kaushall",
-      jobTitle: "Software Engineer & Full-Stack Developer",
+      jobTitle: "Full-Stack Developer & Creative UI Engineer",
       url: "https://skaushall.dev",
       image: "https://skaushall.dev/Images/profile.png",
+      email: "githeshkaushall@gmail.com",
       sameAs: [
         "https://github.com/Kaushall2244",
+        "https://www.linkedin.com/in/kaushall22/",
         "https://www.fiverr.com/sellers/kaushall_dev",
       ],
       knowsAbout: [
@@ -106,6 +120,7 @@ const jsonLd = {
         "React",
         "TypeScript",
         "Three.js",
+        "Tailwind CSS",
         "Java",
         "Python",
       ],
@@ -115,7 +130,7 @@ const jsonLd = {
       "@id": "https://skaushall.dev/#website",
       url: "https://skaushall.dev",
       name: "S Kaushall Portfolio",
-      description: "Computer Science Student & Full Stack Developer Portfolio",
+      description: "Creative Full-Stack Developer & UI Engineer Portfolio",
       publisher: {
         "@id": "https://skaushall.dev/#person",
       },

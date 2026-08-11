@@ -8,11 +8,11 @@ interface PreloaderProps {
 }
 
 const BOOT_LOGS = [
-  "INITIALIZING VIRTUAL CONTAINER...",
-  "LINKING KINETIC GLOW MATRICES...",
-  "ESTABLISHING COMMS COMPILE UPLINK...",
-  "LOADING CORE ASSETS...",
-  "BOOT COMPLETED SUCCESSFULLY."
+  "SPARKING CREATIVITY ✨",
+  "BREWING FRESH CODE & COFFEE ☕",
+  "TUNING PLAYFUL ANIMATIONS 🎨",
+  "POLISHING PIXELS & 3D WORLDS 🚀",
+  "WELCOME TO MY PORTFOLIO! 🎉"
 ];
 
 export default function Preloader({ onComplete }: PreloaderProps) {
@@ -25,7 +25,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const targetWord = "KAUSHALL";
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
 
-  // Progress Counter logic
+  // Fast, snappy progress counter
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prev) => {
@@ -33,11 +33,10 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           clearInterval(timer);
           return 100;
         }
-        // Realistic step speed
-        const step = Math.floor(Math.random() * 8) + 3;
+        const step = Math.floor(Math.random() * 10) + 6;
         return Math.min(prev + step, 100);
       });
-    }, 60);
+    }, 35);
 
     return () => clearInterval(timer);
   }, []);
@@ -52,104 +51,110 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     }
   }, [progress]);
 
-  // Character scramble decryption logic
+  // Character scramble animation
   useEffect(() => {
     let animationFrameId: number;
     let iteration = 0;
 
     const runScramble = () => {
-      // Scale iterations with the progress
-      const targetIter = Math.floor((progress / 100) * targetWord.length);
-      
-      setScrambledText((prev) => {
-        return targetWord
+      setScrambledText(
+        targetWord
           .split("")
-          .map((letter, index) => {
-            if (index < targetIter) {
-              return letter; // Decrypted
+          .map((char, index) => {
+            if (index < iteration) {
+              return targetWord[index];
             }
-            if (progress === 100) {
-              return letter; // Decrypted fully
-            }
-            // Scrambling character
             return chars[Math.floor(Math.random() * chars.length)];
           })
-          .join("");
-      });
+          .join("")
+      );
 
-      if (progress < 100) {
+      if (iteration < targetWord.length) {
+        iteration += 1 / 3;
         animationFrameId = requestAnimationFrame(runScramble);
-      } else {
-        setScrambledText(targetWord);
       }
     };
 
-    animationFrameId = requestAnimationFrame(runScramble);
+    runScramble();
     return () => cancelAnimationFrame(animationFrameId);
-  }, [progress]);
+  }, []);
 
-  // GSAP Curtain Exit Animation
+  // Exit Animation when 100% is reached
   useEffect(() => {
     if (progress === 100) {
-      const curtains = containerRef.current?.querySelectorAll(".curtain-panel");
-      const title = containerRef.current?.querySelector(".preloader-title");
-      const hud = containerRef.current?.querySelectorAll(".hud-element");
-
-      if (!curtains) return;
-
-      document.body.style.overflow = "hidden";
-
       const tl = gsap.timeline({
         onComplete: () => {
-          document.body.style.overflow = "";
           onComplete();
-        }
+        },
       });
 
-      // Fade out textual elements first
-      tl.to([title, hud], {
+      tl.to(".hud-element", {
         opacity: 0,
-        y: -30,
-        duration: 0.5,
-        stagger: 0.05,
-        ease: "power2.inOut"
+        y: -20,
+        duration: 0.35,
+        stagger: 0.04,
+        ease: "power3.in",
       })
-      // Stagger curtain panels sliding up
-      .to(curtains, {
-        y: "-100%",
-        duration: 1.1,
-        stagger: 0.12,
-        ease: "power4.inOut"
-      }, "-=0.2");
+      .to(
+        ".preloader-title",
+        {
+          scale: 1.08,
+          opacity: 0,
+          filter: "blur(8px)",
+          duration: 0.45,
+          ease: "power2.inOut",
+        },
+        "-=0.2"
+      )
+      .to(
+        curtainsRef.current?.children || [],
+        {
+          scaleY: 0,
+          transformOrigin: "top",
+          duration: 0.65,
+          stagger: 0.05,
+          ease: "power4.inOut",
+        },
+        "-=0.15"
+      )
+      .to(
+        containerRef.current,
+        {
+          opacity: 0,
+          duration: 0.2,
+          pointerEvents: "none",
+        },
+        "-=0.1"
+      );
     }
   }, [progress, onComplete]);
 
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[9999] overflow-hidden bg-transparent select-none"
+      className="fixed inset-0 z-[100] flex flex-col justify-between bg-black select-none pointer-events-auto"
+      style={{ cursor: "none" }}
     >
-      {/* 5 Vertical Curtain Panels */}
-      <div ref={curtainsRef} className="absolute inset-0 grid grid-cols-5 pointer-events-none z-0">
-        {[...Array(5)].map((_, i) => (
-          <div
-            key={i}
-            className="curtain-panel w-full h-[100vh] bg-black border-r border-white/5 last:border-0"
-          />
-        ))}
+      {/* 5-Column Split Curtain Animation Panels */}
+      <div
+        ref={curtainsRef}
+        className="absolute inset-0 grid grid-cols-5 pointer-events-none z-0"
+      >
+        <div className="bg-[#050505] w-full h-full border-r border-white/5 origin-top" />
+        <div className="bg-[#080808] w-full h-full border-r border-white/5 origin-top" />
+        <div className="bg-[#050505] w-full h-full border-r border-white/5 origin-top" />
+        <div className="bg-[#080808] w-full h-full border-r border-white/5 origin-top" />
+        <div className="bg-[#050505] w-full h-full origin-top" />
       </div>
 
       {/* Cyber Grid Overlay background */}
       <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none z-10" />
 
-      {/* Subtle Scanner Line */}
-      <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-[#ccff00]/5 to-transparent blur-md select-none pointer-events-none" />
-
-      {/* Centered Decrypting Title */}
+      {/* Centered Title */}
       <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
         <div className="preloader-title text-center px-4">
-          <p className="font-mono text-xs text-[#ccff00] tracking-[0.6em] uppercase mb-4 hud-element">
-            DECRYPTING SYSTEM SIGNATURE
+          <p className="font-mono text-xs text-[#ccff00] tracking-[0.4em] uppercase mb-4 hud-element">
+            ✨ WELCOME TO MY CREATIVE SPACE
           </p>
           <h1 className="font-display font-black text-6xl md:text-8xl tracking-tight text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
             {scrambledText}
@@ -160,25 +165,25 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       {/* BOTTOM HUD ELEMENTS */}
       <div className="absolute bottom-16 left-8 right-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 z-20 hud-element">
         {/* Logs */}
-        <div className="font-mono text-[9px] text-white/40 tracking-widest uppercase flex flex-col gap-1.5 max-w-xs md:max-w-md">
-          <span className="text-[#ccff00] font-semibold">{"// BOOT LOG ENTRY"}</span>
-          <span className="text-white/80 transition-all duration-300">
+        <div className="font-mono text-[10px] text-white/50 tracking-wider flex flex-col gap-1.5 max-w-xs md:max-w-md">
+          <span className="text-[#ccff00] font-semibold">{"// CREATIVE ENGINE"}</span>
+          <span className="text-white/90 transition-all duration-300 font-medium">
             {BOOT_LOGS[logIndex]}
           </span>
-          <span className="text-white/20">SYS_PORT_READY: 0x89F0A2</span>
+          <span className="text-white/30 text-[9px]">READY FOR EXPLORATION 🚀</span>
         </div>
 
-        {/* Huge Counter */}
+        {/* Counter */}
         <div className="flex items-baseline gap-2 font-display text-8xl md:text-[10vw] font-black text-[#ccff00] tracking-tighter leading-none select-none drop-shadow-[0_0_40px_rgba(204,255,0,0.15)]">
           <span>{String(progress).padStart(3, "0")}</span>
           <span className="text-xl md:text-3xl font-mono text-white/30 font-normal">%</span>
         </div>
       </div>
 
-      {/* System Decorative Borders */}
-      <div className="absolute top-8 left-8 right-8 flex justify-between items-center z-20 font-mono text-[9px] text-white/25 hud-element">
-        <span>CORE_INIT_SYS // 2026</span>
-        <span>KAUSHALL_DEV_SYSTEMS</span>
+      {/* Top Friendly Header */}
+      <div className="absolute top-8 left-8 right-8 flex justify-between items-center z-20 font-mono text-[9px] text-white/40 hud-element tracking-widest">
+        <span>S KAUSHALL // PORTFOLIO</span>
+        <span>LET&apos;S BUILD SOMETHING AWESOME 💡</span>
       </div>
     </div>
   );

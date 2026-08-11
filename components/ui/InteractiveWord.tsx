@@ -13,10 +13,10 @@ export default function InteractiveWord({ word, isAccent = false }: InteractiveW
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const accentColor = isDark ? "#ccff00" : "#0284c7";
-  const defaultColor = isDark ? "#ffffff" : "#090d16";
-  const hoverColor = isAccent ? (isDark ? "#ffffff" : "#090d16") : accentColor;
-  const glowColor = isAccent ? (isDark ? "255, 255, 255" : "2, 132, 199") : isDark ? "204, 255, 0" : "2, 132, 199";
+  const accentColor = isDark ? "#ffe880" : "#bf0039";
+  const defaultColor = isDark ? "#ffffff" : "#0f172a";
+  const hoverColor = isAccent ? (isDark ? "#ffffff" : "#0f172a") : accentColor;
+  const glowColor = isAccent ? (isDark ? "255, 232, 128" : "191, 0, 57") : isDark ? "255, 232, 128" : "191, 0, 57";
 
   return (
     <span className="inline-block cursor-none select-none">
@@ -33,7 +33,7 @@ export default function InteractiveWord({ word, isAccent = false }: InteractiveW
             scale: 1.15,
             rotate: idx % 2 === 0 ? 6 : -6,
             color: hoverColor,
-            textShadow: `0 0 20px rgba(${glowColor}, 0.8), 0 0 40px rgba(${glowColor}, 0.4)`,
+            textShadow: `0 0 25px rgba(${glowColor}, 0.9), 0 0 50px rgba(${glowColor}, 0.5)`,
           }}
           transition={{
             type: "spring",

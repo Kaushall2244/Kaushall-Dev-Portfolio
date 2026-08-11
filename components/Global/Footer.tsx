@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, Cpu, Clock, Globe, Terminal } from "lucide-react";
+import { ArrowUpRight, Globe, Sparkles, Navigation, Heart } from "lucide-react";
 import Magnetic from "../ui/Magnetic";
 import TextReveal from "../ui/TextReveal";
+import { useTheme } from "./ThemeProvider";
 
 const SYSTEM_LINKS = [
   { label: "Home", href: "#home" },
@@ -14,80 +15,87 @@ const SYSTEM_LINKS = [
 ];
 
 const MATRIX_LINKS = [
-  { label: "GitHub Core", href: "https://github.com/Kaushall2244" },
-  { label: "LinkedIn Network", href: "https://www.linkedin.com/in/kaushall22/" },
+  { label: "GitHub", href: "https://github.com/Kaushall2244" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/kaushall22/" },
   { label: "Fiverr Studio", href: "https://www.fiverr.com/sellers/kaushall_dev" },
-  { label: "Instagram Grid", href: "#" }, 
 ];
 
 export default function Footer() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <footer className="relative bg-background border-t border-white/5 px-8 md:px-16 py-20 overflow-hidden select-none">
+    <footer className="relative bg-background border-t border-white/10 px-8 md:px-16 py-20 overflow-hidden select-none">
       {/* Structural alignment lines */}
       <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
       <div className="absolute right-4 sm:right-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
 
       <div className="max-w-5xl w-full mx-auto flex flex-col gap-16 relative z-10">
-        
-        {/* TOP BLOCK: KINETIC CALLOUT & ANCHOR RESET */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-12 border-b border-white/5">
+        {/* TOP BLOCK */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-12 border-b border-white/10">
           <div>
             <h3 className="text-3xl md:text-4xl font-display font-black text-white tracking-tight leading-tight">
-              <TextReveal text="Let's build something" variant="h3" delayOffset={0} />{" "}
-              <span className="text-[#ccff00] font-light italic font-sans block md:inline-block">extraordinary.</span>
+              <TextReveal text="Let's make something" variant="h3" delayOffset={0} />{" "}
+              <span className={`font-light italic font-sans block md:inline-block ${isDark ? "text-[#ffe880]" : "text-[#bf0039]"}`}>
+                awesome.
+              </span>
             </h3>
-            <p className="text-[10px] text-white/40 font-mono mt-3 uppercase tracking-widest">
-              System architecture // Digital asset production // 2026 Engine
+            <p className="text-xs text-white/60 font-mono mt-3 uppercase tracking-wider font-medium">
+              Designed & built with curiosity, coffee, and clean code ☕
             </p>
           </div>
-          
+
           <Magnetic range={30} actionFactor={0.2}>
-            <button 
+            <button
               onClick={scrollToTop}
-              className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest px-4 py-3 bg-white/5 border border-white/10 rounded-lg hover:border-[#ccff00] text-white/60 hover:text-[#ccff00] transition-colors duration-300 cursor-none"
+              data-cursor-text="APEX"
+              className={`flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider px-6 py-3.5 rounded-full border transition-all duration-300 cursor-none font-bold shadow-xl ${
+                isDark
+                  ? "bg-white/5 border-white/15 text-white/80 hover:text-[#ffe880] hover:border-[#ffe880]/50 hover:bg-white/10"
+                  : "bg-black/5 border-black/15 text-black/80 hover:text-[#bf0039] hover:border-[#bf0039]/40 hover:bg-black/10"
+              }`}
             >
-              <span>[ Return to Apex ]</span>
-              <ArrowUpRight size={11} className="-rotate-45" />
+              <span>[ Back to Top 🚀 ]</span>
+              <ArrowUpRight size={13} className="-rotate-45" />
             </button>
           </Magnetic>
         </div>
 
-        {/* MID BLOCK: DATA INDEX MATRICES */}
-        <motion.div 
+        {/* MID BLOCK: NAVIGATION COLUMNS */}
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-10%" }}
           variants={{
             hidden: {},
             visible: {
-              transition: { staggerChildren: 0.08 }
-            }
+              transition: { staggerChildren: 0.08 },
+            },
           }}
           className="grid grid-cols-2 md:grid-cols-4 gap-8 py-4"
         >
-          
-          {/* COLUMN 1: NAVIGATION MATRIX */}
-          <motion.div 
+          {/* COLUMN 1 */}
+          <motion.div
             variants={{
-              hidden: { opacity: 0, y: 25 },
-              visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[9px] uppercase tracking-widest text-white/30 flex items-center gap-1.5 border-b border-white/5 pb-2">
-              <Terminal size={10} className="text-[#ccff00]" />
-              01 // Path Indices
+            <span className="font-mono text-[10px] uppercase tracking-wider text-white/50 flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
+              <Navigation size={11} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+              Explore
             </span>
             <div className="flex flex-col gap-2">
               {SYSTEM_LINKS.map((link) => (
-                <a 
+                <a
                   key={link.label}
                   href={link.href}
-                  className="text-sm text-white/50 hover:text-white hover:translate-x-1 transition-all duration-300 max-w-max cursor-none font-sans"
+                  className="text-sm text-white/70 hover:text-white hover:translate-x-1 transition-all duration-300 max-w-max cursor-none font-medium"
                 >
                   {link.label}
                 </a>
@@ -95,26 +103,28 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          {/* COLUMN 2: SOCIAL RUNWAY CONNECTIONS */}
-          <motion.div 
+          {/* COLUMN 2 */}
+          <motion.div
             variants={{
-              hidden: { opacity: 0, y: 25 },
-              visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[9px] uppercase tracking-widest text-white/30 flex items-center gap-1.5 border-b border-white/5 pb-2">
-              <Cpu size={10} className="text-[#ccff00]" />
-              02 // External Nodes
+            <span className="font-mono text-[10px] uppercase tracking-wider text-white/50 flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
+              <Sparkles size={11} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+              Connect
             </span>
             <div className="flex flex-col gap-2">
               {MATRIX_LINKS.map((link) => (
-                <a 
+                <a
                   key={link.label}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-white/50 hover:text-[#ccff00] hover:translate-x-1 transition-all duration-300 flex items-center gap-1 max-w-max group cursor-none font-sans"
+                  className={`text-sm text-white/70 hover:translate-x-1 transition-all duration-300 flex items-center gap-1 max-w-max group cursor-none font-medium ${
+                    isDark ? "hover:text-[#ffe880]" : "hover:text-[#bf0039]"
+                  }`}
                 >
                   <span>{link.label}</span>
                   <ArrowUpRight size={11} className="opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
@@ -123,53 +133,49 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          {/* COLUMN 3: REGIONAL GEOMETRIC MATRIX */}
-          <motion.div 
+          {/* COLUMN 3 */}
+          <motion.div
             variants={{
-              hidden: { opacity: 0, y: 25 },
-              visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[9px] uppercase tracking-widest text-white/30 flex items-center gap-1.5 border-b border-white/5 pb-2">
-              <Globe size={10} className="text-[#ccff00]" />
-              03 // Coordinates
+            <span className="font-mono text-[10px] uppercase tracking-wider text-white/50 flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
+              <Globe size={11} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+              Location
             </span>
-            <div className="text-sm text-white/55 font-light leading-relaxed font-sans">
-              <span className="block font-medium text-white/80">Coimbatore, IN</span>
-              <span className="block font-mono text-[10px] mt-1 text-white/30">11.0168° N, 76.9558° E</span>
-              <span className="block font-mono text-[10px] text-white/30">IST // UTC +5:30</span>
+            <div className="text-sm text-white/70 leading-relaxed font-sans">
+              <span className="block font-semibold text-white/90">Coimbatore, India 📍</span>
+              <span className="block font-mono text-[10px] mt-1 text-white/50">Available Worldwide 🌍</span>
             </div>
           </motion.div>
 
-          {/* COLUMN 4: SYSTEM OPERATING PARAMETERS */}
-          <motion.div 
+          {/* COLUMN 4 */}
+          <motion.div
             variants={{
-              hidden: { opacity: 0, y: 25 },
-              visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100, damping: 15 } }
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[9px] uppercase tracking-widest text-white/30 flex items-center gap-1.5 border-b border-white/5 pb-2">
-              <Clock size={10} className="text-[#ccff00]" />
-              04 // Telemetry Spec
+            <span className="font-mono text-[10px] uppercase tracking-wider text-white/50 flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
+              <Heart size={11} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+              Crafted With
             </span>
-            <div className="text-sm text-white/50 font-mono text-[10px] flex flex-col gap-1.5">
-              <span className="text-white/80">RENDER_PIPELINE: ACTIVE</span>
-              <span>FPS_TARGET: 120HZ</span>
-              <span>CORE: NEXT_15_R3F</span>
-              <span className="text-[#ccff00]/60">STATUS: FULLY_OPTIMIZED</span>
+            <div className="text-xs text-white/60 flex flex-col gap-1 font-mono">
+              <span>• Next.js 15 & React 19</span>
+              <span>• Framer Motion & GSAP</span>
+              <span>• Tailwind CSS & Three.js</span>
             </div>
           </motion.div>
-
         </motion.div>
 
-        {/* BOTTOM BLOCK: METADATA ENCRYPTION SIGNATURE */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-white/5 font-mono text-[8px] tracking-[0.22em] text-white/20">
-          <span>PIPELINE_STABLE // COMPILED_SUCCESSFULLY</span>
-          <span>© 2026 S KAUSHALL // ALL RIGHTS RESERVED</span>
+        {/* BOTTOM COPYRIGHT */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] font-mono text-white/40 border-t border-white/10 pt-8">
+          <span>© 2026 S KAUSHALL • ALL RIGHTS RESERVED</span>
+          <span>HAVE A WONDERFUL DAY! ✨</span>
         </div>
-
       </div>
     </footer>
   );

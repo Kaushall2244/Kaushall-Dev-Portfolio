@@ -10,8 +10,8 @@ export default function GlobalMouseGlow() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const smoothX = useSpring(mouseX, { stiffness: 40, damping: 20 });
-  const smoothY = useSpring(mouseY, { stiffness: 40, damping: 20 });
+  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 25 });
+  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 25 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -19,9 +19,13 @@ export default function GlobalMouseGlow() {
       mouseY.set(e.clientY);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
+
+  const glowGradient = isDark
+    ? "radial-gradient(circle, rgba(255, 232, 128, 0.09) 0%, rgba(191, 0, 57, 0.04) 40%, transparent 70%)"
+    : "radial-gradient(circle, rgba(191, 0, 57, 0.08) 0%, rgba(234, 179, 8, 0.05) 45%, transparent 70%)";
 
   return (
     <motion.div
@@ -30,10 +34,9 @@ export default function GlobalMouseGlow() {
         top: smoothY,
         x: "-50%",
         y: "-50%",
+        background: glowGradient,
       }}
-      className={`pointer-events-none fixed z-0 h-[800px] w-[800px] rounded-full blur-[180px] hidden md:block transition-colors duration-700 ${
-        isDark ? "bg-[#ccff00]/10" : "bg-[#0284c7]/10"
-      }`}
+      className="pointer-events-none fixed z-0 h-[650px] w-[650px] rounded-full hidden md:block will-change-transform transform-gpu"
     />
   );
 }

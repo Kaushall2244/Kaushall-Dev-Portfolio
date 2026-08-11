@@ -1,14 +1,22 @@
 "use client";
 
-import { useRef } from "react";
-import { motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Sparkles,
+  ArrowUpRight,
+  CheckCircle2,
+  Circle,
+  Scan,
+  MapPin,
+  Compass,
+  Flame,
+  Volume2,
+} from "lucide-react";
 import TextReveal from "../ui/TextReveal";
-import { ProjectCard } from "../ui/ProjectCard";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useTheme } from "../Global/ThemeProvider";
+import MagneticWrapper from "../ui/Magnetic";
+import ProjectModal, { ProjectDetail } from "../ui/ProjectModal";
 
 export interface Project {
   title: string;
@@ -24,175 +32,608 @@ export interface Project {
   tech: string[];
 }
 
-const projects: Project[] = [
+const PROJECTS_DATA: ProjectDetail[] = [
   {
-    title: "DayFlow",
-    subtitle: "Smart Productivity Platform",
-    description: "A modern productivity platform focused on task management, habit tracking and intelligent planning. Built while exploring scalable application architecture and user-centric design.",
-    image: "/projects/dayflow.jpg",
-    status: "Active",
+    id: "dayflow",
+    title: "DayFlow Platform",
+    subtitle: "Smart Productivity & Habit Engine",
+    tagline: "Effortless task management built for everyday humans.",
+    category: "Web Apps",
     year: "2026",
-    role: "Full Stack Developer",
-    progress: 92,
-    github: "#",
-    demo: "#",
-    tech: ["Java", "Spring Boot", "MySQL", "React", "REST API"],
+    role: "Full-Stack Developer",
+    status: "Active & Live 🚀",
+    description: "A joyful productivity platform featuring intelligent task planning, habit streaks, and intuitive daily workflows.",
+    story: "I wanted a productivity app that felt fast, calm, and satisfying to use rather than cluttered and stressful. DayFlow combines minimal design with instant keyboard shortcuts and streak celebrations.",
+    features: [
+      "Interactive daily task checklists with instant completion animations",
+      "Dynamic habit streak tracker with visual progress analytics",
+      "Keyboard-first command palette for lightning-fast task entry",
+      "Customizable categories with color-coded tags and priorities",
+      "Cloud synchronization with instant offline fallback"
+    ],
+    tech: ["React 19", "Next.js 15", "TypeScript", "Tailwind CSS v4", "Spring Boot", "MySQL"],
+    github: "https://github.com/Kaushall2244",
+    demo: "https://github.com/Kaushall2244",
   },
   {
+    id: "visionmate",
     title: "VisionMate AI",
-    subtitle: "AI Assistant for the Visually Impaired",
-    description: "An AI-powered Android application that detects surrounding objects, reads text aloud and assists visually impaired users using computer vision, speech synthesis and deep learning models.",
-    image: "/projects/visionmate.jpg",
-    status: "In Development",
+    subtitle: "Real-Time AI Vision & Voice Assistant",
+    tagline: "Empowering visually impaired users through computer vision.",
+    category: "AI & Vision",
     year: "2026",
     role: "AI & Android Developer",
-    progress: 82,
-    github: "#",
-    demo: "#",
-    tech: ["Python", "OpenCV", "Android", "YOLO", "TensorFlow"],
+    status: "In Development ✨",
+    description: "An intelligent assistive tool that detects surroundings, reads street signs and books aloud, and describes visual scenes in real-time.",
+    story: "Inspired by accessibility tech, VisionMate AI was developed to turn mobile cameras into real-time perceptual assistants using lightweight deep learning models and low-latency speech synthesis.",
+    features: [
+      "Real-time object detection and spatial distance estimation",
+      "Instant optical character recognition (OCR) with text-to-speech",
+      "Voice-guided navigation and scene summary narration",
+      "Optimized lightweight YOLOv8 model running on-device",
+      "Haptic feedback triggers for nearby obstacle proximity"
+    ],
+    tech: ["Python", "OpenCV", "YOLOv8", "TensorFlow Lite", "Android", "Java"],
+    github: "https://github.com/Kaushall2244",
+    demo: "https://github.com/Kaushall2244",
   },
   {
+    id: "tracksphere",
     title: "TrackSphere",
-    subtitle: "Real-Time Location Platform",
-    description: "A secure family and team location sharing application featuring real-time GPS tracking, geofencing and Firebase cloud synchronization with an intuitive Android experience.",
-    image: "/projects/tracksphere.jpg",
-    status: "Active",
+    subtitle: "Real-Time Live Location & Family Shield",
+    tagline: "Stay connected with family and team members anywhere on Earth.",
+    category: "Mobile Apps",
     year: "2026",
     role: "Android Developer",
-    progress: 88,
-    github: "#",
-    demo: "#",
-    tech: ["Java", "Firebase", "Mapbox", "Android"],
+    status: "Active Project 📍",
+    description: "A secure family location sharing app featuring live GPS beacon tracking, smart geofencing alerts, and cloud synchronization.",
+    story: "TrackSphere was designed to provide reliable, low-battery GPS tracking and instant safety geofences for families and outdoor teams with seamless Firebase cloud synchronization.",
+    features: [
+      "Live GPS tracking with sub-meter location accuracy",
+      "Smart geofencing boundaries with enter/exit push notifications",
+      "Emergency SOS trigger with instant SMS coordinate broadcast",
+      "Low-battery GPS optimization with smart sensor sleep",
+      "Mapbox vector tiles with custom dark/light map styling"
+    ],
+    tech: ["Java", "Android SDK", "Firebase Realtime DB", "Mapbox Maps API", "Cloud Functions"],
+    github: "https://github.com/Kaushall2244",
+    demo: "https://github.com/Kaushall2244",
   },
   {
-    title: "Premium Portfolio",
-    subtitle: "Interactive Developer Portfolio",
-    description: "A cinematic developer portfolio featuring immersive animations, premium UI interactions, smooth scrolling and modern web technologies to showcase projects and engineering skills.",
-    image: "/projects/portfolio.jpg",
-    status: "Current",
+    id: "creative3d",
+    title: "3D Creative Lab",
+    subtitle: "Interactive WebGL & Shaders Playground",
+    tagline: "Exploring the bleeding edge of 3D web graphics & shaders.",
+    category: "3D & Creative",
     year: "2026",
-    role: "Frontend Developer",
-    progress: 95,
-    github: "#",
-    demo: "#",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    role: "Creative UI Engineer",
+    status: "Updated 🎉",
+    description: "A collection of GPU-accelerated 3D web experiments featuring refractive materials, procedural geometry, and particle physics.",
+    story: "An ongoing creative laboratory pushing the limits of Three.js and custom GLSL fragment shaders to create breathtaking digital art directly inside the web browser.",
+    features: [
+      "Custom refractive glass transmission shaders with chromatic aberration",
+      "Physics-driven particle field with 60fps GPU compute",
+      "Kinetic mouse follow and gyro-tilt mobile responsiveness",
+      "Zero-latency WebGL canvas integration with Next.js 15"
+    ],
+    tech: ["Three.js", "React Three Fiber", "@react-three/drei", "GLSL", "WebGL"],
+    github: "https://github.com/Kaushall2244",
+    demo: "https://github.com/Kaushall2244",
   },
 ];
 
+const CATEGORIES = ["All", "Web Apps", "AI & Vision", "Mobile Apps", "3D & Creative"];
+
 export default function Projects() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const scrollWrapperRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
-  useGSAP(() => {
-    const section = sectionRef.current;
-    const wrapper = scrollWrapperRef.current;
-    if (!section || !wrapper) return;
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [selectedProject, setSelectedProject] = useState<ProjectDetail | null>(null);
 
-    const getScrollAmount = () => {
-      const wrapperWidth = wrapper.scrollWidth;
-      return -(wrapperWidth - window.innerWidth);
-    };
+  // Interactive Live Task State for DayFlow Card
+  const [tasks, setTasks] = useState([
+    { id: 1, text: "Finish Next.js portfolio redesign", done: true },
+    { id: 2, text: "Tune 60fps spring animations", done: true },
+    { id: 3, text: "Deploy smart DayFlow engine", done: false },
+  ]);
 
-    const tween = gsap.to(wrapper, {
-      x: getScrollAmount,
-      ease: "none",
-    });
+  const toggleTask = (id: number) => {
+    setTasks(tasks.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
+  };
 
-    const pinTrigger = ScrollTrigger.create({
-      trigger: section,
-      start: "top top",
-      end: () => `+=${getScrollAmount() * -1}`,
-      pin: true,
-      animation: tween,
-      scrub: 1,
-      invalidateOnRefresh: true,
-    });
-
-    return () => {
-      tween.kill();
-      pinTrigger.kill();
-    };
-  }, { scope: sectionRef });
+  const filteredProjects =
+    activeCategory === "All"
+      ? PROJECTS_DATA
+      : PROJECTS_DATA.filter((p) => p.category === activeCategory);
 
   return (
     <section
       id="projects"
-      ref={sectionRef}
-      aria-label="Featured Projects"
-      className="relative overflow-hidden h-screen bg-transparent flex flex-col justify-center border-t border-white/5"
+      aria-label="Projects and Creations"
+      className="relative overflow-hidden py-32 md:py-44 px-6 md:px-10 lg:px-20 bg-background border-t border-white/5"
     >
-      {/* ================= Background ================= */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        {/* Main Glow */}
-        <motion.div
-          animate={{
-            x: [0, 90, -70, 0],
-            y: [0, -40, 45, 0],
-            scale: [1, 1.15, 0.95, 1],
+      {/* Background Ambient Dual Glow */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 select-none">
+        <div
+          className="absolute left-1/2 top-1/3 h-[600px] w-[600px] -translate-x-1/2 rounded-full transform-gpu"
+          style={{
+            background: isDark
+              ? "radial-gradient(circle, rgba(255,232,128,0.09) 0%, transparent 70%)"
+              : "radial-gradient(circle, rgba(191,0,57,0.08) 0%, transparent 70%)",
           }}
-          transition={{
-            duration: 24,
-            repeat: Infinity,
-            ease: "easeInOut",
+        />
+        <div
+          className="absolute right-10 bottom-1/4 h-[450px] w-[450px] rounded-full transform-gpu"
+          style={{
+            background: isDark
+              ? "radial-gradient(circle, rgba(191,0,57,0.07) 0%, transparent 70%)"
+              : "radial-gradient(circle, rgba(234,179,8,0.07) 0%, transparent 70%)",
           }}
-          className="absolute left-1/2 top-1/2 h-[850px] w-[850px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ccff00]/5 blur-[240px]"
         />
       </div>
 
-      {/* ================= Background Watermark Title ================= */}
-      <motion.div
-        initial={{ opacity: 0, y: 80 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-        className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-white/[0.025] select-none"
+      {/* Watermark Title */}
+      <div
+        className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-white/[0.015] select-none"
         aria-hidden="true"
       >
-        PROJECTS
-      </motion.div>
-
-      {/* ================= Header Content ================= */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 lg:px-20 w-full mb-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex items-center gap-3"
-        >
-          <div className="w-2.5 h-2.5 rounded-full bg-[#ccff00] animate-pulse" />
-          <span className="font-mono text-xs uppercase tracking-[0.4em] text-[#ccff00]">
-            03 // FEATURED PROJECTS
-          </span>
-        </motion.div>
-        
-        <div className="mt-5 max-w-5xl">
-          <TextReveal
-            text="Building ideas into real products, one project at a time."
-            variant="h2"
-            className="text-4xl sm:text-5xl md:text-7xl font-black leading-tight text-white"
-          />
-        </div>
-        <motion.div
-          initial={{ width: 0 }}
-          whileInView={{ width: 140 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="mt-8 h-[2px] bg-gradient-to-r from-[#ccff00] via-[#ccff00]/60 to-transparent"
-        />
+        WORKS
       </div>
 
-      {/* ================= Horizontal Scroll Wrapper ================= */}
-      <div className="relative z-10 flex items-center w-full overflow-hidden">
-        <div ref={scrollWrapperRef} className="flex gap-16 px-6 md:px-20 flex-nowrap w-max" data-cursor-text="DRAG">
-          {projects.map((project) => (
-            <div key={project.title} className="w-[480px] shrink-0 interactive-node" data-cursor-text="VIEW">
-              <ProjectCard project={project} />
+      <div className="max-w-7xl mx-auto relative z-10 w-full">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-3"
+            >
+              <div
+                className={`w-2.5 h-2.5 rounded-full animate-pulse ${
+                  isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"
+                }`}
+              />
+              <span
+                className={`font-mono text-xs uppercase tracking-[0.4em] font-bold ${
+                  isDark ? "text-[#ffe880]" : "text-[#bf0039]"
+                }`}
+              >
+                03 // BENTO PLAYGROUND 🚀
+              </span>
+            </motion.div>
+
+            <div className="mt-5 max-w-2xl">
+              <TextReveal
+                text="Turning wild ideas into fast, playful, and interactive creations."
+                variant="h2"
+                className="text-4xl sm:text-5xl md:text-6xl font-black leading-tight text-white"
+              />
             </div>
-          ))}
-          {/* Spacer for the end */}
-          <div className="w-[10vw] shrink-0"></div>
+          </div>
+
+          {/* Category Filter Pills */}
+          <div className="flex flex-wrap gap-2 glass-panel p-2 rounded-2xl border border-white/15 self-start md:self-auto shadow-xl">
+            {CATEGORIES.map((cat) => {
+              const active = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  data-cursor-text="FILTER"
+                  className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all duration-300 ${
+                    active
+                      ? isDark
+                        ? "bg-[#ffe880] text-black shadow-[0_0_20px_rgba(255,232,128,0.4)]"
+                        : "bg-[#bf0039] text-white shadow-md"
+                      : "text-white/60 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ======================================================== */}
+        {/* INTERACTIVE GLASSMORPHIC BENTO GRID */}
+        {/* ======================================================== */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+          {/* ============================================== */}
+          {/* BENTO CARD 1 (Large 2x2): DAYFLOW PLATFORM */}
+          {/* ============================================== */}
+          {(activeCategory === "All" || activeCategory === "Web Apps") && (
+            <motion.div
+              layout
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{ y: -6 }}
+              className="md:col-span-12 lg:col-span-7 glass-frosted rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#ffe880]/50 transition-all duration-500 shadow-2xl"
+            >
+              {/* Card Ambient Glow */}
+              <div
+                className={`absolute -right-20 -top-20 w-80 h-80 rounded-full blur-[100px] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
+                  isDark ? "bg-[#ffe880]/12" : "bg-[#bf0039]/10"
+                }`}
+              />
+
+              <div>
+                {/* Header Row */}
+                <div className="flex items-center justify-between gap-4 flex-wrap mb-6">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border ${
+                        isDark
+                          ? "border-[#ffe880]/40 bg-[#ffe880]/15 text-[#ffe880]"
+                          : "border-[#bf0039]/30 bg-[#bf0039]/10 text-[#bf0039]"
+                      }`}
+                    >
+                      🌟 Featured Web App
+                    </span>
+                    <span className="text-xs font-mono text-white/40">{"// 2026"}</span>
+                  </div>
+
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 font-mono text-xs font-bold">
+                    <Flame size={14} className="animate-pulse" />
+                    <span>14-Day Streak</span>
+                  </div>
+                </div>
+
+                {/* Title & Tagline */}
+                <h3 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                  DayFlow Platform
+                </h3>
+                <p className="mt-3 text-white/70 text-base leading-relaxed max-w-xl">
+                  Smart habit tracking and delightful daily workflows. Try clicking the tasks below to experience the live micro-interaction!
+                </p>
+
+                {/* Live Interactive Task Widget Simulation */}
+                <div className="mt-8 p-5 rounded-2xl border border-white/15 bg-black/50 backdrop-blur-2xl shadow-inner max-w-lg">
+                  <div className="flex items-center justify-between mb-3 text-xs font-mono text-white/50 border-b border-white/10 pb-2">
+                    <span className="font-bold flex items-center gap-1.5">
+                      <Sparkles size={12} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+                      TODAY&apos;S FOCUS
+                    </span>
+                    <span>
+                      {tasks.filter((t) => t.done).length}/{tasks.length} Done
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    {tasks.map((task) => (
+                      <div
+                        key={task.id}
+                        onClick={() => toggleTask(task.id)}
+                        data-cursor-text="TOGGLE"
+                        className={`flex items-center gap-3 p-3 rounded-xl border transition-all duration-300 cursor-pointer ${
+                          task.done
+                            ? isDark
+                              ? "bg-[#ffe880]/15 border-[#ffe880]/40 text-white/90"
+                              : "bg-[#bf0039]/10 border-[#bf0039]/30 text-black/90"
+                            : "bg-white/[0.03] border-white/10 text-white/60 hover:bg-white/10 hover:border-white/25"
+                        }`}
+                      >
+                        {task.done ? (
+                          <CheckCircle2
+                            size={17}
+                            className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"}
+                          />
+                        ) : (
+                          <Circle size={17} className="text-white/30" />
+                        )}
+                        <span
+                          className={`text-xs font-medium ${
+                            task.done ? "line-through opacity-70" : ""
+                          }`}
+                        >
+                          {task.text}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Actions Row */}
+              <div className="mt-10 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+                <div className="flex flex-wrap gap-2">
+                  {["React 19", "Next.js 15", "TypeScript", "Spring Boot"].map((t) => (
+                    <span
+                      key={t}
+                      className="px-3 py-1 rounded-lg text-[11px] font-mono border border-white/10 bg-white/5 text-white/70"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <MagneticWrapper range={30} actionFactor={0.25}>
+                    <button
+                      onClick={() => setSelectedProject(PROJECTS_DATA[0])}
+                      data-cursor-text="DETAILS"
+                      className={`px-5 py-2.5 rounded-full text-xs font-mono font-bold transition-all duration-300 shadow-md ${
+                        isDark
+                          ? "bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_25px_rgba(255,232,128,0.4)]"
+                          : "bg-[#bf0039] text-white hover:bg-black hover:shadow-[0_0_25px_rgba(191,0,57,0.3)]"
+                      }`}
+                    >
+                      Explore Deep Dive ✨
+                    </button>
+                  </MagneticWrapper>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ============================================== */}
+          {/* BENTO CARD 2 (Wide 2x1): VISIONMATE AI */}
+          {/* ============================================== */}
+          {(activeCategory === "All" || activeCategory === "AI & Vision") && (
+            <motion.div
+              layout
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              whileHover={{ y: -6 }}
+              className="md:col-span-12 lg:col-span-5 glass-frosted rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#ffe880]/50 transition-all duration-500 shadow-2xl"
+            >
+              <div>
+                <div className="flex items-center justify-between gap-4 mb-6">
+                  <span
+                    className={`px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border ${
+                      isDark
+                        ? "border-[#ffe880]/40 bg-[#ffe880]/15 text-[#ffe880]"
+                        : "border-[#bf0039]/30 bg-[#bf0039]/10 text-[#bf0039]"
+                    }`}
+                  >
+                    🤖 AI & Vision Assistant
+                  </span>
+                  <span className="text-xs font-mono text-white/40">{"// 2026"}</span>
+                </div>
+
+                <h3 className="text-3xl font-black text-white tracking-tight">
+                  VisionMate AI
+                </h3>
+                <p className="mt-3 text-white/70 text-sm leading-relaxed">
+                  Real-time object perception and audio narration empowering visually impaired users.
+                </p>
+
+                {/* Animated Real-Time Radar Scanner Viewport */}
+                <div className="mt-6 p-4 rounded-2xl border border-white/15 bg-black/60 backdrop-blur-2xl relative overflow-hidden h-44 flex flex-col justify-between shadow-inner">
+                  {/* Grid Lines */}
+                  <div className="absolute inset-0 bg-grid-pattern opacity-25 pointer-events-none" />
+
+                  {/* Real-Time Scan Line */}
+                  <motion.div
+                    animate={{ y: [0, 150, 0] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    className={`absolute inset-x-0 h-[2px] shadow-lg pointer-events-none ${
+                      isDark
+                        ? "bg-[#ffe880] shadow-[0_0_15px_#ffe880]"
+                        : "bg-[#bf0039] shadow-[0_0_15px_#bf0039]"
+                    }`}
+                  />
+
+                  {/* Header in scanner */}
+                  <div className="relative z-10 flex justify-between items-center text-[10px] font-mono text-white/40">
+                    <span className="flex items-center gap-1">
+                      <Scan size={12} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+                      YOLOv8 CAMERA FEED
+                    </span>
+                    <span className="flex items-center gap-1 text-green-400 font-bold">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                      LIVE
+                    </span>
+                  </div>
+
+                  {/* Detected Object Floating Chips */}
+                  <div className="relative z-10 flex flex-wrap gap-2">
+                    <motion.span
+                      animate={{ scale: [1, 1.05, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="px-2.5 py-1 rounded-md bg-[#ffe880]/20 border border-[#ffe880]/40 text-[#ffe880] font-mono text-[10px] font-bold"
+                    >
+                      [ Laptop: 98% ]
+                    </motion.span>
+                    <span className="px-2.5 py-1 rounded-md bg-[#bf0039]/20 border border-[#bf0039]/40 text-white/90 font-mono text-[10px]">
+                      [ Coffee: 95% ]
+                    </span>
+                    <span className="px-2.5 py-1 rounded-md bg-white/10 border border-white/20 text-white/80 font-mono text-[10px]">
+                      [ Book: 91% ]
+                    </span>
+                  </div>
+
+                  {/* Speech synthesis footer */}
+                  <div className="relative z-10 flex items-center gap-2 text-[10px] font-mono text-white/60">
+                    <Volume2 size={13} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+                    <span className="italic truncate">&ldquo;Laptop detected 1.2m ahead on desk&rdquo;</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+                <span className="text-xs font-mono text-white/50">Python • OpenCV • Android</span>
+                <MagneticWrapper range={25} actionFactor={0.25}>
+                  <button
+                    onClick={() => setSelectedProject(PROJECTS_DATA[1])}
+                    data-cursor-text="VIEW"
+                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-white hover:text-[#ffe880] transition-colors"
+                  >
+                    <span>Details</span>
+                    <ArrowUpRight size={14} />
+                  </button>
+                </MagneticWrapper>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ============================================== */}
+          {/* BENTO CARD 3 (Tall 1x2): TRACKSPHERE */}
+          {/* ============================================== */}
+          {(activeCategory === "All" || activeCategory === "Mobile Apps") && (
+            <motion.div
+              layout
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ y: -6 }}
+              className="md:col-span-12 lg:col-span-6 glass-frosted rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#ffe880]/50 transition-all duration-500 shadow-2xl"
+            >
+              <div>
+                <div className="flex items-center justify-between gap-4 mb-6">
+                  <span
+                    className={`px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border ${
+                      isDark
+                        ? "border-[#ffe880]/40 bg-[#ffe880]/15 text-[#ffe880]"
+                        : "border-[#bf0039]/30 bg-[#bf0039]/10 text-[#bf0039]"
+                    }`}
+                  >
+                    📱 Real-Time Location App
+                  </span>
+                  <span className="text-xs font-mono text-white/40">{"// 2026"}</span>
+                </div>
+
+                <h3 className="text-3xl font-black text-white tracking-tight">
+                  TrackSphere
+                </h3>
+                <p className="mt-3 text-white/70 text-sm leading-relaxed">
+                  Friendly GPS beacon tracking and smart family safety geofences.
+                </p>
+
+                {/* Smartphone Radar Mockup Box */}
+                <div className="mt-6 p-5 rounded-2xl border border-white/15 bg-black/60 backdrop-blur-2xl relative overflow-hidden flex flex-col items-center justify-center min-h-[170px] shadow-inner">
+                  {/* Pulsing Radar Ring */}
+                  <motion.div
+                    animate={{ scale: [1, 2.2], opacity: [0.6, 0] }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
+                    className={`absolute w-20 h-20 rounded-full border ${
+                      isDark ? "border-[#ffe880]" : "border-[#bf0039]"
+                    }`}
+                  />
+                  <div
+                    className={`relative z-10 p-3 rounded-full shadow-lg ${
+                      isDark
+                        ? "bg-[#ffe880] text-black shadow-[0_0_20px_#ffe880]"
+                        : "bg-[#bf0039] text-white shadow-[0_0_20px_#bf0039]"
+                    }`}
+                  >
+                    <MapPin size={20} />
+                  </div>
+
+                  <div className="mt-3 text-center z-10">
+                    <span className="font-mono text-xs font-bold text-white block">
+                      Live Beacon Active
+                    </span>
+                    <span className="font-mono text-[10px] text-white/40 mt-0.5 block">
+                      11.0168° N, 76.9558° E • Accuracy: 0.8m
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+                <span className="text-xs font-mono text-white/50">Java • Firebase • Mapbox</span>
+                <MagneticWrapper range={25} actionFactor={0.25}>
+                  <button
+                    onClick={() => setSelectedProject(PROJECTS_DATA[2])}
+                    data-cursor-text="VIEW"
+                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-white hover:text-[#ffe880] transition-colors"
+                  >
+                    <span>Details</span>
+                    <ArrowUpRight size={14} />
+                  </button>
+                </MagneticWrapper>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ============================================== */}
+          {/* BENTO CARD 4 (1x1): CREATIVE 3D LAB */}
+          {/* ============================================== */}
+          {(activeCategory === "All" || activeCategory === "3D & Creative") && (
+            <motion.div
+              layout
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              whileHover={{ y: -6 }}
+              className="md:col-span-12 lg:col-span-6 glass-frosted rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#ffe880]/50 transition-all duration-500 shadow-2xl"
+            >
+              <div>
+                <div className="flex items-center justify-between gap-4 mb-6">
+                  <span
+                    className={`px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border ${
+                      isDark
+                        ? "border-[#ffe880]/40 bg-[#ffe880]/15 text-[#ffe880]"
+                        : "border-[#bf0039]/30 bg-[#bf0039]/10 text-[#bf0039]"
+                    }`}
+                  >
+                    🎨 3D & Shaders Lab
+                  </span>
+                  <span className="text-xs font-mono text-white/40">{"// 2026"}</span>
+                </div>
+
+                <h3 className="text-3xl font-black text-white tracking-tight">
+                  Creative 3D Experiments
+                </h3>
+                <p className="mt-3 text-white/70 text-sm leading-relaxed">
+                  Interactive WebGL shaders, refractive glass transmission, and kinetic GPU particles.
+                </p>
+
+                {/* Interactive 3D Sphere Representation */}
+                <div className="mt-6 p-5 rounded-2xl border border-white/15 bg-black/60 backdrop-blur-2xl relative overflow-hidden flex items-center justify-center min-h-[170px] shadow-inner">
+                  <motion.div
+                    animate={{ rotate: 360, scale: [1, 1.08, 1] }}
+                    transition={{ rotate: { duration: 18, repeat: Infinity, ease: "linear" }, scale: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
+                    className={`w-28 h-28 rounded-full border border-dashed flex items-center justify-center ${
+                      isDark ? "border-[#ffe880]/40" : "border-[#bf0039]/40"
+                    }`}
+                  >
+                    <motion.div
+                      animate={{ rotate: -360 }}
+                      transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                      className={`w-16 h-16 rounded-full border flex items-center justify-center ${
+                        isDark ? "border-[#ffe880]/70 bg-[#ffe880]/10" : "border-[#bf0039]/70 bg-[#bf0039]/10"
+                      }`}
+                    >
+                      <Compass size={24} className={isDark ? "text-[#ffe880]" : "text-[#bf0039]"} />
+                    </motion.div>
+                  </motion.div>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+                <span className="text-xs font-mono text-white/50">Three.js • WebGL • GLSL</span>
+                <MagneticWrapper range={25} actionFactor={0.25}>
+                  <button
+                    onClick={() => setSelectedProject(PROJECTS_DATA[3])}
+                    data-cursor-text="VIEW"
+                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-white hover:text-[#ffe880] transition-colors"
+                  >
+                    <span>Details</span>
+                    <ArrowUpRight size={14} />
+                  </button>
+                </MagneticWrapper>
+              </div>
+            </motion.div>
+          )}
         </div>
       </div>
+
+      {/* Deep-Dive Project Modal */}
+      <ProjectModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
     </section>
   );
 }

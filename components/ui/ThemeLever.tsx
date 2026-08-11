@@ -20,7 +20,7 @@ export default function ThemeLever() {
   const isDark = theme === "dark";
 
   const triggerSparks = () => {
-    const sparkColor = isDark ? "#00f0ff" : "#ccff00";
+    const sparkColor = isDark ? "#bf0039" : "#ffe880";
     const newSparks: Spark[] = Array.from({ length: 8 }).map((_, i) => ({
       id: Date.now() + i,
       x: (Math.random() - 0.5) * 60,
@@ -46,25 +46,25 @@ export default function ThemeLever() {
           onMouseLeave={() => setIsHovered(false)}
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
-          className={`relative flex flex-col items-center p-2 rounded-2xl cursor-pointer backdrop-blur-xl border transition-all duration-500 shadow-2xl ${
+          className={`relative flex flex-col items-center p-2.5 rounded-2xl cursor-pointer backdrop-blur-2xl border transition-all duration-500 shadow-2xl ${
             isDark
-              ? "bg-[#0c0d12]/90 border-white/15 shadow-[0_10px_35px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)] hover:border-[#ccff00]/40"
-              : "bg-white/90 border-black/10 shadow-[0_10px_35px_rgba(0,0,0,0.12),inset_0_1px_1px_rgba(255,255,255,0.8)] hover:border-black/30"
+              ? "bg-[#0c0d14]/85 border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.25)] hover:border-[#ffe880]/50"
+              : "bg-white/90 border-black/10 shadow-[0_12px_40px_rgba(0,0,0,0.1),inset_0_1px_1px_rgba(255,255,255,0.9)] hover:border-[#bf0039]/40"
           }`}
           style={{ cursor: "none" }}
         >
           {/* Micro Corner Screws / Rivets */}
-          <span className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-white/20 dark:bg-white/30" />
-          <span className="absolute top-1.5 right-1.5 w-1 h-1 rounded-full bg-white/20 dark:bg-white/30" />
-          <span className="absolute bottom-1.5 left-1.5 w-1 h-1 rounded-full bg-white/20 dark:bg-white/30" />
-          <span className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-white/20 dark:bg-white/30" />
+          <span className="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-white/30" />
+          <span className="absolute top-1.5 right-1.5 w-1 h-1 rounded-full bg-white/30" />
+          <span className="absolute bottom-1.5 left-1.5 w-1 h-1 rounded-full bg-white/30" />
+          <span className="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-white/30" />
 
           {/* Top Label: DARK */}
           <div className="flex items-center gap-1.5 mb-1.5 px-1">
             <span
               className={`font-mono text-[8px] font-bold tracking-widest uppercase transition-colors duration-300 ${
                 isDark
-                  ? "text-[#ccff00] drop-shadow-[0_0_8px_rgba(204,255,0,0.8)]"
+                  ? "text-[#ffe880] drop-shadow-[0_0_8px_rgba(255,232,128,0.8)]"
                   : "text-black/30"
               }`}
             >
@@ -78,7 +78,7 @@ export default function ThemeLever() {
               transition={{ repeat: Infinity, duration: 2 }}
               className={`w-1.5 h-1.5 rounded-full ${
                 isDark
-                  ? "bg-[#ccff00] shadow-[0_0_8px_#ccff00]"
+                  ? "bg-[#ffe880] shadow-[0_0_8px_#ffe880]"
                   : "bg-black/20"
               }`}
             />
@@ -88,14 +88,14 @@ export default function ThemeLever() {
           <div
             className={`relative w-8 h-16 rounded-full p-1 flex flex-col justify-between items-center transition-colors duration-500 overflow-hidden ${
               isDark
-                ? "bg-[#050608] shadow-[inset_0_2px_6px_rgba(0,0,0,0.9),inset_0_0_2px_rgba(255,255,255,0.05)] border border-white/5"
+                ? "bg-[#040508] shadow-[inset_0_2px_6px_rgba(0,0,0,0.9),inset_0_0_2px_rgba(255,255,255,0.08)] border border-white/10"
                 : "bg-[#e2e8f0] shadow-[inset_0_2px_6px_rgba(0,0,0,0.2),inset_0_0_2px_rgba(255,255,255,0.8)] border border-black/5"
             }`}
           >
             {/* Center Mechanical Guide Rail */}
             <div
               className={`absolute top-2 bottom-2 w-0.5 rounded-full ${
-                isDark ? "bg-white/10" : "bg-black/15"
+                isDark ? "bg-white/15" : "bg-black/15"
               }`}
             />
 
@@ -109,8 +109,8 @@ export default function ThemeLever() {
               transition={{ type: "spring", stiffness: 450, damping: 25 }}
               className={`absolute w-1 rounded-full ${
                 isDark
-                  ? "bg-[#ccff00] shadow-[0_0_10px_#ccff00]"
-                  : "bg-amber-500 shadow-[0_0_10px_#f59e0b]"
+                  ? "bg-[#ffe880] shadow-[0_0_10px_#ffe880]"
+                  : "bg-[#bf0039] shadow-[0_0_10px_#bf0039]"
               }`}
             />
 
@@ -130,7 +130,7 @@ export default function ThemeLever() {
               className="relative z-10 w-6 h-6 rounded-full flex items-center justify-center cursor-pointer shadow-lg"
               style={{
                 background: isDark
-                  ? "linear-gradient(145deg, #2a2e39, #15181f)"
+                  ? "linear-gradient(145deg, #2d3142, #161824)"
                   : "linear-gradient(145deg, #ffffff, #cbd5e1)",
                 boxShadow: isDark
                   ? "0 4px 10px rgba(0,0,0,0.7), inset 0 1px 1px rgba(255,255,255,0.3)"
@@ -149,10 +149,10 @@ export default function ThemeLever() {
                 <motion.div
                   animate={{
                     scale: isHovered ? 1.2 : 1,
-                    backgroundColor: isDark ? "#ccff00" : "#f59e0b",
+                    backgroundColor: isDark ? "#ffe880" : "#bf0039",
                     boxShadow: isDark
-                      ? "0 0 10px #ccff00, inset 0 0 4px #ffffff"
-                      : "0 0 10px #f59e0b, inset 0 0 4px #ffffff",
+                      ? "0 0 10px #ffe880, inset 0 0 4px #ffffff"
+                      : "0 0 10px #bf0039, inset 0 0 4px #ffffff",
                   }}
                   transition={{ duration: 0.2 }}
                   className="w-2 h-2 rounded-full"
@@ -174,14 +174,14 @@ export default function ThemeLever() {
               transition={{ repeat: Infinity, duration: 2 }}
               className={`w-1.5 h-1.5 rounded-full ${
                 !isDark
-                  ? "bg-amber-500 shadow-[0_0_8px_#f59e0b]"
+                  ? "bg-[#bf0039] shadow-[0_0_8px_#bf0039]"
                   : "bg-white/20"
               }`}
             />
             <span
               className={`font-mono text-[8px] font-bold tracking-widest uppercase transition-colors duration-300 ${
                 !isDark
-                  ? "text-amber-600 dark:text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]"
+                  ? "text-[#bf0039] drop-shadow-[0_0_8px_rgba(191,0,57,0.8)]"
                   : "text-white/30"
               }`}
             >
@@ -189,7 +189,7 @@ export default function ThemeLever() {
             </span>
           </div>
 
-          {/* Cyberpunk Sparks / Electrical Burst Particle FX on Flick */}
+          {/* Electrical Burst Particle FX on Flick */}
           <AnimatePresence>
             {sparks.map((spark) => (
               <motion.div
@@ -217,7 +217,7 @@ export default function ThemeLever() {
           {/* Telemetry Tag */}
           <span
             className={`font-mono text-[6px] tracking-[0.2em] uppercase mt-1 transition-colors duration-300 ${
-              isDark ? "text-white/20" : "text-black/30"
+              isDark ? "text-white/25" : "text-black/35"
             }`}
           >
             PWR // SW

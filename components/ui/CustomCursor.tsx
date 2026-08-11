@@ -11,7 +11,7 @@ export default function CustomCursor() {
   const { theme } = useTheme();
 
   const isDark = theme === "dark";
-  const accentColor = isDark ? "#ccff00" : "#0284c7";
+  const accentColor = isDark ? "#ffe880" : "#bf0039";
   const pointerFill = isHovered ? accentColor : isDark ? "#ffffff" : "#090d16";
 
   const mouseX = useMotionValue(-100);
@@ -20,7 +20,7 @@ export default function CustomCursor() {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Smooth springs for cursor movement
-  const springConfig = { stiffness: 450, damping: 28, mass: 0.08 };
+  const springConfig = { stiffness: 500, damping: 30, mass: 0.06 };
   const cursorX = useSpring(mouseX, springConfig);
   const cursorY = useSpring(mouseY, springConfig);
 
@@ -29,12 +29,11 @@ export default function CustomCursor() {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
 
-      // Track movement to trigger subtle movement glow
       setIsMoving(true);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
         setIsMoving(false);
-      }, 150);
+      }, 120);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -51,8 +50,8 @@ export default function CustomCursor() {
       }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
@@ -63,9 +62,9 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* 1. Futuristic Diamond/Stealth Glow */}
+      {/* 1. Hardware-accelerated Diamond Glow (High-performance CSS radial glow) */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[99] hidden md:block"
+        className="fixed top-0 left-0 pointer-events-none z-[99] hidden md:block will-change-transform"
         style={{
           x: cursorX,
           y: cursorY,
@@ -73,29 +72,19 @@ export default function CustomCursor() {
           translateY: "-50%",
         }}
       >
-        <svg width="180" height="180" viewBox="0 0 180 180" className="overflow-visible">
-          <defs>
-            <filter id="glow-blur" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="30" />
-            </filter>
-          </defs>
-          {/* Subtle diamond shape glow */}
-          <motion.polygon
-            points="90,10 170,90 90,170 10,90"
-            fill={accentColor}
-            animate={{
-              opacity: isMoving ? (isHovered ? 0.35 : 0.22) : (isHovered ? 0.25 : 0.08),
-              scale: isMoving ? 1.25 : 1,
-            }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            filter="url(#glow-blur)"
-          />
-        </svg>
+        <div
+          className="w-32 h-32 rounded-full transition-opacity duration-300 transform-gpu"
+          style={{
+            background: `radial-gradient(circle, ${accentColor} 0%, transparent 70%)`,
+            opacity: isMoving ? (isHovered ? 0.35 : 0.2) : (isHovered ? 0.25 : 0.08),
+            transform: isMoving ? "scale(1.2)" : "scale(1)",
+          }}
+        />
       </motion.div>
 
       {/* 2. Main Cursor Graphics */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[100] flex items-center justify-center hidden md:flex"
+        className="fixed top-0 left-0 pointer-events-none z-[100] flex items-center justify-center hidden md:flex will-change-transform"
         style={{
           x: cursorX,
           y: cursorY,
@@ -104,46 +93,40 @@ export default function CustomCursor() {
         }}
       >
         <div className="relative w-12 h-12 flex items-center justify-center">
-          
-          {/* Rotating Outer Reticle */}
+          {/* Outer Reticle Triangles */}
           <motion.svg
-            width="44"
-            height="44"
+            width="40"
+            height="40"
             viewBox="0 0 44 44"
             fill="none"
             className="absolute inset-0"
             animate={{
               rotate: isMoving ? 360 : 0,
-              scale: isHovered ? 1.3 : 1,
+              scale: isHovered ? 1.25 : 1,
             }}
             transition={{
               rotate: isMoving 
                 ? { repeat: Infinity, duration: 3, ease: "linear" } 
-                : { duration: 0.6 },
-              scale: { type: "spring", stiffness: 350, damping: 22 }
+                : { duration: 0.5 },
+              scale: { type: "spring", stiffness: 400, damping: 24 }
             }}
           >
-            {/* Top Triangle */}
             <path d="M22 2 L19 8 L25 8 Z" fill={accentColor} />
-            
-            {/* Bottom-Left Triangle (rotated 120 deg) */}
             <path d="M4.68 32 L10.82 29.5 L7.82 35 Z" fill={accentColor} />
-            
-            {/* Bottom-Right Triangle (rotated 240 deg) */}
             <path d="M39.32 32 L36.18 35 L33.18 29.5 Z" fill={accentColor} />
           </motion.svg>
 
           {/* Central Stealth Chevron Pointer */}
           <motion.svg
-            width="22"
-            height="22"
+            width="20"
+            height="20"
             viewBox="0 0 22 22"
             fill="none"
             animate={{
               scale: isHovered ? 1.2 : 1,
-              rotate: isHovered ? -12 : 0,
+              rotate: isHovered ? -10 : 0,
             }}
-            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+            transition={{ type: "spring", stiffness: 450, damping: 22 }}
           >
             <path
               d="M2 2 L20 8 L12 12 L8 20 Z"
@@ -152,7 +135,6 @@ export default function CustomCursor() {
               strokeWidth="1.5"
               strokeLinejoin="round"
             />
-            {/* Cybersecurity diagonal dashed trail */}
             <path
               d="M13.5 13.5 L19.5 19.5"
               stroke={accentColor}
@@ -162,28 +144,24 @@ export default function CustomCursor() {
             />
           </motion.svg>
 
-          {/* Cyberpunk slanted badge for hover text */}
+          {/* Friendly & Fun Hover Badge */}
           <AnimatePresence>
             {hoverText && (
               <motion.div
-                initial={{ opacity: 0, x: 25, y: 25, scale: 0.8 }}
-                animate={{ opacity: 1, x: 30, y: 30, scale: 1 }}
-                exit={{ opacity: 0, x: 25, y: 25, scale: 0.8 }}
-                className={`absolute left-0 top-0 border font-mono text-[9px] px-2 py-1 tracking-widest uppercase flex items-center gap-1 select-none whitespace-nowrap shadow-md ${
+                initial={{ opacity: 0, x: 20, y: 20, scale: 0.8 }}
+                animate={{ opacity: 1, x: 26, y: 26, scale: 1 }}
+                exit={{ opacity: 0, x: 20, y: 20, scale: 0.8 }}
+                className={`absolute left-0 top-0 border font-mono text-[9px] font-bold px-2.5 py-1 tracking-wider uppercase flex items-center gap-1.5 select-none whitespace-nowrap rounded-lg shadow-xl backdrop-blur-xl ${
                   isDark
-                    ? "bg-black/95 border-[#ccff00]/40 text-[#ccff00] shadow-[0_0_10px_rgba(204,255,0,0.15)]"
-                    : "bg-white/95 border-[#0284c7]/40 text-[#0284c7] shadow-[0_0_10px_rgba(2,132,199,0.15)]"
+                    ? "bg-[#090b10]/95 border-[#ffe880]/40 text-[#ffe880] shadow-[0_0_15px_rgba(255,232,128,0.3)]"
+                    : "bg-white/95 border-[#bf0039]/40 text-[#bf0039] shadow-[0_4px_16px_rgba(191,0,57,0.15)]"
                 }`}
-                style={{
-                  clipPath: "polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%)",
-                }}
               >
-                <span className="text-[7px] opacity-60">[//]</span>
+                <span>✨</span>
                 {hoverText}
               </motion.div>
             )}
           </AnimatePresence>
-          
         </div>
       </motion.div>
     </>

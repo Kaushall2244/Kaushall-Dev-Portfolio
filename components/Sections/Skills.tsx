@@ -9,6 +9,7 @@ export interface Skill {
   title: string;
   subtitle: string;
   description: string;
+  tag: string;
   tech: string[];
 }
 
@@ -17,29 +18,33 @@ const skills: Skill[] = [
     title: "Core Engineering",
     subtitle: "Building Strong Foundations",
     description:
-      "Learning backend engineering by building Java applications, REST APIs, database systems and solving real-world programming problems.",
+      "Crafting backend logic, building REST APIs, database schemas, and solving real-world challenges with speed and precision.",
+    tag: "FOUNDATION",
     tech: ["Java", "MySQL", "Python", "REST APIs", "Git"],
   },
   {
-    title: "Frontend Development",
-    subtitle: "Design meets Engineering",
+    title: "Frontend & Motion",
+    subtitle: "Design Meets Fluidity",
     description:
-      "Creating modern interfaces using React, Next.js, Tailwind CSS and premium animations with Framer Motion.",
-    tech: ["HTML, CSS", "Next.js", "Tailwind CSS", "Framer Motion", "TypeScript"],
+      "Creating modern, reactive interfaces using React 19, Next.js 15, Tailwind CSS, and delightful micro-interactions with Framer Motion.",
+    tag: "FRONTEND",
+    tech: ["React 19", "Next.js 15", "Tailwind CSS", "Framer Motion", "TypeScript"],
   },
   {
-    title: "Artificial Intelligence",
+    title: "Smart AI & Vision",
     subtitle: "Learning Intelligent Systems",
     description:
-      "Exploring Computer Vision, OpenCV and Python while building projects involving automation and intelligent systems.",
+      "Exploring Computer Vision, OpenCV, and Machine Learning models to build automated and intelligent real-time tools.",
+    tag: "AI & VISION",
     tech: ["Python", "OpenCV", "Machine Learning", "YOLO", "TensorFlow"],
   },
   {
-    title: "Creative Engineering",
-    subtitle: "Where Code meets Creativity",
+    title: "3D & Creative Arts",
+    subtitle: "Where Code Meets Imagination",
     description:
-      "Experimenting with Blender, Unreal Engine 5 and cinematic environments while combining programming with visual creativity.",
-    tech: ["Blender", "Unreal Engine 5", "Adobe Premiere Pro", "3D Design"],
+      "Experimenting with Three.js, Blender, and cinematic environments to build immersive digital worlds and interactive visuals.",
+    tag: "CREATIVE 3D",
+    tech: ["Three.js", "Blender", "Unreal Engine 5", "WebGL", "3D Design"],
   },
 ];
 
@@ -49,7 +54,7 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const glowColor = isDark ? "rgba(204,255,0,.08)" : "rgba(2,132,199,.08)";
+  const glowColor = isDark ? "rgba(255, 232, 128, 0.12)" : "rgba(191, 0, 57, 0.1)";
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current) return;
@@ -69,14 +74,14 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 1, 0.5, 1] }}
-      className={`group relative overflow-hidden rounded-3xl border p-8 md:p-10 flex flex-col h-full transition-all duration-500 backdrop-blur-xl ${
+      className={`group relative overflow-hidden rounded-[32px] p-8 md:p-10 flex flex-col h-full transition-all duration-500 shadow-2xl ${
         isDark
-          ? "border-white/10 bg-white/[0.02] hover:border-[#ccff00]/40 hover:shadow-[0_0_50px_rgba(204,255,0,0.06)]"
-          : "border-black/10 bg-white/80 hover:border-[#0284c7]/40 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)]"
+          ? "glass-frosted hover:border-[#ffe880]/60 hover:shadow-[0_0_60px_rgba(255,232,128,0.15)]"
+          : "glass-card hover:border-[#bf0039]/50 hover:shadow-[0_15px_45px_rgba(191,0,57,0.1)]"
       }`}
     >
       {/* Interactive mouse glow */}
@@ -84,7 +89,7 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
         className="absolute inset-0 pointer-events-none z-0"
         animate={{
           background: `radial-gradient(
-            240px circle at ${mouse.x}px ${mouse.y}px,
+            280px circle at ${mouse.x}px ${mouse.y}px,
             ${glowColor},
             transparent 75%
           )`,
@@ -93,39 +98,39 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
       />
 
       {/* Decorative Grid Lines Inside Card */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] z-0 pointer-events-none" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-[0.04] z-0 pointer-events-none" />
 
       {/* Header Panel */}
       <div className="relative z-10 flex items-center justify-between mb-8">
         <span
-          className={`font-mono text-xs uppercase tracking-widest rounded-md px-3 py-1 border ${
+          className={`font-mono text-xs uppercase tracking-widest rounded-xl px-3.5 py-1 border font-bold ${
             isDark
-              ? "text-[#ccff00] bg-[#ccff00]/10 border-[#ccff00]/20"
-              : "text-[#0284c7] bg-[#0284c7]/10 border-[#0284c7]/20"
+              ? "text-[#ffe880] bg-[#ffe880]/10 border-[#ffe880]/30 shadow-[0_0_15px_rgba(255,232,128,0.2)]"
+              : "text-[#bf0039] bg-[#bf0039]/10 border-[#bf0039]/20"
           }`}
         >
           {String(index + 1).padStart(2, "0")}
         </span>
-        <span className="font-mono text-[9px] text-white/30 uppercase tracking-widest">
-          {"// SYS_NODE_"}{index + 1}
+        <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest font-semibold">
+          {"// "}{skill.tag}
         </span>
       </div>
 
       {/* Body Content */}
       <div className="relative z-10 flex-grow">
-        <h3 className="font-display font-black text-2xl md:text-3xl text-white group-hover:text-[#ccff00] dark:group-hover:text-[#ccff00] transition-colors duration-300">
+        <h3 className="font-display font-black text-2xl md:text-3xl text-white group-hover:text-[#ffe880] dark:group-hover:text-[#ffe880] transition-colors duration-300">
           {skill.title}
         </h3>
-        <p className="font-mono text-[10px] uppercase tracking-widest text-white/40 mt-1.5">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-white/50 mt-1.5 font-bold">
           {skill.subtitle}
         </p>
-        <p className="text-sm text-white/60 leading-relaxed mt-6">
+        <p className="text-sm text-white/70 leading-relaxed mt-6">
           {skill.description}
         </p>
       </div>
 
       {/* Tech Tags */}
-      <div className="relative z-10 mt-8 pt-6 border-t border-white/5 flex flex-wrap gap-2.5">
+      <div className="relative z-10 mt-8 pt-6 border-t border-white/10 flex flex-wrap gap-2.5">
         {skill.tech.map((tech) => (
           <motion.span
             key={tech}
@@ -133,7 +138,7 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
               y: -3,
               scale: 1.05,
             }}
-            className="font-mono text-[10px] text-white/70 bg-white/5 border border-white/10 rounded-full px-3.5 py-1.5 transition-all duration-300"
+            className="font-mono text-[10px] text-white/80 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 transition-all duration-300 font-medium hover:border-[#ffe880]/40 hover:text-[#ffe880]"
           >
             {tech}
           </motion.span>
@@ -150,24 +155,18 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      aria-label="Skills & Capabilities"
+      aria-label="Skills and Superpowers"
       className="relative overflow-hidden py-36 px-6 md:px-10 lg:px-20 bg-background border-t border-white/5"
     >
       {/* Background Ambient Glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-        <motion.div
-          animate={{
-            x: [0, -60, 40, 0],
-            y: [0, 50, -30, 0],
+        <div
+          className="absolute left-1/3 top-1/4 h-[550px] w-[550px] rounded-full transform-gpu"
+          style={{
+            background: isDark
+              ? "radial-gradient(circle, rgba(255,232,128,0.08) 0%, rgba(191,0,57,0.04) 40%, transparent 70%)"
+              : "radial-gradient(circle, rgba(191,0,57,0.08) 0%, rgba(234,179,8,0.05) 50%, transparent 70%)",
           }}
-          transition={{
-            duration: 22,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className={`absolute left-1/3 top-1/4 h-[600px] w-[600px] rounded-full blur-[180px] ${
-            isDark ? "bg-[#ccff00]/3" : "bg-[#0284c7]/5"
-          }`}
         />
       </div>
 
@@ -180,21 +179,21 @@ export default function Skills() {
         >
           <div
             className={`w-2.5 h-2.5 rounded-full animate-pulse ${
-              isDark ? "bg-[#ccff00]" : "bg-[#0284c7]"
+              isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"
             }`}
           />
           <span
-            className={`font-mono text-xs uppercase tracking-[0.4em] ${
-              isDark ? "text-[#ccff00]" : "text-[#0284c7]"
+            className={`font-mono text-xs uppercase tracking-[0.4em] font-bold ${
+              isDark ? "text-[#ffe880]" : "text-[#bf0039]"
             }`}
           >
-            02 // SKILLS & ARCHITECTURE
+            02 // MY SUPERPOWERS ⚡
           </span>
         </motion.div>
 
         <div className="mt-5 max-w-5xl">
           <TextReveal
-            text="Learning by building. Improving with every project."
+            text="Tools, technologies & playground toys I love creating with."
             variant="h2"
             className="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-tight"
           />
@@ -207,8 +206,8 @@ export default function Skills() {
           transition={{ duration: 1, delay: 0.3 }}
           className={`mt-8 h-[2px] ${
             isDark
-              ? "bg-gradient-to-r from-[#ccff00] via-[#ccff00]/60 to-transparent"
-              : "bg-gradient-to-r from-[#0284c7] via-[#0284c7]/60 to-transparent"
+              ? "bg-gradient-to-r from-[#ffe880] via-[#bf0039]/60 to-transparent"
+              : "bg-gradient-to-r from-[#bf0039] via-[#ffe880]/60 to-transparent"
           }`}
         />
 

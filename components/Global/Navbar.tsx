@@ -34,18 +34,19 @@ export default function Navbar() {
       <motion.div
         layout
         animate={{
-          padding: isCollapsed ? "8px 16px" : "12px 24px",
+          padding: isCollapsed ? "8px 18px" : "12px 26px",
           scale: isCollapsed ? 0.95 : 1,
         }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className={`flex items-center gap-2 backdrop-blur-xl rounded-full transition-colors duration-500 border shadow-2xl ${
+        className={`flex items-center gap-2 backdrop-blur-2xl rounded-full transition-all duration-500 border shadow-2xl ${
           isDark
-            ? "bg-[#0a0c10]/80 border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
-            : "bg-white/85 border-black/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)]"
+            ? "bg-[#090b12]/80 border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.3)]"
+            : "bg-white/85 border-black/10 shadow-[0_16px_40px_rgba(0,0,0,0.08),inset_0_1px_1px_rgba(255,255,255,0.9)]"
         }`}
         style={{ cursor: "none" }}
       >
-        <motion.span layout className="font-semibold text-foreground tracking-tight px-3 whitespace-nowrap">
+        <motion.span layout className="font-bold text-foreground tracking-tight px-3 whitespace-nowrap flex items-center gap-2">
+          <span className={`w-2 h-2 rounded-full animate-pulse ${isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"}`} />
           KAUSHALL
         </motion.span>
 
@@ -65,7 +66,7 @@ export default function Navbar() {
                 href={`#${item.toLowerCase()}`}
                 onMouseEnter={() => setHoveredLink(item)}
                 onMouseLeave={() => setHoveredLink(null)}
-                className="relative px-3 py-1.5 text-sm text-foreground/60 hover:text-foreground transition-colors duration-300 z-10 whitespace-nowrap"
+                className="relative px-3.5 py-1.5 text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-300 z-10 whitespace-nowrap"
                 style={{ cursor: "none" }}
               >
                 {hoveredLink === item && (
@@ -87,10 +88,10 @@ export default function Navbar() {
           <a
             href="#contact"
             data-cursor-text="HI"
-            className={`ml-2 flex items-center gap-1 px-4 py-2 rounded-full text-xs font-semibold transition-all duration-300 whitespace-nowrap shadow-md ${
+            className={`ml-2 flex items-center gap-1 px-4 py-2 rounded-full text-xs font-bold font-mono transition-all duration-300 whitespace-nowrap shadow-lg ${
               isDark
-                ? "bg-[#ccff00] text-black hover:bg-white hover:shadow-[0_0_20px_rgba(204,255,0,0.4)]"
-                : "bg-[#090d16] text-white hover:bg-[#0284c7] hover:shadow-[0_0_20px_rgba(2,132,199,0.3)]"
+                ? "bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_20px_rgba(255,232,128,0.45)]"
+                : "bg-[#bf0039] text-white hover:bg-black hover:shadow-[0_0_20px_rgba(191,0,57,0.35)]"
             }`}
             style={{ cursor: "none" }}
           >

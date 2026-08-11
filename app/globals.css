@@ -1,9 +1,14 @@
 @import "tailwindcss";
+@source "../components";
+@source "../app";
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-background: var(--bg-main);
   --color-foreground: var(--fg-main);
   --color-accent: var(--accent-main);
+  --color-accent-crimson: var(--accent-secondary);
   --color-card-bg: var(--card-bg-main);
   --color-border-subtle: var(--border-subtle-main);
 
@@ -12,42 +17,48 @@
 }
 
 /* =====================================================
-   THEME TOKENS
+   THEME TOKENS: Radiant Gold (#ffe880) & Ruby Crimson (#bf0039)
    ===================================================== */
-:root, html.dark {
-  --bg-main: #000000;
+:root, .dark {
+  --bg-main: #06070a;
   --fg-main: #ffffff;
-  --accent-main: #ccff00;
-  --card-bg-main: rgba(255, 255, 255, 0.03);
-  --border-subtle-main: rgba(255, 255, 255, 0.08);
+  --accent-main: #ffe880;
+  --accent-secondary: #bf0039;
+  --card-bg-main: rgba(255, 255, 255, 0.04);
+  --border-subtle-main: rgba(255, 255, 255, 0.12);
   --grid-line: rgba(255, 255, 255, 0.05);
-  --grid-glow-pt: rgba(204, 255, 0, 0.15);
-  --vignette-color: #000000;
-  --watermark-color: rgba(255, 255, 255, 0.015);
-  --glass-card-bg: rgba(255, 255, 255, 0.03);
-  --glass-card-border: rgba(255, 255, 255, 0.08);
-  --glass-panel-bg: rgba(0, 0, 0, 0.4);
-  --glass-panel-border: rgba(255, 255, 255, 0.08);
-  --cursor-color: #ccff00;
-  --cursor-trail: #ffffff;
+  --grid-glow-pt: rgba(255, 232, 128, 0.18);
+  --vignette-color: #06070a;
+  
+  /* Visible High-End Glassmorphism Tokens */
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  --glass-border: rgba(255, 255, 255, 0.16);
+  --glass-border-hover: rgba(255, 232, 128, 0.45);
+  --glass-specular: rgba(255, 255, 255, 0.35);
+  --glass-inner-glow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.25), inset 0 0 20px 0 rgba(255, 255, 255, 0.02);
+  --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  --glass-panel-bg: linear-gradient(145deg, rgba(14, 16, 24, 0.85) 0%, rgba(8, 10, 15, 0.9) 100%);
 }
 
-html.light {
-  --bg-main: #f6f8fb;
-  --fg-main: #090d16;
-  --accent-main: #0284c7;
+.light {
+  --bg-main: #f8fafc;
+  --fg-main: #0f172a;
+  --accent-main: #bf0039;
+  --accent-secondary: #eab308;
   --card-bg-main: rgba(255, 255, 255, 0.85);
   --border-subtle-main: rgba(0, 0, 0, 0.08);
   --grid-line: rgba(0, 0, 0, 0.06);
-  --grid-glow-pt: rgba(2, 132, 199, 0.18);
-  --vignette-color: #f6f8fb;
-  --watermark-color: rgba(0, 0, 0, 0.025);
-  --glass-card-bg: rgba(255, 255, 255, 0.85);
-  --glass-card-border: rgba(0, 0, 0, 0.08);
-  --glass-panel-bg: rgba(255, 255, 255, 0.9);
-  --glass-panel-border: rgba(0, 0, 0, 0.08);
-  --cursor-color: #0284c7;
-  --cursor-trail: #090d16;
+  --grid-glow-pt: rgba(191, 0, 57, 0.18);
+  --vignette-color: #f8fafc;
+
+  /* Light Glassmorphism Tokens */
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --glass-border-hover: rgba(191, 0, 57, 0.45);
+  --glass-specular: rgba(255, 255, 255, 0.95);
+  --glass-inner-glow: inset 0 1px 2px 0 rgba(255, 255, 255, 0.9), inset 0 0 15px 0 rgba(0, 0, 0, 0.01);
+  --glass-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+  --glass-panel-bg: rgba(255, 255, 255, 0.92);
 }
 
 /* =====================================================
@@ -63,7 +74,7 @@ html.light {
 }
 
 /* =====================================================
-   SYSTEM CURSOR SUPPRESSION (Custom Cursor Active)
+   SYSTEM CURSOR SUPPRESSION
    ===================================================== */
 *, *::before, *::after {
   cursor: none !important;
@@ -86,22 +97,45 @@ html.light {
 }
 
 /* =====================================================
-   GLASS / CARD UTILITIES
+   PREMIUM ULTRA-VISIBLE GLASSMORPHISM UTILITIES
    ===================================================== */
 @layer utilities {
   .glass-card {
-    background: var(--glass-card-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-card-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), var(--glass-inner-glow);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glass-card:hover {
+    border-color: var(--glass-border-hover);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 1px 2px 0 rgba(255, 255, 255, 0.4);
   }
 
   .glass-panel {
     background: var(--glass-panel-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-panel-border);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(28px) saturate(200%);
+    -webkit-backdrop-filter: blur(28px) saturate(200%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), var(--glass-inner-glow);
+  }
+
+  .glass-pill {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), inset 0 1px 1px 0 var(--glass-specular);
+  }
+
+  .glass-frosted {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+    backdrop-filter: blur(30px) saturate(210%);
+    -webkit-backdrop-filter: blur(30px) saturate(210%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), inset 0 1px 2px 0 rgba(255, 255, 255, 0.35);
   }
 
   .card-gradient-border {
@@ -111,91 +145,15 @@ html.light {
   }
   
   .hover-glow {
-    transition: box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
   }
   .hover-glow:hover {
-    box-shadow: 0 0 30px rgba(204, 255, 0, 0.08);
+    box-shadow: 0 0 40px rgba(255, 232, 128, 0.2);
   }
 
   .whitespace-nowrap {
     white-space: nowrap;
   }
-}
-
-/* =====================================================
-   LIGHT MODE OVERRIDES FOR HIGH CONTRAST & READABILITY
-   ===================================================== */
-html.light .text-white {
-  color: #090d16 !important;
-}
-html.light .text-white\/90 {
-  color: rgba(9, 13, 22, 0.9) !important;
-}
-html.light .text-white\/80 {
-  color: rgba(9, 13, 22, 0.8) !important;
-}
-html.light .text-white\/70 {
-  color: rgba(9, 13, 22, 0.7) !important;
-}
-html.light .text-white\/60 {
-  color: rgba(9, 13, 22, 0.6) !important;
-}
-html.light .text-white\/55 {
-  color: rgba(9, 13, 22, 0.55) !important;
-}
-html.light .text-white\/50 {
-  color: rgba(9, 13, 22, 0.5) !important;
-}
-html.light .text-white\/40 {
-  color: rgba(9, 13, 22, 0.45) !important;
-}
-html.light .text-white\/35 {
-  color: rgba(9, 13, 22, 0.4) !important;
-}
-html.light .text-white\/30 {
-  color: rgba(9, 13, 22, 0.35) !important;
-}
-html.light .text-white\/25 {
-  color: rgba(9, 13, 22, 0.3) !important;
-}
-html.light .text-white\/20 {
-  color: rgba(9, 13, 22, 0.25) !important;
-}
-html.light .text-white\/10 {
-  color: rgba(9, 13, 22, 0.15) !important;
-}
-html.light .text-white\/\[0\.015\] {
-  color: rgba(0, 0, 0, 0.02) !important;
-}
-html.light .text-white\/\[0\.025\] {
-  color: rgba(0, 0, 0, 0.03) !important;
-}
-
-html.light .bg-white\/3,
-html.light .bg-white\/5,
-html.light .bg-white\/\[0\.02\],
-html.light .bg-white\/\[0\.03\],
-html.light .bg-white\/\[0\.04\],
-html.light .bg-white\/10 {
-  background-color: rgba(255, 255, 255, 0.85) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-}
-
-html.light .bg-black\/40,
-html.light .bg-black\/60,
-html.light .bg-black\/80,
-html.light .bg-black\/90,
-html.light .bg-black\/95 {
-  background-color: rgba(246, 248, 251, 0.88) !important;
-}
-
-html.light .border-white\/5,
-html.light .border-white\/6,
-html.light .border-white\/8,
-html.light .border-white\/10,
-html.light .border-white\/15,
-html.light .border-white\/20 {
-  border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
 /* =====================================================
