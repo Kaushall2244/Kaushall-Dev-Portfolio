@@ -1,165 +1,116 @@
 "use client";
 
-import { useRef } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { useRef } from "react";
 import { ArrowRight, Download, Sparkles } from "lucide-react";
 import MagneticWrapper from "../ui/Magnetic";
-import InteractiveWord from "../ui/InteractiveWord";
 import { useTheme } from "../Global/ThemeProvider";
 
 const containerVariants: Variants = {
-  hidden: {
-    opacity: 0,
-  },
+  hidden: {},
   visible: {
-    opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.15,
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
     },
   },
 };
 
 const itemVariants: Variants = {
-  hidden: {
-    y: 35,
-    opacity: 0,
-  },
+  hidden: { opacity: 0, y: 30 },
   visible: {
-    y: 0,
     opacity: 1,
+    y: 0,
     transition: {
       duration: 0.8,
-      ease: [0.22, 1, 0.36, 1],
+      ease: [0.16, 1, 0.3, 1],
     },
   },
 };
 
-const floatingShapes = [
-  { size: 180, top: "10%", left: "6%", border: true, duration: 20, delay: 0 },
-  { size: 120, top: "70%", left: "12%", border: false, duration: 24, delay: 2 },
-  { size: 220, top: "18%", right: "10%", border: true, duration: 28, delay: 4 },
-  { size: 90, top: "52%", right: "6%", border: false, duration: 18, delay: 1 },
-  { size: 150, bottom: "10%", right: "26%", border: true, duration: 30, delay: 5 },
-];
+function InteractiveWord({ word, isAccent = false }: { word: string; isAccent?: boolean }) {
+  return (
+    <span className="inline-flex overflow-hidden">
+      {word.split("").map((char, i) => (
+        <motion.span
+          key={i}
+          className="inline-block transition-transform duration-300 hover:-translate-y-2 select-none"
+          whileHover={{
+            scale: 1.15,
+            rotate: (i % 2 === 0 ? 1 : -1) * 6,
+            transition: { type: "spring", stiffness: 450, damping: 15 },
+          }}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
 
 export default function Hero() {
-  const heroRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
   const { scrollYProgress } = useScroll({
-    target: heroRef,
+    target: containerRef,
     offset: ["start start", "end start"],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 0.45, 1], [1, 0.85, 0.75]);
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8, 1], [1, 0.95, 0.2]);
-  const borderRadius = useTransform(scrollYProgress, [0, 0.4, 1], ["0px", "28px", "44px"]);
+  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
-    <div ref={heroRef} className="relative w-full">
-      <motion.section
-        id="home"
-        style={{
-          scale,
-          y,
-          opacity,
-          borderRadius,
-          transformOrigin: "center center",
-        }}
-        className="relative min-h-screen overflow-hidden flex items-center pt-32 md:pt-40 lg:pt-44 px-6 md:px-10 lg:px-20 border-b border-white/5 transition-all duration-300 origin-center bg-transparent transform-gpu"
-      >
-        {/* Subtle Ambient Radial Highlights */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 select-none">
-          <div
-            className="absolute left-1/2 top-20 h-[600px] w-[600px] -translate-x-1/2 rounded-full transform-gpu"
-            style={{
-              background: "radial-gradient(circle, rgba(255,232,128,0.08) 0%, transparent 70%)",
-            }}
-          />
-          <div
-            className="absolute right-0 bottom-0 h-[450px] w-[450px] rounded-full transform-gpu"
-            style={{
-              background: "radial-gradient(circle, rgba(191,0,57,0.08) 0%, transparent 70%)",
-            }}
-          />
+    <motion.section
+      ref={containerRef}
+      id="home"
+      aria-label="Introduction and Overview"
+      style={{ y: heroY, opacity: heroOpacity }}
+      className="relative min-h-screen overflow-hidden flex items-center pt-28 sm:pt-36 md:pt-40 lg:pt-44 px-6 md:px-10 lg:px-20 border-b border-black/5 dark:border-white/5 transition-all duration-300 origin-center bg-transparent transform-gpu"
+    >
+      {/* Structural subtle grid lines */}
+      <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-black/5 dark:bg-white/5 z-20 pointer-events-none hidden md:block" />
+      <div className="absolute right-4 sm:right-8 top-0 bottom-0 w-px bg-black/5 dark:bg-white/5 z-20 pointer-events-none hidden md:block" />
 
-          {/* Floating Aesthetic Glass Rings */}
-          {floatingShapes.map((shape, index) => (
-            <motion.div
-              key={index}
-              animate={{
-                y: [0, -25, 10, 0],
-                rotate: [0, 180, 360],
-              }}
-              transition={{
-                duration: shape.duration,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: shape.delay,
-              }}
-              style={{
-                width: shape.size,
-                height: shape.size,
-                top: shape.top,
-                left: shape.left,
-                right: shape.right,
-                bottom: shape.bottom,
-              }}
-              className={`absolute rounded-full pointer-events-none ${
-                shape.border
-                  ? "border border-[#ffe880]/20 shadow-[0_0_20px_rgba(255,232,128,0.05)]"
-                  : "bg-[#bf0039]/8 blur-xl"
-              }`}
-            />
-          ))}
-        </div>
-
+      <div className="max-w-7xl mx-auto w-full relative z-10">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="relative z-10 w-full max-w-7xl mx-auto"
+          className="flex flex-col items-start"
         >
-          {/* Top Label */}
-          <motion.div
-            variants={itemVariants}
-            className="flex items-center gap-3 mb-8 flex-wrap"
-          >
-            <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#ffe880] font-bold">
-              <Sparkles size={16} className="animate-spin text-[#ffe880]" style={{ animationDuration: "6s" }} />
-              <span>👋 HELLO THERE! • FULL-STACK & CREATIVE BUILDER</span>
-            </div>
-
-            {/* Distinct Crimson Badge */}
-            <div className="hidden sm:flex items-center gap-2 rounded-full border border-[#bf0039]/40 bg-[#bf0039]/15 px-4 py-1.5 backdrop-blur-xl shadow-lg">
-              <div className="w-2 h-2 rounded-full bg-[#bf0039] animate-pulse" />
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[#ffe880] font-bold">
+          {/* Top Status Pill: Ruby Crimson Indicator */}
+          <motion.div variants={itemVariants} className="mb-6">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-[#bf0039]/40 bg-[#bf0039]/10 backdrop-blur-xl shadow-md">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#bf0039] opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#bf0039]" />
+              </span>
+              <span className="font-mono text-xs text-foreground font-bold tracking-wider uppercase">
                 🟢 Ready for fun projects & ideas
               </span>
             </div>
           </motion.div>
 
-          {/* Hero Heading */}
+          {/* Hero Heading: Fluid Responsive Scaling with SaaS springs */}
           <motion.h1
             variants={itemVariants}
-            className="font-black uppercase tracking-[-0.06em] leading-[0.82] flex flex-col items-start gap-1 select-none"
+            className="font-black uppercase tracking-[-0.06em] leading-[0.82] flex flex-col items-start gap-1 select-none text-foreground"
           >
-            <div className="text-white text-[44px] xs:text-[54px] sm:text-[80px] md:text-[110px] lg:text-[140px] xl:text-[160px] 2xl:text-[180px]">
+            <div className="text-foreground text-[44px] xs:text-[54px] sm:text-[80px] md:text-[110px] lg:text-[140px] xl:text-[160px] 2xl:text-[180px]">
               <MagneticWrapper range={80} actionFactor={0.2}>
                 <InteractiveWord word="DREAM." />
               </MagneticWrapper>
             </div>
 
-            <div className="text-white text-[44px] xs:text-[54px] sm:text-[80px] md:text-[110px] lg:text-[140px] xl:text-[160px] 2xl:text-[180px]">
+            <div className="text-foreground text-[44px] xs:text-[54px] sm:text-[80px] md:text-[110px] lg:text-[140px] xl:text-[160px] 2xl:text-[180px]">
               <MagneticWrapper range={80} actionFactor={0.2}>
                 <InteractiveWord word="BUILD." />
               </MagneticWrapper>
             </div>
 
-            <div className="text-[#ffe880] text-[44px] xs:text-[54px] sm:text-[80px] md:text-[110px] lg:text-[140px] xl:text-[160px] 2xl:text-[180px]">
+            <div className="text-[#ffe880] dark:text-[#ffe880] text-[#bf0039] light:text-[#bf0039] text-[44px] xs:text-[54px] sm:text-[80px] md:text-[110px] lg:text-[140px] xl:text-[160px] 2xl:text-[180px]">
               <MagneticWrapper range={80} actionFactor={0.2}>
                 <InteractiveWord word="PLAY." isAccent />
               </MagneticWrapper>
@@ -167,10 +118,10 @@ export default function Hero() {
           </motion.h1>
 
           {/* Description */}
-          <motion.div variants={itemVariants} className="mt-10 max-w-2xl">
-            <p className="text-lg md:text-xl text-white/80 leading-9">
+          <motion.div variants={itemVariants} className="mt-8 sm:mt-10 max-w-2xl">
+            <p className="text-base sm:text-lg md:text-xl text-foreground/80 leading-relaxed sm:leading-9">
               Hi! I&apos;m{" "}
-              <span className="text-white font-bold underline decoration-[#ffe880] decoration-2 underline-offset-4">
+              <span className="text-foreground font-bold underline decoration-[#ffe880] dark:decoration-[#ffe880] decoration-[#bf0039] decoration-2 underline-offset-4">
                 S Kaushall
               </span>
               . I turn exciting ideas into super fast, playful, and interactive digital experiences.
@@ -178,17 +129,17 @@ export default function Hero() {
           </motion.div>
 
           {/* CTA Buttons: Separate Distinct Colors */}
-          <motion.div variants={itemVariants} className="mt-12 flex flex-wrap gap-4 items-center">
+          <motion.div variants={itemVariants} className="mt-10 sm:mt-12 flex flex-wrap gap-4 items-center">
             {/* Distinct Gold Main CTA */}
             <MagneticWrapper>
               <a
                 href="#projects"
                 data-cursor-text="EXPLORE"
-                className="group relative overflow-hidden flex items-center gap-3 rounded-full px-8 py-4 font-bold transition-all duration-300 hover:scale-105 shadow-2xl bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_30px_#ffe880]"
+                className="group relative overflow-hidden flex items-center gap-3 rounded-full px-7 sm:px-8 py-3.5 sm:py-4 font-bold transition-all duration-300 hover:scale-105 shadow-2xl bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_30px_#ffe880]"
               >
-                <span className="font-extrabold tracking-wide">Explore My Work ✨</span>
+                <span className="font-extrabold tracking-wide text-xs sm:text-sm">Explore My Work ✨</span>
                 <ArrowRight
-                  size={18}
+                  size={16}
                   className="transition-transform duration-300 group-hover:translate-x-1 text-black"
                 />
               </a>
@@ -199,36 +150,36 @@ export default function Hero() {
               <a
                 href="../resume.pdf"
                 data-cursor-text="RESUME"
-                className="group flex items-center gap-3 rounded-full border border-[#bf0039]/50 bg-[#bf0039]/10 backdrop-blur-2xl px-8 py-4 text-white font-semibold transition-all duration-300 hover:border-[#bf0039] hover:bg-[#bf0039]/20 shadow-lg"
+                className="group flex items-center gap-3 rounded-full border border-[#bf0039]/50 bg-[#bf0039]/10 backdrop-blur-2xl px-7 sm:px-8 py-3.5 sm:py-4 text-foreground font-semibold transition-all duration-300 hover:border-[#bf0039] hover:bg-[#bf0039]/20 shadow-lg text-xs sm:text-sm"
               >
                 <span>Grab My Resume 📄</span>
                 <Download
-                  size={18}
+                  size={16}
                   className="transition-transform duration-300 group-hover:translate-y-0.5 text-[#bf0039]"
                 />
               </a>
             </MagneticWrapper>
           </motion.div>
 
-          {/* Right Floating Highlight Glass Card */}
+          {/* Right Floating Highlight Card (Apple Liquid Glass in Light / Specular in Dark) */}
           <motion.div
             variants={itemVariants}
             initial={{ opacity: 0, y: 30 }}
             animate={{ y: [0, -8, 0] }}
-            transition={{ y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
+            transition={{ y: { duration: 6, repeat: Infinity, ease: "easeInOut" } }}
             className="absolute right-8 top-32 hidden xl:block pointer-events-auto"
           >
-            <div className="glass-frosted rounded-3xl p-7 w-80 shadow-2xl hover:border-[#ffe880]/60 transition-all duration-300">
+            <div className="glass-card saas-shimmer rounded-3xl p-7 w-80 shadow-2xl hover:border-[#ffe880]/60 dark:hover:border-[#ffe880]/60 hover:border-[#bf0039]/60 transition-all duration-300">
               <div className="flex items-center gap-2.5">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#bf0039] animate-pulse" />
-                <span className="text-xs font-mono uppercase tracking-wider text-[#ffe880] font-bold">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#bf0039] dark:text-[#ffe880] font-bold">
                   Currently Crafting ✨
                 </span>
               </div>
-              <h3 className="mt-4 text-2xl font-black text-white">
+              <h3 className="mt-4 text-2xl font-black text-foreground">
                 DayFlow Platform
               </h3>
-              <p className="mt-3 text-white/70 text-sm leading-relaxed">
+              <p className="mt-3 text-foreground/70 text-sm leading-relaxed">
                 Smart habit tracking and super slick productivity tools built for everyday humans.
               </p>
             </div>
@@ -237,40 +188,27 @@ export default function Hero() {
           {/* Bottom Info Metrics: Separate Gold & Crimson */}
           <motion.div
             variants={itemVariants}
-            className="mt-20 grid gap-8 border-t border-white/10 pt-10 md:grid-cols-3"
+            className="mt-16 sm:mt-20 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 border-t border-black/10 dark:border-white/10 pt-8 sm:pt-10 w-full"
           >
             <div>
-              <p className="text-[#ffe880] text-5xl font-black tracking-tight drop-shadow-[0_0_15px_rgba(255,232,128,0.3)]">15+</p>
-              <p className="mt-2 text-white/70 font-medium">Fun Web Projects Built</p>
-            </div>
-
-            <div>
-              <p className="text-[#ffe880] text-4xl font-bold">4+</p>
-              <p className="mt-2 text-white/70 font-medium">Years of Code & Coffee ☕</p>
-            </div>
-
-            <div>
-              <p className="text-[#ffe880] text-4xl font-bold flex items-center gap-2">
-                <span>100%</span>
-                <span className="text-[#bf0039] text-3xl">❤️</span>
+              <p className="text-[#ffe880] dark:text-[#ffe880] text-[#bf0039] text-4xl sm:text-5xl font-black tracking-tight drop-shadow-[0_0_15px_rgba(255,232,128,0.3)]">
+                15+
               </p>
-              <p className="mt-2 text-white/70 font-medium">Love for Crafting Joyful UI</p>
+              <p className="mt-2 text-foreground/70 font-medium text-sm sm:text-base">Fun Web Projects Built</p>
             </div>
-          </motion.div>
 
-          {/* Scroll Down Indicator */}
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex justify-center mt-12 mb-4"
-          >
-            <a href="#about" className="flex flex-col items-center gap-2 text-white/50 hover:text-white transition-colors duration-300">
-              <span className="text-[10px] uppercase tracking-[0.3em] font-mono font-bold">Scroll to Explore</span>
-              <div className="w-[1px] h-12 bg-gradient-to-b from-[#ffe880] to-transparent" />
-            </a>
+            <div>
+              <p className="text-foreground text-3xl sm:text-4xl font-bold">4+</p>
+              <p className="mt-2 text-foreground/70 font-medium text-sm sm:text-base">Years of Code & Coffee ☕</p>
+            </div>
+
+            <div>
+              <p className="text-[#bf0039] text-3xl sm:text-4xl font-bold">100%</p>
+              <p className="mt-2 text-foreground/70 font-medium text-sm sm:text-base">Passion for Great UX</p>
+            </div>
           </motion.div>
         </motion.div>
-      </motion.section>
-    </div>
+      </div>
+    </motion.section>
   );
 }

@@ -3,11 +3,11 @@
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { Github, ExternalLink } from "lucide-react";
-import { Project } from "../Sections/Projects";
+import { ProjectDetail } from "./ProjectModal";
 import { useTheme } from "../Global/ThemeProvider";
 
 interface Props {
-  project: Project;
+  project: ProjectDetail;
 }
 
 export function ProjectCard({ project }: Props) {

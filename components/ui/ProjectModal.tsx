@@ -57,8 +57,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/85 backdrop-blur-2xl select-none"
-        style={{ cursor: "none" }}
+        className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6 md:p-10 bg-black/60 dark:bg-black/85 backdrop-blur-2xl select-none"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.92, y: 30 }}
@@ -66,7 +65,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           exit={{ opacity: 0, scale: 0.92, y: 30 }}
           transition={{ type: "spring", stiffness: 350, damping: 28 }}
           onClick={(e) => e.stopPropagation()}
-          className="relative w-full max-w-4xl max-h-[88vh] overflow-y-auto rounded-[36px] border p-6 sm:p-10 backdrop-blur-3xl shadow-2xl bg-[#090b14]/95 border-white/20 shadow-[0_25px_70px_rgba(0,0,0,0.95),inset_0_1px_1px_rgba(255,255,255,0.3)]"
+          className="relative w-full max-w-4xl max-h-[88vh] overflow-y-auto rounded-[36px] border p-6 sm:p-10 backdrop-blur-3xl shadow-2xl glass-panel border-black/10 dark:border-white/20"
         >
           {/* Close Button Top Right */}
           <div className="absolute top-6 right-6 z-20">
@@ -74,38 +73,38 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               <button
                 onClick={onClose}
                 data-cursor-text="CLOSE"
-                className="p-3 rounded-full border transition-all duration-300 bg-white/5 border-white/15 text-white/70 hover:text-white hover:border-[#ffe880] hover:bg-white/10"
+                className="p-3 rounded-full border transition-all duration-300 bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/15 text-foreground/70 hover:text-foreground hover:border-[#bf0039] dark:hover:border-[#ffe880]"
               >
                 <X size={18} />
               </button>
             </MagneticWrapper>
           </div>
 
-          {/* Modal Header: Distinct Crimson Badge & Gold Highlights */}
+          {/* Modal Header */}
           <div className="flex flex-col gap-3 pr-14">
             <div className="flex items-center gap-3 flex-wrap">
-              <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/20 text-[#ffe880]">
+              <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/20 text-[#bf0039] dark:text-[#ffe880]">
                 {project.category}
               </span>
-              <span className="font-mono text-xs text-white/40">
+              <span className="font-mono text-xs text-foreground/40">
                 {"// "} {project.year}
               </span>
-              <span className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[#ffe880]">
+              <span className="flex items-center gap-1.5 text-xs font-mono font-semibold text-[#bf0039] dark:text-[#ffe880]">
                 <span className="w-2 h-2 rounded-full animate-pulse bg-[#bf0039]" />
                 {project.status}
               </span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mt-1">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight mt-1">
               {project.title}
             </h2>
-            <p className="text-lg text-white/70 font-medium leading-relaxed">
+            <p className="text-lg text-foreground/70 font-medium leading-relaxed">
               {project.subtitle}
             </p>
           </div>
 
           {/* Tab Navigation: Solid Distinct Gold for Active Tab */}
-          <div className="mt-8 flex gap-2 border-b border-white/10 pb-4">
+          <div className="mt-8 flex gap-2 border-b border-black/10 dark:border-white/10 pb-4">
             {[
               { id: "overview", label: "Overview ✨", icon: Sparkles },
               { id: "features", label: "Key Features 🚀", icon: Layers },
@@ -120,7 +119,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                   className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all duration-300 ${
                     active
                       ? "bg-[#ffe880] text-black font-extrabold shadow-md"
-                      : "text-white/60 hover:text-white hover:bg-white/5"
+                      : "text-foreground/60 hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5"
                   }`}
                 >
                   <Icon size={14} />
@@ -138,29 +137,29 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col gap-6"
               >
-                <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md">
+                <div className="p-6 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] backdrop-blur-md">
                   <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-[#bf0039] mb-2">
                     Project Story & Inspiration
                   </h4>
-                  <p className="text-base text-white/80 leading-relaxed">
+                  <p className="text-base text-foreground/80 leading-relaxed">
                     {project.story}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="p-5 rounded-2xl border border-white/5 bg-white/[0.02]">
+                  <div className="p-5 rounded-2xl border border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02]">
                     <span className="font-mono text-[10px] text-[#bf0039] uppercase tracking-widest block font-bold">
                       My Role
                     </span>
-                    <span className="text-sm font-bold text-white mt-1 block">
+                    <span className="text-sm font-bold text-foreground mt-1 block">
                       {project.role}
                     </span>
                   </div>
-                  <div className="p-5 rounded-2xl border border-white/5 bg-white/[0.02]">
+                  <div className="p-5 rounded-2xl border border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02]">
                     <span className="font-mono text-[10px] text-[#bf0039] uppercase tracking-widest block font-bold">
                       Tagline
                     </span>
-                    <span className="text-sm font-medium text-white/80 mt-1 block">
+                    <span className="text-sm font-medium text-foreground/80 mt-1 block">
                       {project.tagline}
                     </span>
                   </div>
@@ -177,12 +176,12 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 {project.features.map((feat, idx) => (
                   <div
                     key={idx}
-                    className="p-5 rounded-2xl border border-white/10 bg-white/[0.02] flex items-start gap-3 hover:border-[#ffe880]/50 transition-colors duration-300"
+                    className="p-5 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02] flex items-start gap-3 hover:border-[#bf0039] dark:hover:border-[#ffe880]/50 transition-colors duration-300"
                   >
-                    <div className="p-2 rounded-lg bg-[#bf0039]/20 text-[#ffe880] mt-0.5 border border-[#bf0039]/40">
+                    <div className="p-2 rounded-lg bg-[#bf0039]/20 text-[#bf0039] dark:text-[#ffe880] mt-0.5 border border-[#bf0039]/40">
                       <CheckCircle2 size={16} />
                     </div>
-                    <span className="text-sm text-white/80 leading-relaxed font-medium">
+                    <span className="text-sm text-foreground/80 leading-relaxed font-medium">
                       {feat}
                     </span>
                   </div>
@@ -196,7 +195,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex flex-col gap-6"
               >
-                <div className="p-6 rounded-2xl border border-white/10 bg-white/[0.02]">
+                <div className="p-6 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
                   <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-[#bf0039] mb-4">
                     Technologies & Libraries Used
                   </h4>
@@ -204,7 +203,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     {project.tech.map((t) => (
                       <span
                         key={t}
-                        className="px-4 py-2 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/5 text-white/80 shadow-sm hover:border-[#ffe880]/50 hover:text-[#ffe880]"
+                        className="px-4 py-2 rounded-xl text-xs font-mono font-medium border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-foreground/80 shadow-sm hover:border-[#bf0039] dark:hover:border-[#ffe880]/50 hover:text-[#bf0039] dark:hover:text-[#ffe880]"
                       >
                         {t}
                       </span>
@@ -215,10 +214,10 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             )}
           </div>
 
-          {/* Modal Action Links Footer: Distinct Solid Gold CTA */}
-          <div className="mt-10 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-            <span className="font-mono text-xs text-white/40">
-              Press <kbd className="px-2 py-0.5 rounded bg-white/10 text-white font-mono text-[10px]">ESC</kbd> or click outside to close
+          {/* Modal Action Links Footer */}
+          <div className="mt-10 pt-6 border-t border-black/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-4">
+            <span className="font-mono text-xs text-foreground/40">
+              Press <kbd className="px-2 py-0.5 rounded bg-black/10 dark:bg-white/10 text-foreground font-mono text-[10px]">ESC</kbd> or click outside to close
             </span>
 
             <div className="flex items-center gap-3">
@@ -229,7 +228,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     data-cursor-text="CODE"
-                    className="flex items-center gap-2 px-5 py-3 rounded-full border border-[#bf0039]/50 bg-[#bf0039]/10 text-white text-xs font-mono font-bold hover:border-[#bf0039] hover:bg-[#bf0039]/20 transition-all duration-300"
+                    className="flex items-center gap-2 px-5 py-3 rounded-full border border-[#bf0039]/50 bg-[#bf0039]/10 text-foreground text-xs font-mono font-bold hover:border-[#bf0039] hover:bg-[#bf0039]/20 transition-all duration-300"
                   >
                     <Github size={15} className="text-[#bf0039]" />
                     <span>Source Code</span>

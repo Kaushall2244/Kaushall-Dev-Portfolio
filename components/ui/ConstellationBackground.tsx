@@ -12,14 +12,24 @@ export default function ConstellationBackground() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d", { alpha: true });
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let animationFrameId: number;
     let particles: Particle[] = [];
-    const mouse = { x: -2000, y: -2000, active: false, radiusSq: 220 * 220 };
-    let isVisible = true;
     let dpr = 1;
+    let isVisible = true;
+
+    const mouse = {
+      x: -2000,
+      y: -2000,
+      radius: 220,
+      radiusSq: 220 * 220,
+      active: false,
+    };
+
+    const goldColor = isDark ? "#ffe880" : "#d97706";
+    const crimsonColor = "#bf0039";
 
     class Particle {
       x: number;
@@ -29,46 +39,68 @@ export default function ConstellationBackground() {
       radius: number;
       baseRadius: number;
       type: "gold" | "crimson";
-      pulseSpeed: number;
-      pulseAngle: number;
+      alpha: number;
 
-      constructor(w: number, h: number) {
-        this.x = Math.random() * w;
-        this.y = Math.random() * h;
-        this.vx = (Math.random() - 0.5) * 0.7;
-        this.vy = (Math.random() - 0.5) * 0.7;
-        this.baseRadius = Math.random() * 2.2 + 2; // Noticeably visible particles
+      constructor(width: number, height: number) {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.45;
+        this.vy = (Math.random() - 0.5) * 0.45;
+        this.baseRadius = Math.random() * 2 + 2.5; // 2.5px - 4.5px
         this.radius = this.baseRadius;
-        this.type = Math.random() > 0.5 ? "gold" : "crimson";
-        this.pulseSpeed = 0.03 + Math.random() * 0.03;
-        this.pulseAngle = Math.random() * Math.PI * 2;
+        this.type = Math.random() > 0.45 ? "gold" : "crimson";
+        this.alpha = Math.random() * 0.35 + 0.65;
       }
 
-      update(w: number, h: number) {
+      update(width: number, height: number) {
         this.x += this.vx;
         this.y += this.vy;
 
-        // Wrap around screen
-        if (this.x < -20) this.x = w + 20;
-        if (this.x > w + 20) this.x = -20;
-        if (this.y < -20) this.y = h + 20;
-        if (this.y > h + 20) this.y = -20;
+        // Soft bounce at viewport boundary
+        if (this.x < 0) {
+          this.x = 0;
+          this.vx *= -1;
+        } else if (this.x > width) {
+          this.x = width;
+          this.vx *= -1;
+        }
 
-        // Subtle breathing pulse
-        this.pulseAngle += this.pulseSpeed;
-        this.radius = this.baseRadius + Math.sin(this.pulseAngle) * 0.6;
+        if (this.y < 0) {
+          this.y = 0;
+          this.vy *= -1;
+        } else if (this.y > height) {
+          this.y = height;
+          this.vy *= -1;
+        }
 
-        // Interactive mouse attraction
+        // Active Mouse Attraction Force
         if (mouse.active) {
           const dx = mouse.x - this.x;
           const dy = mouse.y - this.y;
           const distSq = dx * dx + dy * dy;
-          if (distSq < mouse.radiusSq && distSq > 4) {
+
+          if (distSq < mouse.radiusSq && distSq > 1) {
             const dist = Math.sqrt(distSq);
-            const force = (220 - dist) / 220;
-            this.x += (dx / dist) * force * 1.5;
-            this.y += (dy / dist) * force * 1.5;
+            const force = (1 - dist / mouse.radius) * 0.08;
+            this.vx += (dx / dist) * force;
+            this.vy += (dy / dist) * force;
+            this.radius = this.baseRadius * 1.4;
+          } else {
+            this.radius = this.baseRadius;
           }
+        } else {
+          this.radius = this.baseRadius;
+        }
+
+        // Friction dampening
+        this.vx *= 0.985;
+        this.vy *= 0.985;
+
+        // Maintain minimum gentle ambient drift
+        const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+        if (speed < 0.15) {
+          this.vx += (Math.random() - 0.5) * 0.05;
+          this.vy += (Math.random() - 0.5) * 0.05;
         }
       }
 
@@ -76,15 +108,16 @@ export default function ConstellationBackground() {
         context.save();
         context.beginPath();
         context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        context.globalAlpha = this.alpha;
 
         if (this.type === "gold") {
-          context.fillStyle = "#ffe880";
-          context.shadowColor = "#ffe880";
-          context.shadowBlur = 12;
+          context.fillStyle = goldColor;
+          context.shadowColor = goldColor;
+          context.shadowBlur = isDark ? 12 : 6;
         } else {
-          context.fillStyle = "#bf0039";
-          context.shadowColor = "#bf0039";
-          context.shadowBlur = 12;
+          context.fillStyle = crimsonColor;
+          context.shadowColor = crimsonColor;
+          context.shadowBlur = isDark ? 12 : 6;
         }
 
         context.fill();
@@ -104,7 +137,7 @@ export default function ConstellationBackground() {
 
       ctx.scale(dpr, dpr);
 
-      const count = width < 768 ? 40 : 85; // Rich particle density
+      const count = width < 768 ? 40 : 85;
       particles = [];
       for (let i = 0; i < count; i++) {
         particles.push(new Particle(width, height));
@@ -166,20 +199,23 @@ export default function ConstellationBackground() {
 
           if (distSq < maxDistSq) {
             const dist = Math.sqrt(distSq);
-            const alpha = (1 - dist / maxDist) * 0.35;
+            const alpha = (1 - dist / maxDist) * (isDark ? 0.35 : 0.25);
 
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
 
-            // Separate distinct colors for lines based on the connecting particle
             if (p1.type === "gold" && p2.type === "gold") {
-              ctx.strokeStyle = `rgba(255, 232, 128, ${alpha * 1.2})`;
+              ctx.strokeStyle = isDark
+                ? `rgba(255, 232, 128, ${alpha * 1.2})`
+                : `rgba(217, 119, 6, ${alpha * 1.2})`;
             } else if (p1.type === "crimson" && p2.type === "crimson") {
               ctx.strokeStyle = `rgba(191, 0, 57, ${alpha * 1.2})`;
             } else {
-              ctx.strokeStyle = `rgba(255, 232, 128, ${alpha * 0.7})`;
+              ctx.strokeStyle = isDark
+                ? `rgba(255, 232, 128, ${alpha * 0.7})`
+                : `rgba(191, 0, 57, ${alpha * 0.7})`;
             }
 
             ctx.lineWidth = 0.9;
@@ -204,12 +240,14 @@ export default function ConstellationBackground() {
             ctx.lineTo(mouse.x, mouse.y);
 
             if (p1.type === "gold") {
-              ctx.strokeStyle = `rgba(255, 232, 128, ${alpha})`;
-              ctx.shadowColor = "#ffe880";
+              ctx.strokeStyle = isDark
+                ? `rgba(255, 232, 128, ${alpha})`
+                : `rgba(217, 119, 6, ${alpha})`;
+              ctx.shadowColor = goldColor;
               ctx.shadowBlur = 8;
             } else {
               ctx.strokeStyle = `rgba(191, 0, 57, ${alpha})`;
-              ctx.shadowColor = "#bf0039";
+              ctx.shadowColor = crimsonColor;
               ctx.shadowBlur = 8;
             }
 
@@ -237,11 +275,8 @@ export default function ConstellationBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-full h-full pointer-events-none z-[1] will-change-transform"
-      style={{
-        display: "block",
-        mixBlendMode: isDark ? "screen" : "normal",
-      }}
+      aria-hidden="true"
+      className="fixed inset-0 w-full h-full pointer-events-none z-[1]"
     />
   );
 }

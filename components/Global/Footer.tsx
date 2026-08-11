@@ -29,22 +29,22 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-transparent border-t border-white/10 px-8 md:px-16 py-20 overflow-hidden select-none">
+    <footer className="relative bg-transparent border-t border-black/10 dark:border-white/10 px-8 md:px-16 py-20 overflow-hidden select-none">
       {/* Structural alignment lines */}
-      <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
-      <div className="absolute right-4 sm:right-8 top-0 bottom-0 w-px bg-white/5 z-20 pointer-events-none hidden md:block" />
+      <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-black/5 dark:bg-white/5 z-20 pointer-events-none hidden md:block" />
+      <div className="absolute right-4 sm:right-8 top-0 bottom-0 w-px bg-black/5 dark:bg-white/5 z-20 pointer-events-none hidden md:block" />
 
       <div className="max-w-5xl w-full mx-auto flex flex-col gap-16 relative z-10">
         {/* TOP BLOCK */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-12 border-b border-white/10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-12 border-b border-black/10 dark:border-white/10">
           <div>
-            <h3 className="text-3xl md:text-4xl font-display font-black text-white tracking-tight leading-tight">
+            <h3 className="text-3xl md:text-4xl font-display font-black text-foreground tracking-tight leading-tight">
               <TextReveal text="Let's make something" variant="h3" delayOffset={0} />{" "}
-              <span className="font-light italic font-sans block md:inline-block text-[#ffe880]">
+              <span className="font-light italic font-sans block md:inline-block text-[#bf0039] dark:text-[#ffe880]">
                 awesome.
               </span>
             </h3>
-            <p className="text-xs text-white/60 font-mono mt-3 uppercase tracking-wider font-medium">
+            <p className="text-xs text-foreground/60 font-mono mt-3 uppercase tracking-wider font-medium">
               Designed & built with curiosity, coffee, and clean code ☕
             </p>
           </div>
@@ -53,10 +53,10 @@ export default function Footer() {
             <button
               onClick={scrollToTop}
               data-cursor-text="APEX"
-              className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider px-6 py-3.5 rounded-full border transition-all duration-300 cursor-none font-extrabold shadow-xl bg-white/5 border-white/15 text-white/80 hover:text-[#ffe880] hover:border-[#ffe880]/60 hover:bg-white/10"
+              className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider px-6 py-3.5 rounded-full border transition-all duration-300 font-extrabold shadow-xl bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/15 text-foreground/80 hover:text-[#bf0039] dark:hover:text-[#ffe880] hover:border-[#bf0039] dark:hover:border-[#ffe880]/60"
             >
               <span>[ Back to Top 🚀 ]</span>
-              <ArrowUpRight size={13} className="-rotate-45 text-[#ffe880]" />
+              <ArrowUpRight size={13} className="-rotate-45 text-[#bf0039] dark:text-[#ffe880]" />
             </button>
           </Magnetic>
         </div>
@@ -82,7 +82,7 @@ export default function Footer() {
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-black/10 dark:border-white/10 pb-2 font-bold">
               <Navigation size={11} className="text-[#bf0039]" />
               Explore
             </span>
@@ -91,7 +91,7 @@ export default function Footer() {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-sm text-white/70 hover:text-[#ffe880] hover:translate-x-1 transition-all duration-300 max-w-max cursor-none font-medium"
+                  className="text-sm text-foreground/70 hover:text-[#bf0039] dark:hover:text-[#ffe880] hover:translate-x-1 transition-all duration-300 max-w-max font-medium"
                 >
                   {link.label}
                 </a>
@@ -107,7 +107,7 @@ export default function Footer() {
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-black/10 dark:border-white/10 pb-2 font-bold">
               <Sparkles size={11} className="text-[#bf0039]" />
               Connect
             </span>
@@ -118,10 +118,10 @@ export default function Footer() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-white/70 hover:text-[#ffe880] hover:translate-x-1 transition-all duration-300 flex items-center gap-1 max-w-max group cursor-none font-medium"
+                  className="text-sm text-foreground/70 hover:text-[#bf0039] dark:hover:text-[#ffe880] hover:translate-x-1 transition-all duration-300 flex items-center gap-1 max-w-max group font-medium"
                 >
                   <span>{link.label}</span>
-                  <ArrowUpRight size={11} className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-[#ffe880]" />
+                  <ArrowUpRight size={11} className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-[#bf0039] dark:text-[#ffe880]" />
                 </a>
               ))}
             </div>
@@ -135,13 +135,13 @@ export default function Footer() {
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-black/10 dark:border-white/10 pb-2 font-bold">
               <Globe size={11} className="text-[#bf0039]" />
               Location
             </span>
-            <div className="text-sm text-white/70 leading-relaxed font-sans">
-              <span className="block font-semibold text-white/90">Coimbatore, India 📍</span>
-              <span className="block font-mono text-[10px] mt-1 text-white/50">Available Worldwide 🌍</span>
+            <div className="text-sm text-foreground/70 leading-relaxed font-sans">
+              <span className="block font-semibold text-foreground/90">Coimbatore, India 📍</span>
+              <span className="block font-mono text-[10px] mt-1 text-foreground/50">Available Worldwide 🌍</span>
             </div>
           </motion.div>
 
@@ -153,11 +153,11 @@ export default function Footer() {
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-white/10 pb-2 font-bold">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-black/10 dark:border-white/10 pb-2 font-bold">
               <Heart size={11} className="text-[#bf0039]" />
               Crafted With
             </span>
-            <div className="text-xs text-white/60 flex flex-col gap-1 font-mono">
+            <div className="text-xs text-foreground/60 flex flex-col gap-1 font-mono">
               <span>• Next.js 15 & React 19</span>
               <span>• Framer Motion & GSAP</span>
               <span>• Tailwind CSS & Three.js</span>
@@ -166,7 +166,7 @@ export default function Footer() {
         </motion.div>
 
         {/* BOTTOM COPYRIGHT */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] font-mono text-white/40 border-t border-white/10 pt-8">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] font-mono text-foreground/40 border-t border-black/10 dark:border-white/10 pt-8">
           <span>© 2026 S KAUSHALL • ALL RIGHTS RESERVED</span>
           <span>HAVE A WONDERFUL DAY! ✨</span>
         </div>

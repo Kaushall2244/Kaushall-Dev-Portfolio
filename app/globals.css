@@ -22,15 +22,17 @@
 :root, .dark {
   --bg-main: #06070a;
   --fg-main: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.7);
+  --text-dim: rgba(255, 255, 255, 0.4);
   --accent-main: #ffe880;
   --accent-secondary: #bf0039;
   --card-bg-main: rgba(255, 255, 255, 0.04);
   --border-subtle-main: rgba(255, 255, 255, 0.12);
   --grid-line: rgba(255, 255, 255, 0.05);
   --grid-glow-pt: rgba(255, 232, 128, 0.18);
-  --vignette-color: #06070a;
+  --watermark-color: rgba(255, 255, 255, 0.04);
   
-  /* Visible High-End Glassmorphism Tokens */
+  /* Dark Glassmorphism Tokens */
   --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
   --glass-border: rgba(255, 255, 255, 0.16);
   --glass-border-hover: rgba(255, 232, 128, 0.45);
@@ -38,27 +40,31 @@
   --glass-inner-glow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.25), inset 0 0 20px 0 rgba(255, 255, 255, 0.02);
   --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
   --glass-panel-bg: linear-gradient(145deg, rgba(14, 16, 24, 0.85) 0%, rgba(8, 10, 15, 0.9) 100%);
+  --saas-glow: rgba(255, 232, 128, 0.15);
 }
 
 .light {
   --bg-main: #f8fafc;
   --fg-main: #0f172a;
+  --text-muted: #334155;
+  --text-dim: #64748b;
   --accent-main: #bf0039;
-  --accent-secondary: #eab308;
-  --card-bg-main: rgba(255, 255, 255, 0.85);
-  --border-subtle-main: rgba(0, 0, 0, 0.08);
-  --grid-line: rgba(0, 0, 0, 0.06);
-  --grid-glow-pt: rgba(191, 0, 57, 0.18);
-  --vignette-color: #f8fafc;
+  --accent-secondary: #d97706;
+  --card-bg-main: rgba(255, 255, 255, 0.78);
+  --border-subtle-main: rgba(15, 23, 42, 0.08);
+  --grid-line: rgba(15, 23, 42, 0.05);
+  --grid-glow-pt: rgba(191, 0, 57, 0.15);
+  --watermark-color: rgba(15, 23, 42, 0.035);
 
-  /* Light Glassmorphism Tokens */
-  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
-  --glass-border: rgba(0, 0, 0, 0.1);
+  /* Apple VisionOS Liquid Glass Tokens */
+  --glass-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.42) 100%);
+  --glass-border: rgba(255, 255, 255, 0.75);
   --glass-border-hover: rgba(191, 0, 57, 0.45);
   --glass-specular: rgba(255, 255, 255, 0.95);
-  --glass-inner-glow: inset 0 1px 2px 0 rgba(255, 255, 255, 0.9), inset 0 0 15px 0 rgba(0, 0, 0, 0.01);
-  --glass-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
-  --glass-panel-bg: rgba(255, 255, 255, 0.92);
+  --glass-inner-glow: inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 1px 0 rgba(15, 23, 42, 0.03);
+  --glass-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  --glass-panel-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.65) 100%);
+  --saas-glow: rgba(191, 0, 57, 0.12);
 }
 
 /* =====================================================
@@ -99,13 +105,13 @@
 }
 
 /* =====================================================
-   PREMIUM ULTRA-VISIBLE GLASSMORPHISM UTILITIES
+   PREMIUM LIQUID GLASS & GLASSMORPHISM UTILITIES
    ===================================================== */
 @layer utilities {
   .glass-card {
     background: var(--glass-bg);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(28px) saturate(190%) contrast(102%);
+    -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(102%);
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow), var(--glass-inner-glow);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -113,31 +119,31 @@
 
   .glass-card:hover {
     border-color: var(--glass-border-hover);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 1px 2px 0 rgba(255, 255, 255, 0.4);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15), var(--glass-inner-glow);
   }
 
   .glass-panel {
     background: var(--glass-panel-bg);
-    backdrop-filter: blur(28px) saturate(200%);
-    -webkit-backdrop-filter: blur(28px) saturate(200%);
+    backdrop-filter: blur(32px) saturate(200%) contrast(104%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%) contrast(104%);
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow), var(--glass-inner-glow);
   }
 
   .glass-pill {
     background: var(--glass-bg);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), inset 0 1px 1px 0 var(--glass-specular);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05), inset 0 1px 1px 0 var(--glass-specular);
   }
 
   .glass-frosted {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
-    backdrop-filter: blur(30px) saturate(210%);
-    -webkit-backdrop-filter: blur(30px) saturate(210%);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), inset 0 1px 2px 0 rgba(255, 255, 255, 0.35);
+    background: var(--glass-panel-bg);
+    backdrop-filter: blur(36px) saturate(210%) contrast(105%);
+    -webkit-backdrop-filter: blur(36px) saturate(210%) contrast(105%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), var(--glass-inner-glow);
   }
 
   .card-gradient-border {
@@ -150,7 +156,28 @@
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
   }
   .hover-glow:hover {
-    box-shadow: 0 0 40px rgba(255, 232, 128, 0.2);
+    box-shadow: 0 0 35px var(--saas-glow);
+  }
+
+  /* SaaS Ambient Shimmer Utility */
+  .saas-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .saas-shimmer::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, var(--saas-glow) 0%, transparent 65%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+  .saas-shimmer:hover::after {
+    opacity: 1;
   }
 
   .whitespace-nowrap {
@@ -159,8 +186,26 @@
 }
 
 /* =====================================================
-   MARQUEE / SCROLL ANIMATIONS
+   SAAS MICRO-ANIMATIONS & KEYFRAMES
    ===================================================== */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.04); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
 @keyframes scroll {
   0%   { transform: translateX(0); }
   100% { transform: translateX(calc(-50% - 0.5rem)); }

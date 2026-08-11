@@ -1,141 +1,137 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
+  ExternalLink,
+  Github,
   Sparkles,
   ArrowUpRight,
+  Flame,
   CheckCircle2,
   Circle,
   Scan,
-  MapPin,
-  Compass,
-  Flame,
   Volume2,
+  Navigation2,
+  Radio,
+  Gamepad2,
+  Terminal,
+  Play,
+  RotateCw,
 } from "lucide-react";
 import TextReveal from "../ui/TextReveal";
-import { useTheme } from "../Global/ThemeProvider";
 import MagneticWrapper from "../ui/Magnetic";
 import ProjectModal, { ProjectDetail } from "../ui/ProjectModal";
+import { useTheme } from "../Global/ThemeProvider";
 
-export interface Project {
-  title: string;
-  subtitle: string;
-  description: string;
-  image: string;
-  status: string;
-  year: string;
-  role: string;
-  progress: number;
-  github: string;
-  demo: string;
-  tech: string[];
-}
+const CATEGORIES = ["All", "Web Apps", "AI & Vision", "Mobile Apps", "3D & Creative"];
 
 const PROJECTS_DATA: ProjectDetail[] = [
   {
     id: "dayflow",
     title: "DayFlow Platform",
-    subtitle: "Smart Productivity & Habit Engine",
-    tagline: "Effortless task management built for everyday humans.",
+    subtitle: "Daily Productivity & Habit OS",
+    tagline: "Designed to make daily routines smooth, rewarding, and fun.",
     category: "Web Apps",
     year: "2026",
-    role: "Full-Stack Developer",
-    status: "Active & Live 🚀",
-    description: "A joyful productivity platform featuring intelligent task planning, habit streaks, and intuitive daily workflows.",
-    story: "I wanted a productivity app that felt fast, calm, and satisfying to use rather than cluttered and stressful. DayFlow combines minimal design with instant keyboard shortcuts and streak celebrations.",
+    role: "Full-Stack Engineer & UI Designer",
+    status: "Live & Active",
+    description:
+      "DayFlow is a comprehensive daily operating system built with Next.js 15, React 19, TypeScript, and Tailwind CSS. It combines smart habit streaks, timeline scheduling, and delightful completion micro-interactions.",
+    story:
+      "I wanted to build a habit tracker that didn't feel like a chore to open. By combining buttery spring animations, tactile audio feedback, and high-performance serverless storage, DayFlow turns everyday task completion into a genuinely joyful experience.",
     features: [
-      "Interactive daily task checklists with instant completion animations",
-      "Dynamic habit streak tracker with visual progress analytics",
-      "Keyboard-first command palette for lightning-fast task entry",
-      "Customizable categories with color-coded tags and priorities",
-      "Cloud synchronization with instant offline fallback"
+      "Dynamic streak tracking with celebration confetti effects",
+      "Interactive drag-and-drop daily schedule timeline",
+      "Offline-first sync powered by IndexedDB and cloud backups",
+      "Liquid glass design system with responsive layouts",
     ],
-    tech: ["React 19", "Next.js 15", "TypeScript", "Tailwind CSS v4", "Spring Boot", "MySQL"],
+    tech: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Zustand"],
     github: "https://github.com/Kaushall2244",
-    demo: "https://github.com/Kaushall2244",
+    demo: "https://skaushall.dev",
   },
   {
     id: "visionmate",
     title: "VisionMate AI",
-    subtitle: "Real-Time AI Vision & Voice Assistant",
-    tagline: "Empowering visually impaired users through computer vision.",
+    subtitle: "Real-Time Object Perception & Audio Guidance",
+    tagline: "Empowering visually impaired users through real-time Computer Vision.",
     category: "AI & Vision",
     year: "2026",
-    role: "AI & Android Developer",
-    status: "In Development ✨",
-    description: "An intelligent assistive tool that detects surroundings, reads street signs and books aloud, and describes visual scenes in real-time.",
-    story: "Inspired by accessibility tech, VisionMate AI was developed to turn mobile cameras into real-time perceptual assistants using lightweight deep learning models and low-latency speech synthesis.",
+    role: "AI & Computer Vision Developer",
+    status: "In Prototype Testing",
+    description:
+      "VisionMate is an assistive computer vision system using YOLOv8, OpenCV, and Python to identify spatial obstacles and objects in real-time, delivering immediate audio descriptions to users.",
+    story:
+      "Built with the vision of making independent navigation accessible to everyone. The system processes camera frames locally on lightweight hardware at 30+ FPS, converting spatial depth information into natural spatial audio cues.",
     features: [
-      "Real-time object detection and spatial distance estimation",
-      "Instant optical character recognition (OCR) with text-to-speech",
-      "Voice-guided navigation and scene summary narration",
-      "Optimized lightweight YOLOv8 model running on-device",
-      "Haptic feedback triggers for nearby obstacle proximity"
+      "Sub-30ms real-time multi-object detection and tracking",
+      "Spatial directional audio cue synthesis",
+      "Lightweight edge deployment model optimized for mobile and Raspberry Pi",
+      "Voice commands and tactile vibration feedback modes",
     ],
-    tech: ["Python", "OpenCV", "YOLOv8", "TensorFlow Lite", "Android", "Java"],
+    tech: ["Python", "YOLOv8", "OpenCV", "TensorFlow Lite", "PyTorch", "TTS Engine"],
     github: "https://github.com/Kaushall2244",
     demo: "https://github.com/Kaushall2244",
   },
   {
     id: "tracksphere",
-    title: "TrackSphere",
-    subtitle: "Real-Time Live Location & Family Shield",
-    tagline: "Stay connected with family and team members anywhere on Earth.",
+    title: "TrackSphere Transit",
+    subtitle: "Live Fleet GPS Telemetry & Campus Tracking",
+    tagline: "High-accuracy live transport tracking with low-latency geofencing.",
     category: "Mobile Apps",
-    year: "2026",
-    role: "Android Developer",
-    status: "Active Project 📍",
-    description: "A secure family location sharing app featuring live GPS beacon tracking, smart geofencing alerts, and cloud synchronization.",
-    story: "TrackSphere was designed to provide reliable, low-battery GPS tracking and instant safety geofences for families and outdoor teams with seamless Firebase cloud synchronization.",
+    year: "2025",
+    role: "Full-Stack & Mobile Developer",
+    status: "Production Ready",
+    description:
+      "A complete GPS telemetry platform connecting hardware IoT trackers on campus vehicles with a high-performance interactive mobile and web dashboard.",
+    story:
+      "Students often struggled with unpredictable bus schedules. I designed TrackSphere with WebSocket pub/sub streaming to provide millisecond-accurate bus positions, ETA predictions, and instant arrival alerts.",
     features: [
-      "Live GPS tracking with sub-meter location accuracy",
-      "Smart geofencing boundaries with enter/exit push notifications",
-      "Emergency SOS trigger with instant SMS coordinate broadcast",
-      "Low-battery GPS optimization with smart sensor sleep",
-      "Mapbox vector tiles with custom dark/light map styling"
+      "Live WebSocket vehicle position interpolation at 60fps",
+      "Smart geofencing with push notification triggers",
+      "Traffic-aware route arrival time prediction",
+      "Interactive map overlays using Mapbox GL and custom vector pins",
     ],
-    tech: ["Java", "Android SDK", "Firebase Realtime DB", "Mapbox Maps API", "Cloud Functions"],
+    tech: ["React Native", "Node.js", "WebSockets", "Mapbox GL", "MongoDB", "Express"],
     github: "https://github.com/Kaushall2244",
     demo: "https://github.com/Kaushall2244",
   },
   {
-    id: "creative3d",
-    title: "3D Creative Lab",
-    subtitle: "Interactive WebGL & Shaders Playground",
-    tagline: "Exploring the bleeding edge of 3D web graphics & shaders.",
+    id: "cinematic3d",
+    title: "Cinematic Canvas 3D",
+    subtitle: "WebGL Shaders & Interactive 3D Playground",
+    tagline: "Where creative code meets high-performance 3D rendering.",
     category: "3D & Creative",
     year: "2026",
-    role: "Creative UI Engineer",
-    status: "Updated 🎉",
-    description: "A collection of GPU-accelerated 3D web experiments featuring refractive materials, procedural geometry, and particle physics.",
-    story: "An ongoing creative laboratory pushing the limits of Three.js and custom GLSL fragment shaders to create breathtaking digital art directly inside the web browser.",
+    role: "Creative Technologist",
+    status: "Open Playground",
+    description:
+      "An experimental playground exploring WebGL physics, custom GLSL noise shaders, and interactive lighting environments in the browser.",
+    story:
+      "Exploring how far we can push browser 3D without draining battery or dropping frames. Features refractive glass materials, particle vortex dynamics, and gyro-reactive camera controls.",
     features: [
-      "Custom refractive glass transmission shaders with chromatic aberration",
-      "Physics-driven particle field with 60fps GPU compute",
-      "Kinetic mouse follow and gyro-tilt mobile responsiveness",
-      "Zero-latency WebGL canvas integration with Next.js 15"
+      "Custom GLSL chromatic dispersion shader materials",
+      "GPU-accelerated physics simulation for 10,000+ particles",
+      "Audio-reactive visual waveforms and frequency modulation",
+      "Optimized for smooth 60fps on mobile Safari and Chrome",
     ],
-    tech: ["Three.js", "React Three Fiber", "@react-three/drei", "GLSL", "WebGL"],
+    tech: ["Three.js", "React Three Fiber", "GLSL Shaders", "Blender", "GSAP"],
     github: "https://github.com/Kaushall2244",
-    demo: "https://github.com/Kaushall2244",
+    demo: "https://skaushall.dev",
   },
 ];
 
-const CATEGORIES = ["All", "Web Apps", "AI & Vision", "Mobile Apps", "3D & Creative"];
-
 export default function Projects() {
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [selectedProject, setSelectedProject] = useState<ProjectDetail | null>(null);
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [selectedProject, setSelectedProject] = useState<ProjectDetail | null>(null);
-
-  // Interactive Live Task State for DayFlow Card
+  // Interactive Live Task State for Bento Card 1
   const [tasks, setTasks] = useState([
-    { id: 1, text: "Finish Next.js portfolio redesign", done: true },
-    { id: 2, text: "Tune 60fps spring animations", done: true },
-    { id: 3, text: "Deploy smart DayFlow engine", done: false },
+    { id: 1, text: "Build silky smooth UI components", done: true },
+    { id: 2, text: "Optimize 3D shaders for 60fps", done: true },
+    { id: 3, text: "Review user experience with a coffee ☕", done: false },
   ]);
 
   const toggleTask = (id: number) => {
@@ -145,12 +141,12 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      aria-label="Projects and Creations"
-      className="relative overflow-hidden py-32 md:py-44 px-6 md:px-10 lg:px-20 bg-transparent border-t border-white/5"
+      aria-label="Featured Projects and Bento Playground"
+      className="relative overflow-hidden py-32 md:py-44 px-6 md:px-10 lg:px-20 bg-transparent border-t border-black/5 dark:border-white/5"
     >
       {/* Watermark Title */}
       <div
-        className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-white/[0.04] select-none"
+        className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-black/[0.035] dark:text-white/[0.04] select-none"
         aria-hidden="true"
       >
         WORKS
@@ -176,13 +172,13 @@ export default function Projects() {
               <TextReveal
                 text="Turning wild ideas into fast, playful, and interactive creations."
                 variant="h2"
-                className="text-4xl sm:text-5xl md:text-6xl font-black leading-tight text-white"
+                className="text-4xl sm:text-5xl md:text-6xl font-black leading-tight text-foreground"
               />
             </div>
           </div>
 
           {/* Category Filter Pills: Solid Distinct Gold for Active */}
-          <div className="flex flex-wrap gap-2 glass-panel p-2 rounded-2xl border border-white/15 self-start md:self-auto shadow-xl">
+          <div className="flex flex-wrap gap-2 glass-card p-2 rounded-2xl self-start md:self-auto shadow-xl">
             {CATEGORIES.map((cat) => {
               const active = activeCategory === cat;
               return (
@@ -193,7 +189,7 @@ export default function Projects() {
                   className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all duration-300 ${
                     active
                       ? "bg-[#ffe880] text-black font-extrabold shadow-[0_0_20px_#ffe880]"
-                      : "text-white/60 hover:text-white hover:bg-white/5"
+                      : "text-foreground/60 hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5"
                   }`}
                 >
                   {cat}
@@ -204,11 +200,11 @@ export default function Projects() {
         </div>
 
         {/* ======================================================== */}
-        {/* INTERACTIVE GLASSMORPHIC BENTO GRID */}
+        {/* INTERACTIVE BENTO GRID (Apple Liquid Glass & Obsidian Glass) */}
         {/* ======================================================== */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
           {/* ============================================== */}
-          {/* BENTO CARD 1 (Large 2x2): DAYFLOW PLATFORM */}
+          {/* BENTO CARD 1: DAYFLOW PLATFORM */}
           {/* ============================================== */}
           {(activeCategory === "All" || activeCategory === "Web Apps") && (
             <motion.div
@@ -218,37 +214,37 @@ export default function Projects() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
               whileHover={{ y: -6 }}
-              className="md:col-span-12 lg:col-span-7 glass-frosted rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#ffe880]/60 transition-all duration-500 shadow-2xl"
+              className="md:col-span-12 lg:col-span-7 glass-card saas-shimmer rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#bf0039] dark:hover:border-[#ffe880]/60 transition-all duration-500 shadow-2xl"
             >
               <div>
-                {/* Header Row: Distinct Gold Pill & Distinct Crimson Streak */}
+                {/* Header Row */}
                 <div className="flex items-center justify-between gap-4 flex-wrap mb-6">
                   <div className="flex items-center gap-2">
-                    <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#ffe880]/40 bg-[#ffe880]/15 text-[#ffe880]">
+                    <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 dark:border-[#ffe880]/40 bg-[#bf0039]/10 dark:bg-[#ffe880]/15 text-[#bf0039] dark:text-[#ffe880]">
                       🌟 Featured Web App
                     </span>
-                    <span className="text-xs font-mono text-white/40">{"// 2026"}</span>
+                    <span className="text-xs font-mono text-foreground/40">{"// 2026"}</span>
                   </div>
 
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#bf0039]/15 border border-[#bf0039]/40 text-[#ffe880] font-mono text-xs font-bold">
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#bf0039]/15 border border-[#bf0039]/40 text-[#bf0039] dark:text-[#ffe880] font-mono text-xs font-bold">
                     <Flame size={14} className="text-[#bf0039] animate-pulse" />
                     <span>14-Day Streak</span>
                   </div>
                 </div>
 
                 {/* Title & Tagline */}
-                <h3 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                <h3 className="text-3xl sm:text-4xl font-black text-foreground tracking-tight">
                   DayFlow Platform
                 </h3>
-                <p className="mt-3 text-white/70 text-base leading-relaxed max-w-xl">
+                <p className="mt-3 text-foreground/70 text-base leading-relaxed max-w-xl">
                   Smart habit tracking and delightful daily workflows. Try clicking the tasks below to experience the live micro-interaction!
                 </p>
 
                 {/* Live Interactive Task Widget Simulation */}
-                <div className="mt-8 p-5 rounded-2xl border border-white/15 bg-black/50 backdrop-blur-2xl shadow-inner max-w-lg">
-                  <div className="flex items-center justify-between mb-3 text-xs font-mono text-white/50 border-b border-white/10 pb-2">
-                    <span className="font-bold flex items-center gap-1.5 text-[#ffe880]">
-                      <Sparkles size={12} className="text-[#ffe880]" />
+                <div className="mt-8 p-5 rounded-2xl border border-black/10 dark:border-white/15 bg-black/5 dark:bg-black/50 backdrop-blur-2xl shadow-inner max-w-lg">
+                  <div className="flex items-center justify-between mb-3 text-xs font-mono text-foreground/50 border-b border-black/10 dark:border-white/10 pb-2">
+                    <span className="font-bold flex items-center gap-1.5 text-[#bf0039] dark:text-[#ffe880]">
+                      <Sparkles size={12} />
                       TODAY&apos;S FOCUS
                     </span>
                     <span>
@@ -264,14 +260,14 @@ export default function Projects() {
                         data-cursor-text="TOGGLE"
                         className={`flex items-center gap-3 p-3 rounded-xl border transition-all duration-300 cursor-pointer ${
                           task.done
-                            ? "bg-[#ffe880]/15 border-[#ffe880]/40 text-white/95"
-                            : "bg-white/[0.03] border-white/10 text-white/60 hover:bg-white/10 hover:border-white/25"
+                            ? "bg-[#ffe880]/20 border-[#ffe880]/50 text-foreground"
+                            : "bg-black/[0.02] dark:bg-white/[0.03] border-black/10 dark:border-white/10 text-foreground/60 hover:bg-black/5 dark:hover:bg-white/10"
                         }`}
                       >
                         {task.done ? (
-                          <CheckCircle2 size={17} className="text-[#ffe880]" />
+                          <CheckCircle2 size={17} className="text-[#bf0039] dark:text-[#ffe880]" />
                         ) : (
-                          <Circle size={17} className="text-white/30" />
+                          <Circle size={17} className="text-foreground/30" />
                         )}
                         <span
                           className={`text-xs font-medium ${
@@ -286,13 +282,13 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Bottom Actions Row: Solid Distinct Gold Button */}
-              <div className="mt-10 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+              {/* Bottom Actions Row */}
+              <div className="mt-10 pt-6 border-t border-black/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-4">
                 <div className="flex flex-wrap gap-2">
-                  {["React 19", "Next.js 15", "TypeScript", "Spring Boot"].map((t) => (
+                  {["React 19", "Next.js 15", "TypeScript", "Tailwind"].map((t) => (
                     <span
                       key={t}
-                      className="px-3 py-1 rounded-lg text-[11px] font-mono border border-white/10 bg-white/5 text-white/70"
+                      className="px-3 py-1 rounded-lg text-[11px] font-mono border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-foreground/70"
                     >
                       {t}
                     </span>
@@ -315,7 +311,7 @@ export default function Projects() {
           )}
 
           {/* ============================================== */}
-          {/* BENTO CARD 2 (Wide 2x1): VISIONMATE AI */}
+          {/* BENTO CARD 2: VISIONMATE AI */}
           {/* ============================================== */}
           {(activeCategory === "All" || activeCategory === "AI & Vision") && (
             <motion.div
@@ -325,25 +321,25 @@ export default function Projects() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
               whileHover={{ y: -6 }}
-              className="md:col-span-12 lg:col-span-5 glass-frosted rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#ffe880]/50 transition-all duration-500 shadow-2xl"
+              className="md:col-span-12 lg:col-span-5 glass-card saas-shimmer rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#bf0039] dark:hover:border-[#ffe880]/50 transition-all duration-500 shadow-2xl"
             >
               <div>
                 <div className="flex items-center justify-between gap-4 mb-6">
-                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#ffe880]">
+                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#bf0039] dark:text-[#ffe880]">
                     🤖 AI & Vision Assistant
                   </span>
-                  <span className="text-xs font-mono text-white/40">{"// 2026"}</span>
+                  <span className="text-xs font-mono text-foreground/40">{"// 2026"}</span>
                 </div>
 
-                <h3 className="text-3xl font-black text-white tracking-tight">
+                <h3 className="text-3xl font-black text-foreground tracking-tight">
                   VisionMate AI
                 </h3>
-                <p className="mt-3 text-white/70 text-sm leading-relaxed">
+                <p className="mt-3 text-foreground/70 text-sm leading-relaxed">
                   Real-time object perception and audio narration empowering visually impaired users.
                 </p>
 
                 {/* Animated Real-Time Radar Scanner Viewport */}
-                <div className="mt-6 p-4 rounded-2xl border border-white/15 bg-black/60 backdrop-blur-2xl relative overflow-hidden h-44 flex flex-col justify-between shadow-inner">
+                <div className="mt-6 p-4 rounded-2xl border border-black/10 dark:border-white/15 bg-black/85 text-white backdrop-blur-2xl relative overflow-hidden h-44 flex flex-col justify-between shadow-inner">
                   <div className="absolute inset-0 bg-grid-pattern opacity-25 pointer-events-none" />
 
                   {/* Real-Time Scan Line in Crimson */}
@@ -354,7 +350,7 @@ export default function Projects() {
                   />
 
                   {/* Header in scanner */}
-                  <div className="relative z-10 flex justify-between items-center text-[10px] font-mono text-white/40">
+                  <div className="relative z-10 flex justify-between items-center text-[10px] font-mono text-white/50">
                     <span className="flex items-center gap-1 text-[#bf0039] font-bold">
                       <Scan size={12} className="text-[#bf0039]" />
                       YOLOv8 CAMERA FEED
@@ -365,7 +361,7 @@ export default function Projects() {
                     </span>
                   </div>
 
-                  {/* Detected Object Floating Chips in Distinct Gold */}
+                  {/* Detected Object Floating Chips */}
                   <div className="relative z-10 flex flex-wrap gap-2">
                     <motion.span
                       animate={{ scale: [1, 1.05, 1] }}
@@ -383,20 +379,20 @@ export default function Projects() {
                   </div>
 
                   {/* Speech synthesis footer */}
-                  <div className="relative z-10 flex items-center gap-2 text-[10px] font-mono text-white/60">
+                  <div className="relative z-10 flex items-center gap-2 text-[10px] font-mono text-white/70">
                     <Volume2 size={13} className="text-[#ffe880]" />
                     <span className="italic truncate">&ldquo;Laptop detected 1.2m ahead on desk&rdquo;</span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
-                <span className="text-xs font-mono text-white/50">Python • OpenCV • Android</span>
+              <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
+                <span className="text-xs font-mono text-foreground/50">Python • OpenCV • Android</span>
                 <MagneticWrapper range={25} actionFactor={0.25}>
                   <button
                     onClick={() => setSelectedProject(PROJECTS_DATA[1])}
                     data-cursor-text="VIEW"
-                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#ffe880] hover:underline transition-all"
+                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#bf0039] dark:text-[#ffe880] hover:underline transition-all"
                   >
                     <span>Details</span>
                     <ArrowUpRight size={14} />
@@ -407,7 +403,7 @@ export default function Projects() {
           )}
 
           {/* ============================================== */}
-          {/* BENTO CARD 3 (Tall 1x2): TRACKSPHERE */}
+          {/* BENTO CARD 3: TRACKSPHERE TRANSIT */}
           {/* ============================================== */}
           {(activeCategory === "All" || activeCategory === "Mobile Apps") && (
             <motion.div
@@ -417,54 +413,51 @@ export default function Projects() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
               whileHover={{ y: -6 }}
-              className="md:col-span-12 lg:col-span-6 glass-frosted rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#ffe880]/50 transition-all duration-500 shadow-2xl"
+              className="md:col-span-12 lg:col-span-6 glass-card saas-shimmer rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#bf0039] dark:hover:border-[#ffe880]/50 transition-all duration-500 shadow-2xl"
             >
               <div>
                 <div className="flex items-center justify-between gap-4 mb-6">
-                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#ffe880]">
-                    📱 Real-Time Location App
+                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#bf0039] dark:text-[#ffe880]">
+                    📍 Real-Time GPS Tracking
                   </span>
-                  <span className="text-xs font-mono text-white/40">{"// 2026"}</span>
+                  <span className="text-xs font-mono text-foreground/40">{"// 2025"}</span>
                 </div>
 
-                <h3 className="text-3xl font-black text-white tracking-tight">
-                  TrackSphere
+                <h3 className="text-3xl font-black text-foreground tracking-tight">
+                  TrackSphere Transit
                 </h3>
-                <p className="mt-3 text-white/70 text-sm leading-relaxed">
-                  Friendly GPS beacon tracking and smart family safety geofences.
+                <p className="mt-3 text-foreground/70 text-base leading-relaxed">
+                  Campus transport tracking with instant WebSocket telemetry and arrival forecasting.
                 </p>
 
-                {/* Smartphone Radar Mockup Box */}
-                <div className="mt-6 p-5 rounded-2xl border border-white/15 bg-black/60 backdrop-blur-2xl relative overflow-hidden flex flex-col items-center justify-center min-h-[170px] shadow-inner">
-                  {/* Pulsing Radar Ring in Gold */}
-                  <motion.div
-                    animate={{ scale: [1, 2.2], opacity: [0.6, 0] }}
-                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
-                    className="absolute w-20 h-20 rounded-full border border-[#ffe880]"
-                  />
-                  {/* Distinct Crimson Beacon Pin */}
-                  <div className="relative z-10 p-3 rounded-full bg-[#bf0039] text-white shadow-[0_0_20px_#bf0039]">
-                    <MapPin size={20} />
+                {/* Radar Mockup Viewport */}
+                <div className="mt-6 p-5 rounded-2xl border border-black/10 dark:border-white/15 bg-black/5 dark:bg-black/50 backdrop-blur-xl relative overflow-hidden flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="relative flex items-center justify-center w-12 h-12 rounded-xl bg-[#bf0039]/20 border border-[#bf0039]/40 text-[#bf0039]">
+                      <Radio size={22} className="animate-pulse" />
+                      <span className="absolute -top-1 -right-1 w-3 h-3 bg-[#bf0039] rounded-full animate-ping" />
+                    </div>
+                    <div>
+                      <span className="font-mono text-xs font-bold text-foreground block">Campus Route A</span>
+                      <span className="font-mono text-[10px] text-foreground/50">Speed: 42 km/h • ETA: 3 min</span>
+                    </div>
                   </div>
 
-                  <div className="mt-3 text-center z-10">
-                    <span className="font-mono text-xs font-bold text-white block">
-                      Live Beacon Active
-                    </span>
-                    <span className="font-mono text-[10px] text-white/40 mt-0.5 block">
-                      11.0168° N, 76.9558° E • Accuracy: 0.8m
+                  <div className="text-right">
+                    <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-green-500/15 border border-green-500/30 text-green-400">
+                      ON TIME
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
-                <span className="text-xs font-mono text-white/50">Java • Firebase • Mapbox</span>
+              <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
+                <span className="text-xs font-mono text-foreground/50">React Native • WebSockets</span>
                 <MagneticWrapper range={25} actionFactor={0.25}>
                   <button
                     onClick={() => setSelectedProject(PROJECTS_DATA[2])}
                     data-cursor-text="VIEW"
-                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#ffe880] hover:underline transition-all"
+                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#bf0039] dark:text-[#ffe880] hover:underline transition-all"
                   >
                     <span>Details</span>
                     <ArrowUpRight size={14} />
@@ -475,7 +468,7 @@ export default function Projects() {
           )}
 
           {/* ============================================== */}
-          {/* BENTO CARD 4 (1x1): CREATIVE 3D LAB */}
+          {/* BENTO CARD 4: CINEMATIC CANVAS 3D */}
           {/* ============================================== */}
           {(activeCategory === "All" || activeCategory === "3D & Creative") && (
             <motion.div
@@ -485,48 +478,53 @@ export default function Projects() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
               whileHover={{ y: -6 }}
-              className="md:col-span-12 lg:col-span-6 glass-frosted rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#ffe880]/50 transition-all duration-500 shadow-2xl"
+              className="md:col-span-12 lg:col-span-6 glass-card saas-shimmer rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#bf0039] dark:hover:border-[#ffe880]/50 transition-all duration-500 shadow-2xl"
             >
               <div>
                 <div className="flex items-center justify-between gap-4 mb-6">
-                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#ffe880]">
-                    🎨 3D & Shaders Lab
+                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#bf0039] dark:text-[#ffe880]">
+                    🎨 3D Creative Playground
                   </span>
-                  <span className="text-xs font-mono text-white/40">{"// 2026"}</span>
+                  <span className="text-xs font-mono text-foreground/40">{"// 2026"}</span>
                 </div>
 
-                <h3 className="text-3xl font-black text-white tracking-tight">
-                  Creative 3D Experiments
+                <h3 className="text-3xl font-black text-foreground tracking-tight">
+                  Cinematic Canvas 3D
                 </h3>
-                <p className="mt-3 text-white/70 text-sm leading-relaxed">
-                  Interactive WebGL shaders, refractive glass transmission, and kinetic GPU particles.
+                <p className="mt-3 text-foreground/70 text-base leading-relaxed">
+                  Refractive glass materials, particle fluid mechanics, and interactive WebGL shaders.
                 </p>
 
-                {/* Interactive 3D Sphere Representation in Gold & Crimson */}
-                <div className="mt-6 p-5 rounded-2xl border border-white/15 bg-black/60 backdrop-blur-2xl relative overflow-hidden flex items-center justify-center min-h-[170px] shadow-inner">
-                  <motion.div
-                    animate={{ rotate: 360, scale: [1, 1.08, 1] }}
-                    transition={{ rotate: { duration: 18, repeat: Infinity, ease: "linear" }, scale: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
-                    className="w-28 h-28 rounded-full border border-dashed border-[#ffe880]/50 flex items-center justify-center"
-                  >
+                {/* Interactive Gyroscope Mockup */}
+                <div className="mt-6 p-5 rounded-2xl border border-black/10 dark:border-white/15 bg-black/5 dark:bg-black/50 backdrop-blur-xl flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
                     <motion.div
-                      animate={{ rotate: -360 }}
-                      transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                      className="w-16 h-16 rounded-full border border-[#bf0039] bg-[#bf0039]/20 flex items-center justify-center shadow-[0_0_20px_#bf0039]"
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                      className="p-3 rounded-xl bg-[#ffe880]/15 border border-[#ffe880]/40 text-[#bf0039] dark:text-[#ffe880]"
                     >
-                      <Compass size={24} className="text-[#ffe880]" />
+                      <RotateCw size={20} />
                     </motion.div>
-                  </motion.div>
+                    <div>
+                      <span className="font-mono text-xs font-bold text-foreground block">Refractive Sphere Matrix</span>
+                      <span className="font-mono text-[10px] text-foreground/50">GLSL Noise • 60 FPS Lock</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 font-mono text-[10px] text-foreground/70">
+                    <span className="w-2 h-2 rounded-full bg-[#bf0039] animate-pulse" />
+                    <span>GPU Active</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
-                <span className="text-xs font-mono text-white/50">Three.js • WebGL • GLSL</span>
+              <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
+                <span className="text-xs font-mono text-foreground/50">Three.js • GLSL • Blender</span>
                 <MagneticWrapper range={25} actionFactor={0.25}>
                   <button
                     onClick={() => setSelectedProject(PROJECTS_DATA[3])}
                     data-cursor-text="VIEW"
-                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#ffe880] hover:underline transition-all"
+                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#bf0039] dark:text-[#ffe880] hover:underline transition-all"
                   >
                     <span>Details</span>
                     <ArrowUpRight size={14} />
@@ -538,7 +536,7 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* Deep-Dive Project Modal */}
+      {/* Deep-Dive Modal */}
       <ProjectModal
         project={selectedProject}
         onClose={() => setSelectedProject(null)}
