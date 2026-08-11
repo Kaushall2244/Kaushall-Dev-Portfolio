@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import TextReveal from "../ui/TextReveal";
+import { useTheme } from "../Global/ThemeProvider";
 
 export interface Skill {
   title: string;
@@ -45,6 +46,10 @@ const skills: Skill[] = [
 function SkillCard({ index, skill }: { index: number; skill: Skill }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [mouse, setMouse] = useState({ x: -400, y: -400 });
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  const glowColor = isDark ? "rgba(204,255,0,.08)" : "rgba(2,132,199,.08)";
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current) return;
@@ -68,7 +73,11 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 1, 0.5, 1] }}
-      className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl p-8 md:p-10 flex flex-col h-full hover:border-[#ccff00]/40 hover:shadow-[0_0_50px_rgba(204,255,0,0.06)] transition-all duration-500"
+      className={`group relative overflow-hidden rounded-3xl border p-8 md:p-10 flex flex-col h-full transition-all duration-500 backdrop-blur-xl ${
+        isDark
+          ? "border-white/10 bg-white/[0.02] hover:border-[#ccff00]/40 hover:shadow-[0_0_50px_rgba(204,255,0,0.06)]"
+          : "border-black/10 bg-white/80 hover:border-[#0284c7]/40 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)]"
+      }`}
     >
       {/* Interactive mouse glow */}
       <motion.div
@@ -76,7 +85,7 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
         animate={{
           background: `radial-gradient(
             240px circle at ${mouse.x}px ${mouse.y}px,
-            rgba(204,255,0,.08),
+            ${glowColor},
             transparent 75%
           )`,
         }}
@@ -88,7 +97,13 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
 
       {/* Header Panel */}
       <div className="relative z-10 flex items-center justify-between mb-8">
-        <span className="font-mono text-xs uppercase text-[#ccff00] tracking-widest bg-[#ccff00]/10 border border-[#ccff00]/20 rounded-md px-3 py-1">
+        <span
+          className={`font-mono text-xs uppercase tracking-widest rounded-md px-3 py-1 border ${
+            isDark
+              ? "text-[#ccff00] bg-[#ccff00]/10 border-[#ccff00]/20"
+              : "text-[#0284c7] bg-[#0284c7]/10 border-[#0284c7]/20"
+          }`}
+        >
           {String(index + 1).padStart(2, "0")}
         </span>
         <span className="font-mono text-[9px] text-white/30 uppercase tracking-widest">
@@ -98,7 +113,7 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
 
       {/* Body Content */}
       <div className="relative z-10 flex-grow">
-        <h3 className="font-display font-black text-2xl md:text-3xl text-white group-hover:text-[#ccff00] transition-colors duration-300">
+        <h3 className="font-display font-black text-2xl md:text-3xl text-white group-hover:text-[#ccff00] dark:group-hover:text-[#ccff00] transition-colors duration-300">
           {skill.title}
         </h3>
         <p className="font-mono text-[10px] uppercase tracking-widest text-white/40 mt-1.5">
@@ -114,7 +129,10 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
         {skill.tech.map((tech) => (
           <motion.span
             key={tech}
-            whileHover={{ y: -3, scale: 1.05, borderColor: "rgba(204,255,0,0.4)", color: "#ccff00" }}
+            whileHover={{
+              y: -3,
+              scale: 1.05,
+            }}
             className="font-mono text-[10px] text-white/70 bg-white/5 border border-white/10 rounded-full px-3.5 py-1.5 transition-all duration-300"
           >
             {tech}
@@ -126,6 +144,9 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
 }
 
 export default function Skills() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
     <section
       id="skills"
@@ -144,7 +165,9 @@ export default function Skills() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute left-1/3 top-1/4 h-[600px] w-[600px] rounded-full bg-[#ccff00]/3 blur-[180px]"
+          className={`absolute left-1/3 top-1/4 h-[600px] w-[600px] rounded-full blur-[180px] ${
+            isDark ? "bg-[#ccff00]/3" : "bg-[#0284c7]/5"
+          }`}
         />
       </div>
 
@@ -155,8 +178,16 @@ export default function Skills() {
           viewport={{ once: true }}
           className="flex items-center gap-3"
         >
-          <div className="w-2.5 h-2.5 rounded-full bg-[#ccff00] animate-pulse" />
-          <span className="font-mono text-xs uppercase tracking-[0.4em] text-[#ccff00]">
+          <div
+            className={`w-2.5 h-2.5 rounded-full animate-pulse ${
+              isDark ? "bg-[#ccff00]" : "bg-[#0284c7]"
+            }`}
+          />
+          <span
+            className={`font-mono text-xs uppercase tracking-[0.4em] ${
+              isDark ? "text-[#ccff00]" : "text-[#0284c7]"
+            }`}
+          >
             02 // SKILLS & ARCHITECTURE
           </span>
         </motion.div>
@@ -174,17 +205,17 @@ export default function Skills() {
           whileInView={{ width: 140 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="mt-8 h-[2px] bg-gradient-to-r from-[#ccff00] via-[#ccff00]/60 to-transparent"
+          className={`mt-8 h-[2px] ${
+            isDark
+              ? "bg-gradient-to-r from-[#ccff00] via-[#ccff00]/60 to-transparent"
+              : "bg-gradient-to-r from-[#0284c7] via-[#0284c7]/60 to-transparent"
+          }`}
         />
 
         {/* Skill Cards Grid */}
         <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           {skills.map((skill, index) => (
-            <SkillCard
-              key={skill.title}
-              index={index}
-              skill={skill}
-            />
+            <SkillCard key={skill.title} index={index} skill={skill} />
           ))}
         </div>
       </div>

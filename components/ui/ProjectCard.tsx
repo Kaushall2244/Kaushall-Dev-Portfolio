@@ -4,19 +4,23 @@ import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { Github, ExternalLink } from "lucide-react";
 import { Project } from "../Sections/Projects";
+import { useTheme } from "../Global/ThemeProvider";
 
 interface Props {
   project: Project;
 }
 
 export function ProjectCard({ project }: Props) {
-
   const cardRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   const [mouse, setMouse] = useState({
     x: -400,
     y: -400,
   });
+
+  const glowColor = isDark ? "rgba(204,255,0,.14)" : "rgba(2,132,199,.14)";
 
   return (
     <motion.div
@@ -38,51 +42,33 @@ export function ProjectCard({ project }: Props) {
         y: -18,
         scale: 1.03,
       }}
-
       ref={cardRef}
-
       onMouseMove={(e) => {
         if (!cardRef.current) return;
-      
         const rect = cardRef.current.getBoundingClientRect();
-      
         setMouse({
           x: e.clientX - rect.left,
           y: e.clientY - rect.top,
         });
       }}
-
       onMouseLeave={() =>
         setMouse({
           x: -400,
           y: -400,
         })
       }
-
-      className="
-      group
-      relative
-      h-[640px]
-      w-[480px]
-      shrink-0
-      overflow-hidden
-      rounded-[42px]
-      border
-      border-white/10
-      bg-white/[0.03]
-      backdrop-blur-2xl
-      p-8
-      transition-all
-      duration-500
-      "
+      className={`group relative h-[640px] w-[480px] shrink-0 overflow-hidden rounded-[42px] border p-8 transition-all duration-500 backdrop-blur-2xl ${
+        isDark
+          ? "border-white/10 bg-white/[0.03] shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
+          : "border-black/10 bg-white/85 shadow-[0_12px_40px_rgba(0,0,0,0.06)]"
+      }`}
     >
-
       <motion.div
         className="absolute inset-0 pointer-events-none"
         animate={{
           background: `radial-gradient(
             220px circle at ${mouse.x}px ${mouse.y}px,
-            rgba(204,255,0,.14),
+            ${glowColor},
             transparent 75%
           )`,
         }}
@@ -91,23 +77,22 @@ export function ProjectCard({ project }: Props) {
         }}
       />
 
-
       {/* ========================= */}
       {/* Background Effects */}
       {/* ========================= */}
-
       <div className="absolute inset-0 overflow-hidden">
-
         <motion.div
           animate={{
             scale: [1, 1.2, 1],
-            opacity: [0.12, 0.22, 0.12],
+            opacity: isDark ? [0.12, 0.22, 0.12] : [0.08, 0.15, 0.08],
           }}
           transition={{
             duration: 8,
             repeat: Infinity,
           }}
-          className="absolute -top-40 -right-32 h-96 w-96 rounded-full bg-[#ccff00] blur-[160px]"
+          className={`absolute -top-40 -right-32 h-96 w-96 rounded-full blur-[160px] ${
+            isDark ? "bg-[#ccff00]" : "bg-[#0284c7]"
+          }`}
         />
 
         <motion.div
@@ -121,13 +106,11 @@ export function ProjectCard({ project }: Props) {
           }}
           className="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-white/5 blur-[130px]"
         />
-
       </div>
 
       {/* ========================= */}
       {/* Preview */}
       {/* ========================= */}
-
       <motion.div
         initial={{
           opacity: 0,
@@ -141,60 +124,60 @@ export function ProjectCard({ project }: Props) {
           once: true,
         }}
         transition={{
-          duration: 0.7,
+          duration: 0.6,
         }}
-        whileHover={{
-          scale: 1.03,
-        }}
-        className="relative mb-8 h-[300px] overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-white/[0.06] to-transparent"
+        className="relative h-[250px] w-full overflow-hidden rounded-[30px] border border-white/10"
       >
+        <div className="relative h-full w-full overflow-hidden rounded-[30px]">
+          {/* Animated Background Mesh */}
+          <motion.div
+            animate={{
+              scale: [1, 1.15, 1],
+              rotate: [0, 5, 0],
+            }}
+            transition={{
+              duration: 12,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className={`absolute inset-0 transition-opacity duration-500 ${
+              isDark
+                ? "bg-gradient-to-br from-neutral-900 via-black to-neutral-950"
+                : "bg-gradient-to-br from-slate-100 via-white to-slate-200"
+            }`}
+          />
 
-        {/* Grid */}
+          {/* Dynamic Cyber Pattern Overlays */}
+          <div className="absolute inset-0 bg-grid-pattern opacity-30" />
 
-        <div
-          className="absolute inset-0 opacity-[0.08]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(255,255,255,.08) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(255,255,255,.08) 1px, transparent 1px)
-            `,
-            backgroundSize: "30px 30px",
-          }}
-        />
+          {/* Glass Accent Orbital Rings */}
+          <motion.div
+            animate={{
+              rotate: 360,
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className={`absolute -top-12 -right-12 h-44 w-44 rounded-full border border-dashed ${
+              isDark ? "border-[#ccff00]/20" : "border-[#0284c7]/20"
+            }`}
+          />
+          <motion.div
+            animate={{
+              rotate: -360,
+            }}
+            transition={{
+              duration: 35,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="absolute -bottom-16 -left-16 h-52 w-52 rounded-full border border-white/10"
+          />
 
-        {/* Glow */}
-
-        <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-          }}
-          className="absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ccff00]/20 blur-[90px]"
-        />
-
-        {/* Floating Ring */}
-
-        <motion.div
-          animate={{
-            rotate: 360,
-          }}
-          transition={{
-            duration: 16,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#ccff00]/20"
-        />
-
-        {/* Letter */}
-
-        <div className="absolute inset-0 flex items-center justify-center">
-
-          <div className="text-center">
-
+          {/* Project Title Watermark & Graphic Center */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center select-none">
             <motion.p
               animate={{
                 scale: [1, 1.05, 1],
@@ -211,108 +194,103 @@ export function ProjectCard({ project }: Props) {
             <p className="mt-3 text-xs uppercase tracking-[0.55em] text-white/30">
               PROJECT PREVIEW
             </p>
-
           </div>
-
         </div>
-
       </motion.div>
 
       {/* ========================= */}
       {/* Content */}
       {/* ========================= */}
-
       <div className="relative z-10 flex h-[270px] flex-col">
-
         {/* Header */}
-
-        <div className="flex items-center justify-between">
-
-          <div className="rounded-full border border-[#ccff00]/20 bg-[#ccff00]/10 px-4 py-2">
-
-            <p className="text-[10px] uppercase tracking-[0.35em] text-[#ccff00]">
+        <div className="flex items-center justify-between mt-4">
+          <div
+            className={`rounded-full border px-4 py-1.5 ${
+              isDark
+                ? "border-[#ccff00]/20 bg-[#ccff00]/10 text-[#ccff00]"
+                : "border-[#0284c7]/20 bg-[#0284c7]/10 text-[#0284c7]"
+            }`}
+          >
+            <p className="text-[10px] uppercase tracking-[0.35em] font-bold font-mono">
               FEATURED
             </p>
-
           </div>
 
-          <p className="text-xs uppercase tracking-[0.35em] text-white/35">
-            2026
+          <p className="text-xs uppercase tracking-[0.35em] text-white/35 font-mono">
+            {project.year || "2026"}
           </p>
-
         </div>
 
         {/* Title */}
-
-        <h3 className="mt-7 text-4xl font-black leading-tight text-white">
+        <h3 className="mt-5 text-3xl font-black leading-tight text-white">
           {project.title}
         </h3>
 
         {/* Description */}
-
-        <p className="mt-5 leading-8 text-white/60">
+        <p className="mt-3 leading-7 text-white/60 text-sm line-clamp-2">
           {project.description}
         </p>
 
         {/* Technologies */}
-
-        <div className="mt-8 flex flex-wrap gap-3">
-
-          {project.tech.map((tech: string) => (
-
+        <div className="mt-4 flex flex-wrap gap-2">
+          {project.tech.slice(0, 4).map((tech: string) => (
             <motion.div
               key={tech}
               whileHover={{
-                y: -4,
+                y: -3,
               }}
-              className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs text-white/70"
+              className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-[11px] text-white/70"
             >
               {tech}
             </motion.div>
-
           ))}
-
         </div>
 
         {/* Project Metadata & Actions */}
-        <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
-          <div className="flex flex-col gap-1">
+        <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+          <div className="flex flex-col gap-0.5">
             <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">
               Role & Status
             </span>
             <span className="text-xs text-white/80 font-medium font-sans">
               {project.role}
             </span>
-            <span className="text-[9px] text-[#ccff00] font-mono uppercase tracking-widest flex items-center gap-1.5 mt-0.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#ccff00] animate-pulse" />
+            <span
+              className={`text-[9px] font-mono uppercase tracking-widest flex items-center gap-1.5 mt-0.5 ${
+                isDark ? "text-[#ccff00]" : "text-[#0284c7]"
+              }`}
+            >
+              <span
+                className={`w-1.5 h-1.5 rounded-full animate-pulse ${
+                  isDark ? "bg-[#ccff00]" : "bg-[#0284c7]"
+                }`}
+              />
               {project.status}
             </span>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex gap-2.5">
             {project.github && (
               <a
                 href={project.github}
-                className="p-3 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-[#ccff00] hover:border-[#ccff00]/40 transition-colors duration-300 interactive-node"
+                className="p-2.5 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-[#ccff00] dark:hover:text-[#ccff00] hover:border-[#ccff00]/40 transition-colors duration-300 interactive-node"
                 data-cursor-text="CODE"
               >
-                <Github size={16} />
+                <Github size={15} />
               </a>
             )}
             {project.demo && (
               <a
                 href={project.demo}
-                className="p-3 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-[#ccff00] hover:border-[#ccff00]/40 transition-colors duration-300 interactive-node"
+                className="p-2.5 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-[#ccff00] dark:hover:text-[#ccff00] hover:border-[#ccff00]/40 transition-colors duration-300 interactive-node"
                 data-cursor-text="LIVE"
               >
-                <ExternalLink size={16} />
+                <ExternalLink size={15} />
               </a>
             )}
           </div>
         </div>
-
       </div>
-
     </motion.div>
   );
 }

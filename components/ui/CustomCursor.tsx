@@ -2,11 +2,17 @@
 
 import { useEffect, useState, useRef } from "react";
 import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
+import { useTheme } from "../Global/ThemeProvider";
 
 export default function CustomCursor() {
   const [isHovered, setIsHovered] = useState(false);
   const [hoverText, setHoverText] = useState("");
   const [isMoving, setIsMoving] = useState(false);
+  const { theme } = useTheme();
+
+  const isDark = theme === "dark";
+  const accentColor = isDark ? "#ccff00" : "#0284c7";
+  const pointerFill = isHovered ? accentColor : isDark ? "#ffffff" : "#090d16";
 
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
@@ -57,7 +63,7 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* 1. Futuristic Diamond/Stealth Glow (NO circle/rect/square) */}
+      {/* 1. Futuristic Diamond/Stealth Glow */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[99] hidden md:block"
         style={{
@@ -76,7 +82,7 @@ export default function CustomCursor() {
           {/* Subtle diamond shape glow */}
           <motion.polygon
             points="90,10 170,90 90,170 10,90"
-            fill="#ccff00"
+            fill={accentColor}
             animate={{
               opacity: isMoving ? (isHovered ? 0.35 : 0.22) : (isHovered ? 0.25 : 0.08),
               scale: isMoving ? 1.25 : 1,
@@ -99,7 +105,7 @@ export default function CustomCursor() {
       >
         <div className="relative w-12 h-12 flex items-center justify-center">
           
-          {/* Rotating Outer Reticle (Three small triangles, 120-deg offset, pointing inwards) */}
+          {/* Rotating Outer Reticle */}
           <motion.svg
             width="44"
             height="44"
@@ -118,16 +124,16 @@ export default function CustomCursor() {
             }}
           >
             {/* Top Triangle */}
-            <path d="M22 2 L19 8 L25 8 Z" fill="#ccff00" />
+            <path d="M22 2 L19 8 L25 8 Z" fill={accentColor} />
             
             {/* Bottom-Left Triangle (rotated 120 deg) */}
-            <path d="M4.68 32 L10.82 29.5 L7.82 35 Z" fill="#ccff00" />
+            <path d="M4.68 32 L10.82 29.5 L7.82 35 Z" fill={accentColor} />
             
             {/* Bottom-Right Triangle (rotated 240 deg) */}
-            <path d="M39.32 32 L36.18 35 L33.18 29.5 Z" fill="#ccff00" />
+            <path d="M39.32 32 L36.18 35 L33.18 29.5 Z" fill={accentColor} />
           </motion.svg>
 
-          {/* Central Stealth Chevron Pointer (NO circle, rect, square) */}
+          {/* Central Stealth Chevron Pointer */}
           <motion.svg
             width="22"
             height="22"
@@ -141,15 +147,15 @@ export default function CustomCursor() {
           >
             <path
               d="M2 2 L20 8 L12 12 L8 20 Z"
-              fill={isHovered ? "#ccff00" : "#ffffff"}
-              stroke="#ccff00"
+              fill={pointerFill}
+              stroke={accentColor}
               strokeWidth="1.5"
               strokeLinejoin="round"
             />
             {/* Cybersecurity diagonal dashed trail */}
             <path
               d="M13.5 13.5 L19.5 19.5"
-              stroke="#ccff00"
+              stroke={accentColor}
               strokeWidth="1.5"
               strokeDasharray="2 2"
               opacity={isHovered ? 1 : 0.5}
@@ -163,13 +169,16 @@ export default function CustomCursor() {
                 initial={{ opacity: 0, x: 25, y: 25, scale: 0.8 }}
                 animate={{ opacity: 1, x: 30, y: 30, scale: 1 }}
                 exit={{ opacity: 0, x: 25, y: 25, scale: 0.8 }}
-                className="absolute left-0 top-0 bg-black/95 border border-[#ccff00]/40 text-[#ccff00] font-mono text-[9px] px-2 py-1 tracking-widest uppercase flex items-center gap-1 select-none whitespace-nowrap"
+                className={`absolute left-0 top-0 border font-mono text-[9px] px-2 py-1 tracking-widest uppercase flex items-center gap-1 select-none whitespace-nowrap shadow-md ${
+                  isDark
+                    ? "bg-black/95 border-[#ccff00]/40 text-[#ccff00] shadow-[0_0_10px_rgba(204,255,0,0.15)]"
+                    : "bg-white/95 border-[#0284c7]/40 text-[#0284c7] shadow-[0_0_10px_rgba(2,132,199,0.15)]"
+                }`}
                 style={{
                   clipPath: "polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%)",
-                  boxShadow: "0 0 10px rgba(204, 255, 0, 0.15)",
                 }}
               >
-                <span className="text-[7px] text-[#ccff00]/50">[//]</span>
+                <span className="text-[7px] opacity-60">[//]</span>
                 {hoverText}
               </motion.div>
             )}

@@ -4,12 +4,13 @@ import SidebarDecorations from "@/components/ui/SidebarDecorations";
 import Navbar from "@/components/Global/Navbar";
 import Footer from "@/components/Global/Footer";
 import CustomCursor from "@/components/ui/CustomCursor";
-// import BackgroundParticles from "@/components/ui/BackgroundParticles";
 import SystemStatus from "@/components/Global/SystemStatus";
 import GlobalMouseGlow from "@/components/ui/GlobalMouseGlow";
+import ThemeLever from "@/components/ui/ThemeLever";
+import { ThemeProvider } from "@/components/Global/ThemeProvider";
 import "./globals.css";
 
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 
 const displayFont = Syne({
   subsets: ["latin"],
@@ -122,48 +123,72 @@ const jsonLd = {
   ],
 };
 
+const themeScript = `
+  (function() {
+    try {
+      var saved = localStorage.getItem('theme_mode');
+      if (saved === 'light' || saved === 'dark') {
+        document.documentElement.classList.add(saved);
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    } catch (e) {}
+  })();
+`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${displayFont.variable} ${monoFont.variable} scroll-smooth`}>
+    <html lang="en" className={`${displayFont.variable} ${monoFont.variable} scroll-smooth dark`} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="antialiased bg-background text-foreground selection:bg-accent selection:text-black overflow-x-hidden">
-        <GlobalMouseGlow />
-        {/* Global High-Tech Background Grid System */}
-        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          {/* Base Grid Pattern */}
-          <div className="absolute inset-0 bg-grid-pattern opacity-40" />
-          {/* Accent Glowing Grid Points */}
-          <div className="absolute inset-0 bg-grid-glow opacity-30" />
-          {/* Radial Dark Vignette Mask for Focus */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,#000000_90%)]" />
-        </div>
-
-        {/* Global Background Watermark */}
-        <div className="fixed inset-0 flex items-center justify-center pointer-events-none overflow-hidden z-0 select-none" aria-hidden="true">
-          <div className="text-[20vw] font-black uppercase tracking-[-0.08em] text-white/[0.015]">
-            KAUSHALL
+      <body className="antialiased bg-background text-foreground selection:bg-accent selection:text-black overflow-x-hidden transition-colors duration-500">
+        <ThemeProvider>
+          <GlobalMouseGlow />
+          {/* Global High-Tech Background Grid System */}
+          <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+            {/* Base Grid Pattern */}
+            <div className="absolute inset-0 bg-grid-pattern opacity-40" />
+            {/* Accent Glowing Grid Points */}
+            <div className="absolute inset-0 bg-grid-glow opacity-30" />
+            {/* Radial Dark/Light Vignette Mask for Focus */}
+            <div
+              className="absolute inset-0 transition-opacity duration-500"
+              style={{
+                background: "radial-gradient(ellipse at center, transparent 20%, var(--vignette-color) 90%)",
+              }}
+            />
           </div>
-        </div>
 
-        <CustomCursor />
-        <header>
-          <Navbar />
-        </header>
+          {/* Global Background Watermark */}
+          <div className="fixed inset-0 flex items-center justify-center pointer-events-none overflow-hidden z-0 select-none" aria-hidden="true">
+            <div className="text-[20vw] font-black uppercase tracking-[-0.08em] text-white/[0.015]">
+              KAUSHALL
+            </div>
+          </div>
 
-        {/* Global Floating Layout Elements */}
-        <SidebarDecorations />
+          <CustomCursor />
+          
+          <header>
+            <Navbar />
+            <ThemeLever />
+          </header>
 
-        {/* Full-width main viewport layout container */}
-        <main className="relative w-full min-h-screen">
-          {children}
-        </main>
-        <SystemStatus />
-        <Footer />
+          {/* Global Floating Layout Elements */}
+          <SidebarDecorations />
+
+          {/* Full-width main viewport layout container */}
+          <main className="relative w-full min-h-screen">
+            {children}
+          </main>
+          <SystemStatus />
+          <Footer />
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,9 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTheme } from "../Global/ThemeProvider";
 
 export default function ConstellationBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { theme } = useTheme();
+
+  const isDark = theme === "dark";
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -22,58 +26,59 @@ export default function ConstellationBackground() {
       vx: number;
       vy: number;
       radius: number;
-      baseColor: string;
+      isAccent: boolean;
 
       constructor(x: number, y: number) {
         this.x = x;
         this.y = y;
-        // Super slow speeds for premium cinematic feel
         this.vx = (Math.random() - 0.5) * 0.4;
         this.vy = (Math.random() - 0.5) * 0.4;
-        this.radius = Math.random() * 2 + 1; // 1px to 3px
-        // 30% are brand accent colored (#ccff00), 70% white
-        this.baseColor = Math.random() > 0.7 ? "204, 255, 0" : "255, 255, 255";
+        this.radius = Math.random() * 2 + 1;
+        this.isAccent = Math.random() > 0.7;
       }
 
       update(width: number, height: number) {
         this.x += this.vx;
         this.y += this.vy;
 
-        // Wrap around boundaries
         if (this.x < 0) this.x = width;
         if (this.x > width) this.x = 0;
         if (this.y < 0) this.y = height;
         if (this.y > height) this.y = 0;
 
-        // Subtle attraction to mouse cursor when close
         if (mouse.active) {
           const dx = mouse.x - this.x;
           const dy = mouse.y - this.y;
           const dist = Math.hypot(dx, dy);
           if (dist < mouse.radius) {
             const force = (mouse.radius - dist) / mouse.radius;
-            // Pull factor
             this.x += (dx / dist) * force * 0.45;
             this.y += (dy / dist) * force * 0.45;
           }
         }
       }
 
-      draw(context: CanvasRenderingContext2D) {
+      draw(context: CanvasRenderingContext2D, dark: boolean) {
         context.beginPath();
         context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        context.fillStyle = `rgba(${this.baseColor}, 0.5)`;
+        if (dark) {
+          context.fillStyle = this.isAccent
+            ? "rgba(204, 255, 0, 0.7)"
+            : "rgba(255, 255, 255, 0.5)";
+        } else {
+          context.fillStyle = this.isAccent
+            ? "rgba(2, 132, 199, 0.7)"
+            : "rgba(30, 41, 59, 0.4)";
+        }
         context.fill();
       }
     }
 
     const init = () => {
-      const width = canvas.width = window.innerWidth;
-      const height = canvas.height = window.innerHeight;
-      
-      // Control density based on resolution
+      const width = (canvas.width = window.innerWidth);
+      const height = (canvas.height = window.innerHeight);
       const area = width * height;
-      const count = Math.floor(area / 15000); // Elegant distribution density
+      const count = Math.floor(area / 15000);
       particles = [];
       for (let i = 0; i < count; i++) {
         particles.push(new Particle(Math.random() * width, Math.random() * height));
@@ -105,18 +110,17 @@ export default function ConstellationBackground() {
       const height = canvas.height;
       ctx.clearRect(0, 0, width, height);
 
-      // 1. Update and Draw Particles
       particles.forEach((p) => {
         p.update(width, height);
-        p.draw(ctx);
+        p.draw(ctx, isDark);
       });
 
-      // 2. Compute Connections
       const maxDistance = 110;
+      const strokeBase = isDark ? "204, 255, 0" : "2, 132, 199";
+
       for (let i = 0; i < particles.length; i++) {
         const p1 = particles[i];
 
-        // Particle-to-Particle links
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx = p1.x - p2.x;
@@ -124,18 +128,16 @@ export default function ConstellationBackground() {
           const dist = Math.hypot(dx, dy);
 
           if (dist < maxDistance) {
-            // Fades as distance increases
-            const alpha = ((maxDistance - dist) / maxDistance) * 0.12;
+            const alpha = ((maxDistance - dist) / maxDistance) * (isDark ? 0.12 : 0.18);
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(204, 255, 0, ${alpha})`;
+            ctx.strokeStyle = `rgba(${strokeBase}, ${alpha})`;
             ctx.lineWidth = 0.55;
             ctx.stroke();
           }
         }
 
-        // Particle-to-Mouse hover links
         if (mouse.active) {
           const dx = p1.x - mouse.x;
           const dy = p1.y - mouse.y;
@@ -146,8 +148,7 @@ export default function ConstellationBackground() {
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(mouse.x, mouse.y);
-            // Neon accent lines connect from mouse pointer to dots
-            ctx.strokeStyle = `rgba(204, 255, 0, ${alpha})`;
+            ctx.strokeStyle = `rgba(${strokeBase}, ${alpha})`;
             ctx.lineWidth = 0.75;
             ctx.stroke();
           }
@@ -165,13 +166,13 @@ export default function ConstellationBackground() {
       document.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [isDark]);
 
   return (
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full pointer-events-none z-0"
-      style={{ mixBlendMode: "screen" }}
+      style={{ mixBlendMode: isDark ? "screen" : "normal" }}
     />
   );
 }

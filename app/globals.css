@@ -1,14 +1,53 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #000000;
-  --color-foreground: #ffffff;
-  --color-accent: #ccff00;
-  --color-card-bg: rgba(255, 255, 255, 0.03);
-  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-background: var(--bg-main);
+  --color-foreground: var(--fg-main);
+  --color-accent: var(--accent-main);
+  --color-card-bg: var(--card-bg-main);
+  --color-border-subtle: var(--border-subtle-main);
 
   --font-sans: var(--font-mono), monospace;
   --font-display: var(--font-display), sans-serif;
+}
+
+/* =====================================================
+   THEME TOKENS
+   ===================================================== */
+:root, html.dark {
+  --bg-main: #000000;
+  --fg-main: #ffffff;
+  --accent-main: #ccff00;
+  --card-bg-main: rgba(255, 255, 255, 0.03);
+  --border-subtle-main: rgba(255, 255, 255, 0.08);
+  --grid-line: rgba(255, 255, 255, 0.05);
+  --grid-glow-pt: rgba(204, 255, 0, 0.15);
+  --vignette-color: #000000;
+  --watermark-color: rgba(255, 255, 255, 0.015);
+  --glass-card-bg: rgba(255, 255, 255, 0.03);
+  --glass-card-border: rgba(255, 255, 255, 0.08);
+  --glass-panel-bg: rgba(0, 0, 0, 0.4);
+  --glass-panel-border: rgba(255, 255, 255, 0.08);
+  --cursor-color: #ccff00;
+  --cursor-trail: #ffffff;
+}
+
+html.light {
+  --bg-main: #f6f8fb;
+  --fg-main: #090d16;
+  --accent-main: #0284c7;
+  --card-bg-main: rgba(255, 255, 255, 0.85);
+  --border-subtle-main: rgba(0, 0, 0, 0.08);
+  --grid-line: rgba(0, 0, 0, 0.06);
+  --grid-glow-pt: rgba(2, 132, 199, 0.18);
+  --vignette-color: #f6f8fb;
+  --watermark-color: rgba(0, 0, 0, 0.025);
+  --glass-card-bg: rgba(255, 255, 255, 0.85);
+  --glass-card-border: rgba(0, 0, 0, 0.08);
+  --glass-panel-bg: rgba(255, 255, 255, 0.9);
+  --glass-panel-border: rgba(0, 0, 0, 0.08);
+  --cursor-color: #0284c7;
+  --cursor-trail: #090d16;
 }
 
 /* =====================================================
@@ -16,9 +55,10 @@
    ===================================================== */
 @layer base {
   html, body {
-    background-color: #000000;
-    color: var(--color-foreground);
+    background-color: var(--bg-main);
+    color: var(--fg-main);
     overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 }
 
@@ -35,33 +75,33 @@
 .bg-grid-pattern {
   background-size: 50px 50px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
 }
 
 .bg-grid-glow {
   background-size: 150px 150px;
   background-image: 
-    radial-gradient(circle at 1px 1px, rgba(204, 255, 0, 0.15) 1.5px, transparent 0);
+    radial-gradient(circle at 1px 1px, var(--grid-glow-pt) 1.5px, transparent 0);
 }
-
 
 /* =====================================================
    GLASS / CARD UTILITIES
    ===================================================== */
 @layer utilities {
   .glass-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--glass-card-bg);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-card-border);
   }
 
   .glass-panel {
-    background: rgba(0, 0, 0, 0.4);
+    background: var(--glass-panel-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-panel-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
   }
 
   .card-gradient-border {
@@ -80,6 +120,82 @@
   .whitespace-nowrap {
     white-space: nowrap;
   }
+}
+
+/* =====================================================
+   LIGHT MODE OVERRIDES FOR HIGH CONTRAST & READABILITY
+   ===================================================== */
+html.light .text-white {
+  color: #090d16 !important;
+}
+html.light .text-white\/90 {
+  color: rgba(9, 13, 22, 0.9) !important;
+}
+html.light .text-white\/80 {
+  color: rgba(9, 13, 22, 0.8) !important;
+}
+html.light .text-white\/70 {
+  color: rgba(9, 13, 22, 0.7) !important;
+}
+html.light .text-white\/60 {
+  color: rgba(9, 13, 22, 0.6) !important;
+}
+html.light .text-white\/55 {
+  color: rgba(9, 13, 22, 0.55) !important;
+}
+html.light .text-white\/50 {
+  color: rgba(9, 13, 22, 0.5) !important;
+}
+html.light .text-white\/40 {
+  color: rgba(9, 13, 22, 0.45) !important;
+}
+html.light .text-white\/35 {
+  color: rgba(9, 13, 22, 0.4) !important;
+}
+html.light .text-white\/30 {
+  color: rgba(9, 13, 22, 0.35) !important;
+}
+html.light .text-white\/25 {
+  color: rgba(9, 13, 22, 0.3) !important;
+}
+html.light .text-white\/20 {
+  color: rgba(9, 13, 22, 0.25) !important;
+}
+html.light .text-white\/10 {
+  color: rgba(9, 13, 22, 0.15) !important;
+}
+html.light .text-white\/\[0\.015\] {
+  color: rgba(0, 0, 0, 0.02) !important;
+}
+html.light .text-white\/\[0\.025\] {
+  color: rgba(0, 0, 0, 0.03) !important;
+}
+
+html.light .bg-white\/3,
+html.light .bg-white\/5,
+html.light .bg-white\/\[0\.02\],
+html.light .bg-white\/\[0\.03\],
+html.light .bg-white\/\[0\.04\],
+html.light .bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+html.light .bg-black\/40,
+html.light .bg-black\/60,
+html.light .bg-black\/80,
+html.light .bg-black\/90,
+html.light .bg-black\/95 {
+  background-color: rgba(246, 248, 251, 0.88) !important;
+}
+
+html.light .border-white\/5,
+html.light .border-white\/6,
+html.light .border-white\/8,
+html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/20 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
 /* =====================================================
