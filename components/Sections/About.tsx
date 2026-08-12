@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import {
@@ -20,21 +20,12 @@ import TextReveal from "../ui/TextReveal";
 import MagneticWrapper from "../ui/Magnetic";
 import { useTheme } from "../Global/ThemeProvider";
 
-const sidePeekLeft: Variants = {
-  hidden: { opacity: 0, x: -40 },
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
-    x: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
-  },
-};
-
-const sidePeekRight: Variants = {
-  hidden: { opacity: 0, x: 40 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
@@ -141,15 +132,6 @@ export default function About() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  const yLeft = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
-  const yRight = useTransform(scrollYProgress, [0, 1], ["4%", "-4%"]);
-  const sectionScale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.98, 1, 1, 0.98]);
-
   const filteredTech =
     activeFilter === "All"
       ? techStack
@@ -168,8 +150,8 @@ export default function About() {
       </div>
 
       {/* Main Section Header */}
-      <motion.div style={{ scale: sectionScale }} className="relative z-10 max-w-7xl mx-auto">
-        {/* Section Indicator Badge in Distinct Crimson */}
+      <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Section Indicator Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -182,7 +164,7 @@ export default function About() {
           </span>
         </motion.div>
 
-        {/* Section Title with Distinct Gold Glow */}
+        {/* Section Title */}
         <div className="mt-6 max-w-4xl">
           <TextReveal
             text="Crafting digital experiences that feel effortless, exciting, and full of life."
@@ -191,37 +173,32 @@ export default function About() {
           />
         </div>
 
-        {/* Accent Line in Gold */}
+        {/* Accent Line */}
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: 180 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="mt-8 h-[2px] bg-[#ffe880] dark:bg-[#ffe880] bg-[#bf0039]"
+          className="mt-8 h-[2px] bg-[#bf0039] dark:bg-[#ffe880]"
         />
 
-        {/* DUAL SIDE PARALLEL SCROLL GRID CONTAINER */}
-        <div className="mt-20 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* LEFT COLUMN */}
-          <motion.div
-            style={{ y: yLeft }}
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 flex flex-col gap-8"
-          >
+        {/* ======================================================== */}
+        {/* RESTRUCTURED BALANCED GRID LAYOUT */}
+        {/* ======================================================== */}
+        <div className="mt-20 flex flex-col gap-8">
+          {/* ROW 1: PROFILE BIO & PHILOSOPHY */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             {/* CARD 1: Profile & Status Card */}
             <motion.div
-              variants={sidePeekLeft}
+              variants={cardVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-40px" }}
-              className="group relative"
+              className="lg:col-span-5 group relative"
             >
-              <div className="glass-card saas-shimmer rounded-[32px] p-8 flex flex-col justify-between overflow-hidden transition-all duration-500 hover:border-[#ffe880]/60 dark:hover:border-[#ffe880]/60 hover:border-[#bf0039]/60 shadow-2xl">
+              <div className="glass-card saas-shimmer rounded-[32px] p-8 h-full flex flex-col justify-between overflow-hidden transition-all duration-500 hover:border-[#bf0039] dark:hover:border-[#ffe880]/60 shadow-2xl">
                 <div>
-                  {/* Status Pill: Distinct Crimson Badge */}
+                  {/* Status Pill */}
                   <div className="inline-flex items-center gap-2.5 rounded-full border border-[#bf0039]/40 bg-[#bf0039]/15 px-4 py-1.5 backdrop-blur-xl">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#bf0039] opacity-75" />
@@ -233,7 +210,7 @@ export default function About() {
                   </div>
 
                   {/* Profile Avatar Image Showcase */}
-                  <div className="mt-8 relative h-72 sm:h-80 md:h-[360px] w-full rounded-2xl overflow-hidden border border-black/10 dark:border-white/20 bg-gradient-to-b from-white/20 to-black/20 dark:from-white/10 dark:to-black/40 group/avatar shadow-2xl">
+                  <div className="mt-8 relative h-72 sm:h-80 md:h-[340px] w-full rounded-2xl overflow-hidden border border-black/10 dark:border-white/20 bg-gradient-to-b from-white/20 to-black/20 dark:from-white/10 dark:to-black/40 group/avatar shadow-2xl">
                     <Image
                       src="/Images/profile.png"
                       alt="S Kaushall Profile"
@@ -285,174 +262,187 @@ export default function About() {
               </div>
             </motion.div>
 
-            {/* CARD 2: Tech Toolkit Filterable Matrix */}
+            {/* CARD 2: Passion & Philosophy */}
             <motion.div
-              variants={sidePeekLeft}
+              variants={cardVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-40px" }}
-              className="group relative"
+              className="lg:col-span-7 group relative"
             >
-              <div className="glass-card saas-shimmer rounded-[32px] p-8 transition-all duration-500 hover:border-[#ffe880]/50 dark:hover:border-[#ffe880]/50 hover:border-[#bf0039]/50 shadow-2xl">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-2.5">
-                    <FolderGit2 size={18} className="text-[#bf0039]" />
-                    <h4 className="font-mono text-xs uppercase tracking-[0.25em] text-[#bf0039] dark:text-[#ffe880] font-bold">
-                      My Toolkit & Playground 🛠️
-                    </h4>
+              <div className="glass-card saas-shimmer rounded-[32px] p-8 h-full flex flex-col justify-between transition-all duration-500 hover:border-[#bf0039] dark:hover:border-[#ffe880]/50 shadow-2xl">
+                <div>
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl border border-[#bf0039]/30 bg-[#bf0039]/10 text-[#bf0039]">
+                      <Sparkles size={18} />
+                    </div>
+                    <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#bf0039] dark:text-[#ffe880] font-bold">
+                      WHAT DRIVES ME ✨
+                    </span>
+                  </div>
+
+                  <h3 className="mt-6 text-2xl sm:text-3xl font-bold text-foreground leading-snug">
+                    &ldquo;Great software shouldn&apos;t just work—it should feel delightful, fast, and a joy to use.&rdquo;
+                  </h3>
+
+                  <p className="mt-4 text-foreground/70 leading-relaxed text-base">
+                    Every project is an adventure in pushing visual ideas without sacrificing speed or simplicity. I love creating web apps that are responsive, accessible, and fun to interact with.
+                  </p>
+
+                  {/* Capabilities Grid */}
+                  <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {capabilities.map((cap, i) => {
+                      const Icon = cap.icon;
+                      return (
+                        <div
+                          key={i}
+                          className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-4 transition-all duration-300 hover:border-[#bf0039] dark:hover:border-[#ffe880]/50 hover:bg-white/10"
+                        >
+                          <div className="flex items-center justify-between">
+                            <Icon size={18} className="text-[#bf0039] dark:text-[#ffe880]" />
+                            <span className="text-[10px] font-mono text-[#bf0039] dark:text-[#ffe880] px-2 py-0.5 rounded bg-[#bf0039]/15 border border-[#bf0039]/30 font-semibold">
+                              {cap.tag}
+                            </span>
+                          </div>
+                          <h4 className="mt-3 text-sm font-bold text-foreground">
+                            {cap.title}
+                          </h4>
+                          <p className="mt-1.5 text-xs text-foreground/60 leading-relaxed">
+                            {cap.desc}
+                          </p>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
-                {/* Filter Pills */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {["All", "Frontend", "Motion", "3D", "Backend"].map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => setActiveFilter(cat)}
-                      className={`text-[11px] font-mono px-3.5 py-1 rounded-full transition-all duration-300 ${
-                        activeFilter === cat
-                          ? "bg-[#ffe880] text-black font-bold shadow-[0_0_15px_rgba(255,232,128,0.4)]"
-                          : "border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-foreground/60 hover:text-foreground"
-                      }`}
-                    >
-                      {cat}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Tech Items Pills */}
-                <div className="flex flex-wrap gap-2.5">
-                  {filteredTech.map((tech) => (
-                    <motion.span
-                      key={tech.name}
-                      layout
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      transition={{ duration: 0.2 }}
-                      className="inline-flex items-center gap-1.5 text-xs font-mono px-3.5 py-1.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.04] text-foreground/80 transition-colors hover:border-[#bf0039] dark:hover:border-[#ffe880]/60 hover:text-[#bf0039] dark:hover:text-[#ffe880] font-medium"
-                    >
-                      <CheckCircle2 size={12} className="text-[#bf0039]" />
-                      {tech.name}
-                    </motion.span>
-                  ))}
+                <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-xs font-mono text-foreground/50">
+                  <span>Passionate about Clean Architecture</span>
+                  <span>60 FPS Motion</span>
                 </div>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
 
-          {/* RIGHT COLUMN */}
-          <motion.div
-            style={{ y: yRight }}
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 flex flex-col gap-8"
-          >
-            {/* CARD 3: Passion & Philosophy */}
+          {/* ROW 2: TOOLKIT MATRIX & DEVELOPER CONSOLE */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            {/* CARD 3: Tech Toolkit Filterable Matrix */}
             <motion.div
-              variants={sidePeekRight}
+              variants={cardVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-40px" }}
-              className="group relative"
+              className="lg:col-span-5 group relative"
             >
-              <div className="glass-card saas-shimmer rounded-[32px] p-8 transition-all duration-500 hover:border-[#ffe880]/50 dark:hover:border-[#ffe880]/50 hover:border-[#bf0039]/50 shadow-2xl">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl border border-[#bf0039]/30 bg-[#bf0039]/10 text-[#bf0039]">
-                    <Sparkles size={18} />
+              <div className="glass-card saas-shimmer rounded-[32px] p-8 h-full flex flex-col justify-between transition-all duration-500 hover:border-[#bf0039] dark:hover:border-[#ffe880]/50 shadow-2xl">
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-2.5">
+                      <FolderGit2 size={18} className="text-[#bf0039]" />
+                      <h4 className="font-mono text-xs uppercase tracking-[0.25em] text-[#bf0039] dark:text-[#ffe880] font-bold">
+                        My Toolkit & Playground 🛠️
+                      </h4>
+                    </div>
                   </div>
-                  <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#bf0039] dark:text-[#ffe880] font-bold">
-                    WHAT DRIVES ME ✨
-                  </span>
+
+                  {/* Filter Pills */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {["All", "Frontend", "Motion", "3D", "Backend"].map((cat) => (
+                      <button
+                        key={cat}
+                        onClick={() => setActiveFilter(cat)}
+                        className={`text-[11px] font-mono px-3.5 py-1 rounded-full transition-all duration-300 ${
+                          activeFilter === cat
+                            ? "bg-[#ffe880] text-black font-bold shadow-[0_0_15px_rgba(255,232,128,0.4)]"
+                            : "border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-foreground/60 hover:text-foreground"
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Tech Items Pills */}
+                  <div className="flex flex-wrap gap-2.5">
+                    {filteredTech.map((tech) => (
+                      <motion.span
+                        key={tech.name}
+                        layout
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ duration: 0.2 }}
+                        className="inline-flex items-center gap-1.5 text-xs font-mono px-3.5 py-1.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.04] text-foreground/80 transition-colors hover:border-[#bf0039] dark:hover:border-[#ffe880]/60 hover:text-[#bf0039] dark:hover:text-[#ffe880] font-medium"
+                      >
+                        <CheckCircle2 size={12} className="text-[#bf0039]" />
+                        {tech.name}
+                      </motion.span>
+                    ))}
+                  </div>
                 </div>
 
-                <h3 className="mt-5 text-2xl sm:text-3xl font-bold text-foreground leading-snug">
-                  &ldquo;Great software shouldn&apos;t just work—it should feel delightful, fast, and a joy to use.&rdquo;
-                </h3>
-
-                <p className="mt-4 text-foreground/70 leading-relaxed text-base">
-                  Every project is an adventure in pushing visual ideas without sacrificing speed or simplicity. I love creating web apps that are responsive, accessible, and fun to interact with.
-                </p>
-
-                {/* Capabilities Grid */}
-                <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {capabilities.map((cap, i) => {
-                    const Icon = cap.icon;
-                    return (
-                      <div
-                        key={i}
-                        className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-4 transition-all duration-300 hover:border-[#bf0039] dark:hover:border-[#ffe880]/50 hover:bg-white/10"
-                      >
-                        <div className="flex items-center justify-between">
-                          <Icon size={18} className="text-[#bf0039] dark:text-[#ffe880]" />
-                          <span className="text-[10px] font-mono text-[#bf0039] dark:text-[#ffe880] px-2 py-0.5 rounded bg-[#bf0039]/15 border border-[#bf0039]/30 font-semibold">
-                            {cap.tag}
-                          </span>
-                        </div>
-                        <h4 className="mt-3 text-sm font-bold text-foreground">
-                          {cap.title}
-                        </h4>
-                        <p className="mt-1.5 text-xs text-foreground/60 leading-relaxed">
-                          {cap.desc}
-                        </p>
-                      </div>
-                    );
-                  })}
+                <div className="mt-8 pt-4 border-t border-black/10 dark:border-white/10 text-xs font-mono text-foreground/50">
+                  {filteredTech.length} technologies active in stack
                 </div>
               </div>
             </motion.div>
 
             {/* CARD 4: Interactive Developer Snippet Console */}
             <motion.div
-              variants={sidePeekRight}
+              variants={cardVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-40px" }}
-              className="group relative"
+              className="lg:col-span-7 group relative"
             >
-              <div className="glass-card rounded-[32px] p-6 transition-all duration-500 hover:border-[#ffe880]/40 dark:hover:border-[#ffe880]/40 hover:border-[#bf0039]/40 shadow-2xl">
-                {/* Console Header Bar */}
-                <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4 flex-wrap gap-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-[#bf0039]" />
-                    <div className="w-3 h-3 rounded-full bg-[#ffe880]" />
-                    <div className="w-3 h-3 rounded-full bg-green-500/80" />
+              <div className="glass-card rounded-[32px] p-6 h-full flex flex-col justify-between transition-all duration-500 hover:border-[#bf0039] dark:hover:border-[#ffe880]/40 shadow-2xl">
+                <div>
+                  {/* Console Header Bar */}
+                  <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4 flex-wrap gap-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-[#bf0039]" />
+                      <div className="w-3 h-3 rounded-full bg-[#ffe880]" />
+                      <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                    </div>
+
+                    {/* Tab Selection */}
+                    <div className="flex items-center gap-1 bg-black/5 dark:bg-white/5 p-1 rounded-xl border border-black/10 dark:border-white/10">
+                      {consoleTabs.map((tab, idx) => (
+                        <button
+                          key={tab.id}
+                          onClick={() => setActiveTab(idx)}
+                          className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-mono text-xs transition-all ${
+                            activeTab === idx
+                              ? "bg-[#ffe880] text-black font-bold shadow-sm"
+                              : "text-foreground/60 hover:text-foreground hover:bg-white/10"
+                          }`}
+                        >
+                          <Terminal size={12} />
+                          <span>{tab.filename}</span>
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
-                  {/* Tab Selection */}
-                  <div className="flex items-center gap-1 bg-black/5 dark:bg-white/5 p-1 rounded-xl border border-black/10 dark:border-white/10">
-                    {consoleTabs.map((tab, idx) => (
-                      <button
-                        key={tab.id}
-                        onClick={() => setActiveTab(idx)}
-                        className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-mono text-xs transition-all ${
-                          activeTab === idx
-                            ? "bg-[#ffe880] text-black font-bold shadow-sm"
-                            : "text-foreground/60 hover:text-foreground hover:bg-white/10"
-                        }`}
-                      >
-                        <Terminal size={12} />
-                        <span>{tab.filename}</span>
-                      </button>
-                    ))}
+                  {/* Interactive Code Window */}
+                  <div className="mt-4 p-5 rounded-2xl bg-black/90 text-green-400 font-mono text-xs sm:text-sm overflow-x-auto leading-relaxed border border-white/10 shadow-inner min-h-[200px]">
+                    <pre className="text-white/90">
+                      <code>{consoleTabs[activeTab].content}</code>
+                    </pre>
                   </div>
                 </div>
 
-                {/* Interactive Code Window */}
-                <div className="mt-4 p-5 rounded-2xl bg-black/90 text-green-400 font-mono text-xs sm:text-sm overflow-x-auto leading-relaxed border border-white/10 shadow-inner">
-                  <pre className="text-white/90">
-                    <code>{consoleTabs[activeTab].content}</code>
-                  </pre>
+                <div className="mt-4 pt-3 border-t border-black/10 dark:border-white/10 flex justify-between items-center text-[10px] font-mono text-foreground/40">
+                  <span>UTF-8 // TypeScript React</span>
+                  <span>Ln 1, Col 1</span>
                 </div>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
 
         {/* BOTTOM STATS GRID */}
-        <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {stats.map((st, idx) => {
             const Icon = st.icon;
             return (
@@ -485,7 +475,7 @@ export default function About() {
             );
           })}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
