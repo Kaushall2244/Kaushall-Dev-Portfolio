@@ -342,7 +342,7 @@ export default function Projects() {
                 <div className="mt-6 p-4 rounded-2xl border border-black/10 dark:border-white/15 bg-black/85 text-white backdrop-blur-2xl relative overflow-hidden h-44 flex flex-col justify-between shadow-inner">
                   <div className="absolute inset-0 bg-grid-pattern opacity-25 pointer-events-none" />
 
-                  {/* Real-Time Scan Line in Crimson */}
+                  {/* Real-Time Scan Line */}
                   <motion.div
                     animate={{ y: [0, 150, 0] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}

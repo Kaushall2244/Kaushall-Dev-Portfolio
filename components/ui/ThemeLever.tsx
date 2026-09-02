@@ -19,7 +19,7 @@ export default function ThemeLever() {
   const isDark = theme === "dark";
 
   const triggerSparks = () => {
-    const colors = ["#ffe880", "#bf0039", "#ffd700", "#ff4d6d"];
+    const colors = ["#ffe880", "#bf0039", "#ffd700", "#ff3366"];
     const newSparks: Spark[] = Array.from({ length: 8 }).map((_, i) => ({
       id: Date.now() + i,
       x: (Math.random() - 0.5) * 50,
@@ -46,7 +46,7 @@ export default function ThemeLever() {
           className={`relative flex items-center justify-between w-16 h-8 sm:w-[72px] sm:h-9 px-1 rounded-full cursor-pointer transition-all duration-500 shadow-xl backdrop-blur-2xl border ${
             isDark
               ? "bg-[#090b12]/90 border-white/20 shadow-[0_8px_24px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.25)] hover:border-[#ffe880]/60"
-              : "bg-white/85 border-slate-300 shadow-[0_8px_24px_rgba(15,23,42,0.12),inset_0_1.5px_1px_rgba(255,255,255,1)] hover:border-[#bf0039]/60"
+              : "bg-white/85 border-slate-300 shadow-[0_8px_24px_rgba(15,23,42,0.12),inset_0_1.5px_1px_rgba(255,255,255,1)] hover:border-[#bf0039]"
           }`}
           style={{ cursor: "none" }}
           aria-label="Toggle Dark and Light Theme"
@@ -77,7 +77,7 @@ export default function ThemeLever() {
             <Sun
               size={13}
               className={`transition-colors duration-300 ${
-                !isDark ? "text-[#bf0039] drop-shadow-[0_0_6px_#bf0039]" : "text-white/30"
+                !isDark ? "text-[#bf0039] drop-shadow-[0_0_6px_rgba(191,0,57,0.5)]" : "text-white/30"
               }`}
             />
           </div>

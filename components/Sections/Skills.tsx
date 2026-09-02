@@ -54,7 +54,7 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const glowColor = isDark ? "rgba(255, 232, 128, 0.14)" : "rgba(191, 0, 57, 0.1)";
+  const glowColor = isDark ? "rgba(255, 232, 128, 0.14)" : "rgba(191, 0, 57, 0.14)";
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current) return;
@@ -96,12 +96,12 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
       {/* Decorative Grid Lines Inside Card */}
       <div className="absolute inset-0 bg-grid-pattern opacity-[0.04] z-0 pointer-events-none" />
 
-      {/* Header Panel: Distinct Gold Number + Distinct Crimson Tag */}
+      {/* Header Panel: Number + Tag */}
       <div className="relative z-10 flex items-center justify-between mb-8">
-        <span className="font-mono text-xs uppercase tracking-widest rounded-xl px-3.5 py-1 border font-bold text-[#bf0039] dark:text-[#ffe880] bg-[#bf0039]/10 dark:bg-[#ffe880]/10 border-[#bf0039]/30 dark:border-[#ffe880]/30 shadow-sm">
+        <span className="font-mono text-xs uppercase tracking-widest rounded-xl px-3.5 py-1 border font-bold text-[#bf0039] dark:text-[#ffe880] bg-[#bf0039]/15 dark:bg-[#ffe880]/10 border-[#bf0039]/40 dark:border-[#ffe880]/30 shadow-sm">
           {String(index + 1).padStart(2, "0")}
         </span>
-        <span className="font-mono text-[10px] text-[#bf0039] uppercase tracking-widest font-bold px-2 py-0.5 rounded bg-[#bf0039]/10 border border-[#bf0039]/20">
+        <span className="font-mono text-[10px] text-[#bf0039] dark:text-[#ffe880] uppercase tracking-widest font-bold px-2 py-0.5 rounded bg-[#bf0039]/10 dark:bg-[#ffe880]/10 border border-[#bf0039]/30 dark:border-[#ffe880]/20">
           {"// "}{skill.tag}
         </span>
       </div>
@@ -151,15 +151,15 @@ export default function Skills() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Section Indicator Badge in Distinct Crimson */}
+        {/* Section Indicator Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="flex items-center gap-3"
         >
-          <div className="w-2.5 h-2.5 rounded-full animate-pulse bg-[#bf0039]" />
-          <span className="font-mono text-xs uppercase tracking-[0.4em] font-bold text-[#bf0039]">
+          <div className="w-2.5 h-2.5 rounded-full animate-pulse bg-[#bf0039] dark:bg-[#ffe880]" />
+          <span className="font-mono text-xs uppercase tracking-[0.4em] font-bold text-[#bf0039] dark:text-[#ffe880]">
             02 // MY SUPERPOWERS ⚡
           </span>
         </motion.div>
@@ -172,13 +172,13 @@ export default function Skills() {
           />
         </div>
 
-        {/* Distinct Gold Accent Line */}
+        {/* Distinct Accent Line */}
         <motion.div
           initial={{ width: 0 }}
           whileInView={{ width: 140 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="mt-8 h-[2px] bg-[#ffe880] dark:bg-[#ffe880] bg-[#bf0039]"
+          className="mt-8 h-[2px] bg-[#bf0039] dark:bg-[#ffe880]"
         />
 
         {/* Skill Cards Grid */}

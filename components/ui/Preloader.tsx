@@ -152,7 +152,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       {/* Top Header Information Bar */}
       <div className="relative z-20 pt-6 sm:pt-8 px-6 sm:px-10 flex justify-between items-center font-mono text-[9px] sm:text-[10px] text-white/50 hud-element tracking-widest">
         <span className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#bf0039] animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-[#ffe880] animate-pulse" />
           <strong className="text-white">S KAUSHALL</strong> {"// CREATIVE LAB"}
         </span>
         <span className="hidden sm:inline-block text-[#ffe880] font-bold">
@@ -163,7 +163,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       {/* Centered Scramble Decoding Title */}
       <div className="relative z-20 my-auto flex flex-col items-center justify-center px-4 text-center">
         <div className="preloader-title max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#bf0039]/40 bg-[#bf0039]/15 backdrop-blur-xl mb-4 sm:mb-6 hud-element">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-white/20 bg-white/10 backdrop-blur-xl mb-4 sm:mb-6 hud-element">
             <span className="w-1.5 h-1.5 rounded-full bg-[#ffe880] animate-pulse" />
             <span className="font-mono text-[10px] sm:text-xs text-[#ffe880] tracking-[0.3em] uppercase font-bold">
               WELCOME TO MY CREATIVE SPACE
@@ -177,7 +177,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           {/* Glowing Energy Progress Bar */}
           <div className="mt-6 sm:mt-8 w-48 sm:w-72 md:w-96 mx-auto h-[3px] bg-white/10 rounded-full overflow-hidden relative hud-element">
             <div
-              className="h-full bg-gradient-to-r from-[#ffe880] to-[#bf0039] transition-all duration-100 ease-out relative"
+              className="h-full bg-gradient-to-r from-[#ffe880] via-[#ffd700] to-white transition-all duration-100 ease-out relative shadow-[0_0_15px_#ffe880]"
               style={{ width: `${progress}%` }}
             >
               <span className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#ffe880] shadow-[0_0_10px_#ffe880]" />
@@ -190,7 +190,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       <div className="relative z-20 pb-8 sm:pb-12 px-6 sm:px-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 hud-element">
         {/* Animated Boot Logs */}
         <div className="font-mono text-[10px] sm:text-xs text-white/50 tracking-wider flex flex-col gap-1.5 max-w-sm">
-          <span className="text-[#bf0039] font-bold">{"// INITIALIZING MODULES"}</span>
+          <span className="text-[#ffe880] font-bold">{"// INITIALIZING MODULES"}</span>
           <span className="text-white/90 font-medium transition-all duration-200">
             {BOOT_LOGS[logIndex]}
           </span>
@@ -202,7 +202,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         {/* Massive Dynamic Numerical Counter */}
         <div className="flex items-baseline gap-1.5 font-display text-6xl sm:text-8xl md:text-9xl font-black text-[#ffe880] tracking-tighter leading-none select-none drop-shadow-[0_0_35px_rgba(255,232,128,0.3)]">
           <span>{String(progress).padStart(3, "0")}</span>
-          <span className="text-xl sm:text-3xl font-mono text-[#bf0039] font-bold">%</span>
+          <span className="text-xl sm:text-3xl font-mono text-white/60 font-bold">%</span>
         </div>
       </div>
     </div>

@@ -248,6 +248,7 @@ export default function About() {
                   <span className="text-xs font-mono text-foreground/50">
                     Coimbatore, India 📍
                   </span>
+
                   <MagneticWrapper>
                     <a
                       href="../resume.pdf"

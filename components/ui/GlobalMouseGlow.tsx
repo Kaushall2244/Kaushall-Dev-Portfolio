@@ -25,7 +25,7 @@ export default function GlobalMouseGlow() {
 
   const glowGradient = isDark
     ? "radial-gradient(circle, rgba(255, 232, 128, 0.09) 0%, rgba(191, 0, 57, 0.04) 40%, transparent 70%)"
-    : "radial-gradient(circle, rgba(191, 0, 57, 0.08) 0%, rgba(234, 179, 8, 0.05) 45%, transparent 70%)";
+    : "radial-gradient(circle, rgba(191, 0, 57, 0.06) 0%, rgba(255, 232, 128, 0.03) 45%, transparent 70%)";
 
   return (
     <motion.div

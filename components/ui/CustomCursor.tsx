@@ -12,7 +12,7 @@ export default function CustomCursor() {
 
   const isDark = theme === "dark";
   const accentColor = isDark ? "#ffe880" : "#bf0039";
-  const pointerFill = isHovered ? accentColor : isDark ? "#ffffff" : "#090d16";
+  const pointerFill = isHovered ? accentColor : isDark ? "#ffffff" : "#0f172a";
 
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);

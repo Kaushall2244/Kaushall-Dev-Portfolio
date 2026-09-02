@@ -43,16 +43,34 @@ export default function Navbar() {
           scale: isCollapsed ? 0.95 : 1,
         }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className={`flex items-center gap-1.5 sm:gap-2 backdrop-blur-2xl rounded-full transition-all duration-500 border shadow-2xl ${
+        className={`relative flex items-center gap-1.5 sm:gap-2 rounded-full transition-all duration-500 border overflow-hidden backdrop-blur-3xl ${
           isDark
-            ? "bg-[#090b12]/90 border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.3)]"
-            : "bg-white/90 border-black/10 shadow-[0_16px_40px_rgba(0,0,0,0.08),inset_0_1px_1px_rgba(255,255,255,0.9)]"
+            ? "bg-[#090b14]/85 border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.35),inset_0_-1px_1px_rgba(0,0,0,0.5)]"
+            : "bg-white/80 border-white/70 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.14),0_6px_16px_-4px_rgba(15,23,42,0.06),inset_0_1.5px_1px_rgba(255,255,255,1),inset_0_-1px_1px_rgba(148,163,184,0.3)]"
         }`}
       >
+        {/* Optical Liquid Glass Reflection Overlays */}
+        <div className="absolute inset-0 pointer-events-none rounded-full overflow-hidden">
+          {/* Top Specular Rim Reflection */}
+          <div className="absolute top-0 left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/90 dark:via-white/50 to-transparent" />
+          
+          {/* Curved Liquid Wave / Refraction Flare (matches reference liquid glass curvature) */}
+          <div
+            className={`absolute -top-10 -right-6 w-36 h-28 rounded-full pointer-events-none transform -rotate-12 blur-md transition-opacity duration-500 ${
+              isDark
+                ? "bg-gradient-to-bl from-white/20 via-white/5 to-transparent opacity-60"
+                : "bg-gradient-to-bl from-white/70 via-slate-200/40 to-transparent opacity-90"
+            }`}
+          />
+
+          {/* Bottom subtle edge illumination */}
+          <div className="absolute bottom-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-slate-300/40 dark:via-white/10 to-transparent" />
+        </div>
+
         {/* Brand Logo */}
-        <a href="#home" className="flex items-center gap-2 px-2 sm:px-3">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#ffe880] ring-2 ring-[#bf0039] animate-pulse" />
-          <span className="font-display font-black text-sm sm:text-base text-white tracking-tight">
+        <a href="#home" className="relative z-10 flex items-center gap-2 px-2 sm:px-3">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#ffe880] ring-2 ring-slate-400/50 dark:ring-white/25 animate-pulse shadow-sm" />
+          <span className="font-display font-black text-sm sm:text-base text-slate-900 dark:text-white tracking-tight">
             KAUSHALL
           </span>
         </a>
@@ -65,7 +83,7 @@ export default function Navbar() {
             overflow: "hidden",
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="hidden md:flex items-center gap-1"
+          className="hidden md:flex items-center gap-1 relative z-10"
         >
           {NAV_ITEMS.map((item) => (
             <Magnetic key={item.label} range={40} actionFactor={0.25}>
@@ -73,12 +91,12 @@ export default function Navbar() {
                 href={item.href}
                 onMouseEnter={() => setHoveredLink(item.label)}
                 onMouseLeave={() => setHoveredLink(null)}
-                className="relative px-3 py-1.5 text-xs lg:text-sm font-medium text-white/70 hover:text-white transition-colors duration-300 z-10 whitespace-nowrap"
+                className="relative px-3 py-1.5 text-xs lg:text-sm font-medium text-slate-600 hover:text-slate-950 dark:text-white/70 dark:hover:text-white transition-colors duration-300 z-10 whitespace-nowrap"
               >
                 {hoveredLink === item.label && (
                   <motion.div
                     layoutId="nav-pill"
-                    className="absolute inset-0 rounded-full bg-white/10 border border-white/10"
+                    className="absolute inset-0 rounded-full bg-slate-900/5 border border-slate-900/10 dark:bg-white/10 dark:border-white/15 shadow-sm"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
@@ -93,7 +111,7 @@ export default function Navbar() {
           <a
             href="#contact"
             data-cursor-text="HI"
-            className="ml-1 sm:ml-2 flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-black font-mono transition-all duration-300 whitespace-nowrap shadow-lg bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_20px_#ffe880]"
+            className="relative z-10 ml-1 sm:ml-2 flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-black font-mono transition-all duration-300 whitespace-nowrap shadow-md bg-[#ffe880] text-black hover:bg-[#ffdf4d] hover:shadow-[0_0_20px_rgba(255,232,128,0.6)]"
           >
             <span>Let&apos;s Chat</span>
             <ArrowUpRight size={13} />

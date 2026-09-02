@@ -82,8 +82,8 @@ export default function Footer() {
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-black/10 dark:border-white/10 pb-2 font-bold">
-              <Navigation size={11} className="text-[#bf0039]" />
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] dark:text-[#ffe880] flex items-center gap-1.5 border-b border-black/10 dark:border-white/10 pb-2 font-bold">
+              <Navigation size={11} className="text-[#bf0039] dark:text-[#ffe880]" />
               Explore
             </span>
             <div className="flex flex-col gap-2">
@@ -107,8 +107,8 @@ export default function Footer() {
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-black/10 dark:border-white/10 pb-2 font-bold">
-              <Sparkles size={11} className="text-[#bf0039]" />
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] dark:text-[#ffe880] flex items-center gap-1.5 border-b border-black/10 dark:border-white/10 pb-2 font-bold">
+              <Sparkles size={11} className="text-[#bf0039] dark:text-[#ffe880]" />
               Connect
             </span>
             <div className="flex flex-col gap-2">
@@ -135,8 +135,8 @@ export default function Footer() {
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-black/10 dark:border-white/10 pb-2 font-bold">
-              <Globe size={11} className="text-[#bf0039]" />
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] dark:text-[#ffe880] flex items-center gap-1.5 border-b border-black/10 dark:border-white/10 pb-2 font-bold">
+              <Globe size={11} className="text-[#bf0039] dark:text-[#ffe880]" />
               Location
             </span>
             <div className="text-sm text-foreground/70 leading-relaxed font-sans">
@@ -153,8 +153,8 @@ export default function Footer() {
             }}
             className="flex flex-col gap-4"
           >
-            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] flex items-center gap-1.5 border-b border-black/10 dark:border-white/10 pb-2 font-bold">
-              <Heart size={11} className="text-[#bf0039]" />
+            <span className="font-mono text-[10px] uppercase tracking-wider text-[#bf0039] dark:text-[#ffe880] flex items-center gap-1.5 border-b border-black/10 dark:border-white/10 pb-2 font-bold">
+              <Heart size={11} className="text-[#bf0039] dark:text-[#ffe880]" />
               Crafted With
             </span>
             <div className="text-xs text-foreground/60 flex flex-col gap-1 font-mono">

@@ -80,13 +80,13 @@ export default function Hero() {
           >
             {/* Top Status Pill */}
             <motion.div variants={itemVariants} className="mb-6">
-              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-[#bf0039]/40 bg-[#bf0039]/10 backdrop-blur-xl shadow-md">
+              <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-slate-300/80 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-xl shadow-md">
                 <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#bf0039] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#bf0039]" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
                 </span>
                 <span className="font-mono text-xs text-foreground font-bold tracking-wider uppercase">
-                  🟢 Ready for fun projects & ideas
+                  Ready for fun projects & ideas ✨
                 </span>
               </div>
             </motion.div>
@@ -119,7 +119,7 @@ export default function Hero() {
             <motion.div variants={itemVariants} className="mt-8 sm:mt-10 max-w-2xl">
               <p className="text-base sm:text-lg md:text-xl text-foreground/80 leading-relaxed sm:leading-9">
                 Hi! I&apos;m{" "}
-                <span className="text-foreground font-bold underline decoration-[#ffe880] dark:decoration-[#ffe880] decoration-[#bf0039] decoration-2 underline-offset-4">
+                <span className="text-foreground font-bold underline decoration-[#bf0039] dark:decoration-[#ffe880] decoration-2 underline-offset-4">
                   S Kaushall
                 </span>
                 . I turn exciting ideas into super fast, playful, and interactive digital experiences.
@@ -143,17 +143,17 @@ export default function Hero() {
                 </a>
               </MagneticWrapper>
 
-              {/* Distinct Crimson Secondary CTA */}
+              {/* Distinct Secondary CTA */}
               <MagneticWrapper>
                 <a
                   href="../resume.pdf"
                   data-cursor-text="RESUME"
-                  className="group flex items-center gap-3 rounded-full border border-[#bf0039]/50 bg-[#bf0039]/10 backdrop-blur-2xl px-7 sm:px-8 py-3.5 sm:py-4 text-foreground font-semibold transition-all duration-300 hover:border-[#bf0039] hover:bg-[#bf0039]/20 shadow-lg text-xs sm:text-sm"
+                  className="group flex items-center gap-3 rounded-full border border-slate-300/90 dark:border-white/15 bg-white/70 dark:bg-white/5 backdrop-blur-2xl px-7 sm:px-8 py-3.5 sm:py-4 text-foreground font-semibold transition-all duration-300 hover:border-[#bf0039]/50 dark:hover:border-white/30 hover:bg-white dark:hover:bg-white/10 shadow-lg text-xs sm:text-sm"
                 >
                   <span>Grab My Resume 📄</span>
                   <Download
                     size={16}
-                    className="transition-transform duration-300 group-hover:translate-y-0.5 text-[#bf0039]"
+                    className="transition-transform duration-300 group-hover:translate-y-0.5 text-[#bf0039] dark:text-white"
                   />
                 </a>
               </MagneticWrapper>
@@ -167,7 +167,7 @@ export default function Hero() {
               transition={{ y: { duration: 6, repeat: Infinity, ease: "easeInOut" } }}
               className="absolute right-8 top-32 hidden xl:block pointer-events-auto"
             >
-              <div className="glass-card saas-shimmer rounded-3xl p-7 w-80 shadow-2xl hover:border-[#ffe880]/60 dark:hover:border-[#ffe880]/60 hover:border-[#bf0039]/60 transition-all duration-300">
+              <div className="glass-card saas-shimmer rounded-3xl p-7 w-80 shadow-2xl hover:border-[#bf0039]/60 dark:hover:border-[#ffe880]/60 transition-all duration-300">
                 <div className="flex items-center gap-2.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-[#bf0039] animate-pulse" />
                   <span className="text-xs font-mono uppercase tracking-wider text-[#bf0039] dark:text-[#ffe880] font-bold">
@@ -189,7 +189,7 @@ export default function Hero() {
               className="mt-16 sm:mt-20 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 border-t border-black/10 dark:border-white/10 pt-8 sm:pt-10 w-full"
             >
               <div>
-                <p className="text-[#ffe880] dark:text-[#ffe880] text-[#bf0039] text-4xl sm:text-5xl font-black tracking-tight drop-shadow-[0_0_15px_rgba(255,232,128,0.3)]">
+                <p className="text-[#bf0039] dark:text-[#ffe880] text-4xl sm:text-5xl font-black tracking-tight drop-shadow-[0_0_15px_rgba(255,232,128,0.3)]">
                   15+
                 </p>
                 <p className="mt-2 text-foreground/70 font-medium text-sm sm:text-base">Fun Web Projects Built</p>
@@ -201,7 +201,7 @@ export default function Hero() {
               </div>
 
               <div>
-                <p className="text-[#bf0039] text-3xl sm:text-4xl font-bold">100%</p>
+                <p className="text-[#bf0039] dark:text-white text-3xl sm:text-4xl font-bold">100%</p>
                 <p className="mt-2 text-foreground/70 font-medium text-sm sm:text-base">Passion for Great UX</p>
               </div>
             </motion.div>
