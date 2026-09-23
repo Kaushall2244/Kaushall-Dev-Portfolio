@@ -113,16 +113,14 @@ export default function Hero() {
                   <InteractiveWord word="PLAY." isAccent />
                 </MagneticWrapper>
               </div>
-            </motion.h1>
-
-            {/* Description */}
+            </motion.h1>            {/* Description */}
             <motion.div variants={itemVariants} className="mt-8 sm:mt-10 max-w-2xl">
               <p className="text-base sm:text-lg md:text-xl text-foreground/80 leading-relaxed sm:leading-9">
                 Hi! I&apos;m{" "}
                 <span className="text-foreground font-bold underline decoration-[#bf0039] dark:decoration-[#ffe880] decoration-2 underline-offset-4">
                   S Kaushall
                 </span>
-                . I turn exciting ideas into super fast, playful, and interactive digital experiences.
+                . I&apos;m a 3rd-year CSE student passionate about Web development, Software engineering, Game dev, 3D modeling, and Video editing.
               </p>
             </motion.div>
 
@@ -175,10 +173,10 @@ export default function Hero() {
                   </span>
                 </div>
                 <h3 className="mt-4 text-2xl font-black text-foreground">
-                  DayFlow Platform
+                  DayFlow App
                 </h3>
                 <p className="mt-3 text-foreground/70 text-sm leading-relaxed">
-                  Smart habit tracking and super slick productivity tools built for everyday humans.
+                  Location-based habit tracker built with Android Studio, Java & smart geofencing.
                 </p>
               </div>
             </motion.div>
@@ -190,19 +188,19 @@ export default function Hero() {
             >
               <div>
                 <p className="text-[#bf0039] dark:text-[#ffe880] text-4xl sm:text-5xl font-black tracking-tight drop-shadow-[0_0_15px_rgba(255,232,128,0.3)]">
-                  15+
+                  5+
                 </p>
-                <p className="mt-2 text-foreground/70 font-medium text-sm sm:text-base">Fun Web Projects Built</p>
+                <p className="mt-2 text-foreground/70 font-medium text-sm sm:text-base">Featured Projects Built</p>
               </div>
 
               <div>
-                <p className="text-foreground text-3xl sm:text-4xl font-bold">4+</p>
-                <p className="mt-2 text-foreground/70 font-medium text-sm sm:text-base">Years of Code & Coffee ☕</p>
+                <p className="text-foreground text-3xl sm:text-4xl font-bold">3rd</p>
+                <p className="mt-2 text-foreground/70 font-medium text-sm sm:text-base">Year CSE Undergrad 🎓</p>
               </div>
 
               <div>
                 <p className="text-[#bf0039] dark:text-white text-3xl sm:text-4xl font-bold">100%</p>
-                <p className="mt-2 text-foreground/70 font-medium text-sm sm:text-base">Passion for Great UX</p>
+                <p className="mt-2 text-foreground/70 font-medium text-sm sm:text-base">Passion for Code & 3D</p>
               </div>
             </motion.div>
           </motion.div>

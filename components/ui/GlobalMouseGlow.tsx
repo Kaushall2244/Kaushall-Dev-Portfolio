@@ -30,13 +30,13 @@ export default function GlobalMouseGlow() {
   return (
     <motion.div
       style={{
-        left: smoothX,
-        top: smoothY,
-        x: "-50%",
-        y: "-50%",
+        x: smoothX,
+        y: smoothY,
+        translateX: "-50%",
+        translateY: "-50%",
         background: glowGradient,
       }}
-      className="pointer-events-none fixed z-0 h-[650px] w-[650px] rounded-full hidden md:block will-change-transform transform-gpu"
+      className="pointer-events-none fixed top-0 left-0 z-0 h-[600px] w-[600px] rounded-full hidden md:block will-change-transform transform-gpu"
     />
   );
 }

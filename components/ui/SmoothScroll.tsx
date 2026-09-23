@@ -9,14 +9,15 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Initialize the kinetic scroll matrix
+    // Initialize optimized kinetic smooth scroll
     const lenis = new Lenis({
-      duration: 1.2,              
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom exponential decay curve
+      duration: 0.9,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 1.0,       // Standardizes scroll speed scaling
+      wheelMultiplier: 1.05,
+      touchMultiplier: 1.5,
     });
 
     // Synchronize ScrollTrigger with Lenis
@@ -27,7 +28,8 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       lenis.raf(time * 1000);
     };
     gsap.ticker.add(updateTicker);
-    gsap.ticker.lagSmoothing(0);
+    // Standard GSAP lag smoothing: prevents sudden jumps when frames hitch
+    gsap.ticker.lagSmoothing(500, 33);
 
     // Clean up pipeline instances on component destruction
     return () => {

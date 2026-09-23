@@ -7,7 +7,6 @@ import { useTheme } from "../Global/ThemeProvider";
 export default function CustomCursor() {
   const [isHovered, setIsHovered] = useState(false);
   const [hoverText, setHoverText] = useState("");
-  const [isMoving, setIsMoving] = useState(false);
   const { theme } = useTheme();
 
   const isDark = theme === "dark";
@@ -17,10 +16,8 @@ export default function CustomCursor() {
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
   // Smooth springs for cursor movement
-  const springConfig = { stiffness: 500, damping: 30, mass: 0.06 };
+  const springConfig = { stiffness: 600, damping: 35, mass: 0.05 };
   const cursorX = useSpring(mouseX, springConfig);
   const cursorY = useSpring(mouseY, springConfig);
 
@@ -28,21 +25,19 @@ export default function CustomCursor() {
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
-
-      setIsMoving(true);
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => {
-        setIsMoving(false);
-      }, 120);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      const interactive = target.closest("a, button, [role='button'], .interactive-node, h1, span");
+      if (!target || !target.closest) return;
+
+      const interactive = target.closest(
+        "a, button, [role='button'], input, textarea, select, .interactive-node, [data-cursor-text]"
+      );
       
       if (interactive) {
-        setIsHovered(true);
         const text = interactive.getAttribute("data-cursor-text") || "";
+        setIsHovered(true);
         setHoverText(text);
       } else {
         setIsHovered(false);
@@ -56,7 +51,6 @@ export default function CustomCursor() {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseover", handleMouseOver);
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [mouseX, mouseY]);
 
@@ -73,11 +67,11 @@ export default function CustomCursor() {
         }}
       >
         <div
-          className="w-32 h-32 rounded-full transition-opacity duration-300 transform-gpu"
+          className="w-28 h-28 rounded-full transition-opacity duration-300 transform-gpu"
           style={{
             background: `radial-gradient(circle, ${accentColor} 0%, transparent 70%)`,
-            opacity: isMoving ? (isHovered ? 0.35 : 0.2) : (isHovered ? 0.25 : 0.08),
-            transform: isMoving ? "scale(1.2)" : "scale(1)",
+            opacity: isHovered ? 0.35 : 0.12,
+            transform: isHovered ? "scale(1.2)" : "scale(1)",
           }}
         />
       </motion.div>
@@ -93,7 +87,7 @@ export default function CustomCursor() {
         }}
       >
         <div className="relative w-12 h-12 flex items-center justify-center">
-          {/* Outer Reticle Triangles */}
+          {/* Outer Reticle Triangles (Smooth continuous spin without mousemove re-renders) */}
           <motion.svg
             width="40"
             height="40"
@@ -101,13 +95,11 @@ export default function CustomCursor() {
             fill="none"
             className="absolute inset-0"
             animate={{
-              rotate: isMoving ? 360 : 0,
+              rotate: 360,
               scale: isHovered ? 1.25 : 1,
             }}
             transition={{
-              rotate: isMoving 
-                ? { repeat: Infinity, duration: 3, ease: "linear" } 
-                : { duration: 0.5 },
+              rotate: { repeat: Infinity, duration: 10, ease: "linear" },
               scale: { type: "spring", stiffness: 400, damping: 24 }
             }}
           >

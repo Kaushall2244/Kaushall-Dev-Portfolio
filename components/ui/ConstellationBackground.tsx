@@ -113,28 +113,24 @@ export default function ConstellationBackground() {
       }
 
       draw(context: CanvasRenderingContext2D) {
-        context.save();
+        // Outer gentle glow ring (Hardware-accelerated simple arc, 0 convolution overhead)
+        context.beginPath();
+        context.arc(this.x, this.y, this.radius * 2, 0, Math.PI * 2);
+        context.globalAlpha = this.alpha * 0.18;
+        context.fillStyle = this.type === "gold" ? goldColor : secondaryColor;
+        context.fill();
+
+        // Core sharp particle
         context.beginPath();
         context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         context.globalAlpha = this.alpha;
-
-        if (this.type === "gold") {
-          context.fillStyle = goldColor;
-          context.shadowColor = goldColor;
-          context.shadowBlur = isDark ? 10 : 4;
-        } else {
-          context.fillStyle = secondaryColor;
-          context.shadowColor = secondaryColor;
-          context.shadowBlur = isDark ? 8 : 4;
-        }
-
+        context.fillStyle = this.type === "gold" ? goldColor : secondaryColor;
         context.fill();
-        context.restore();
       }
     }
 
     const init = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       const width = window.innerWidth;
       const height = window.innerHeight;
 
@@ -145,8 +141,8 @@ export default function ConstellationBackground() {
 
       ctx.scale(dpr, dpr);
 
-      // Reduced particle density for a clean, non-cluttered look
-      const count = width < 768 ? 16 : 32;
+      // Balanced particle density for fluid performance & elegance
+      const count = width < 768 ? 14 : 24;
       particles = [];
       for (let i = 0; i < count; i++) {
         particles.push(new Particle(width, height));
@@ -180,7 +176,7 @@ export default function ConstellationBackground() {
 
     init();
 
-    const maxDist = 150;
+    const maxDist = 140;
     const maxDistSq = maxDist * maxDist;
 
     const animate = () => {
@@ -194,11 +190,16 @@ export default function ConstellationBackground() {
 
       ctx.clearRect(0, 0, width, height);
 
-      // 1. Draw particle-to-particle constellation lines
+      // 1. Draw particles
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update(width, height);
+        particles[i].draw(ctx);
+      }
+
+      // 2. Draw particle-to-particle constellation lines (batched, high-perf)
+      ctx.lineWidth = 0.85;
       for (let i = 0; i < particles.length; i++) {
         const p1 = particles[i];
-        p1.update(width, height);
-        p1.draw(ctx);
 
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
@@ -208,9 +209,8 @@ export default function ConstellationBackground() {
 
           if (distSq < maxDistSq) {
             const dist = Math.sqrt(distSq);
-            const alpha = (1 - dist / maxDist) * (isDark ? 0.3 : 0.22);
+            const alpha = (1 - dist / maxDist) * (isDark ? 0.28 : 0.2);
 
-            ctx.save();
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
@@ -227,13 +227,11 @@ export default function ConstellationBackground() {
                 : `rgba(191, 0, 57, ${alpha * 0.6})`;
             }
 
-            ctx.lineWidth = 0.85;
             ctx.stroke();
-            ctx.restore();
           }
         }
 
-        // 2. Draw mouse-to-particle interactive beams
+        // 3. Draw mouse-to-particle interactive beams
         if (mouse.active) {
           const dx = p1.x - mouse.x;
           const dy = p1.y - mouse.y;
@@ -241,28 +239,17 @@ export default function ConstellationBackground() {
 
           if (distSq < mouse.radiusSq) {
             const dist = Math.sqrt(distSq);
-            const alpha = (1 - dist / mouse.radius) * 0.45;
+            const alpha = (1 - dist / mouse.radius) * 0.4;
 
-            ctx.save();
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(mouse.x, mouse.y);
-
-            if (p1.type === "gold") {
-              ctx.strokeStyle = isDark
-                ? `rgba(255, 232, 128, ${alpha})`
-                : `rgba(217, 119, 6, ${alpha})`;
-              ctx.shadowColor = goldColor;
-              ctx.shadowBlur = 6;
-            } else {
-              ctx.strokeStyle = `rgba(191, 0, 57, ${alpha})`;
-              ctx.shadowColor = secondaryColor;
-              ctx.shadowBlur = 6;
-            }
-
+            ctx.strokeStyle = p1.type === "gold"
+              ? (isDark ? `rgba(255, 232, 128, ${alpha})` : `rgba(217, 119, 6, ${alpha})`)
+              : `rgba(191, 0, 57, ${alpha})`;
             ctx.lineWidth = 1.0;
             ctx.stroke();
-            ctx.restore();
+            ctx.lineWidth = 0.85;
           }
         }
       }

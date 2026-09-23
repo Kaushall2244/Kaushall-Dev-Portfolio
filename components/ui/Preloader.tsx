@@ -25,7 +25,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const targetWord = "KAUSHALL";
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
 
-  // Snappy progress counter
+  // Snappy, brisk progress counter (finishes in ~600ms)
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prev) => {
@@ -33,10 +33,10 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           clearInterval(timer);
           return 100;
         }
-        const step = Math.floor(Math.random() * 12) + 7;
+        const step = Math.floor(Math.random() * 18) + 14;
         return Math.min(prev + step, 100);
       });
-    }, 32);
+    }, 28);
 
     return () => clearInterval(timer);
   }, []);
@@ -70,7 +70,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       );
 
       if (iteration < targetWord.length) {
-        iteration += 1 / 3;
+        iteration += 1 / 2;
         animationFrameId = requestAnimationFrame(runScramble);
       }
     };
@@ -79,7 +79,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
-  // Exit Animation when 100% is reached
+  // Exit Animation when 100% is reached (High performance, GPU composited)
   useEffect(() => {
     if (progress === 100) {
       const tl = gsap.timeline({
@@ -90,38 +90,38 @@ export default function Preloader({ onComplete }: PreloaderProps) {
 
       tl.to(".hud-element", {
         opacity: 0,
-        y: -20,
-        duration: 0.35,
-        stagger: 0.04,
-        ease: "power3.in",
+        y: -15,
+        duration: 0.25,
+        stagger: 0.03,
+        ease: "power2.in",
       })
       .to(
         ".preloader-title",
         {
-          scale: 1.08,
+          scale: 1.04,
           opacity: 0,
-          filter: "blur(10px)",
-          duration: 0.45,
+          y: -10,
+          duration: 0.35,
           ease: "power2.inOut",
         },
-        "-=0.2"
+        "-=0.15"
       )
       .to(
         curtainsRef.current?.children || [],
         {
           scaleY: 0,
           transformOrigin: "top",
-          duration: 0.65,
-          stagger: 0.05,
+          duration: 0.5,
+          stagger: 0.04,
           ease: "power4.inOut",
         },
-        "-=0.15"
+        "-=0.1"
       )
       .to(
         containerRef.current,
         {
           opacity: 0,
-          duration: 0.2,
+          duration: 0.15,
           pointerEvents: "none",
         },
         "-=0.1"

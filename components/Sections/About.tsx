@@ -31,63 +31,65 @@ const cardVariants: Variants = {
 
 const stats = [
   {
-    value: "15+",
-    label: "Web Projects",
-    subtext: "From scratch to production",
+    value: "5+",
+    label: "Featured Projects",
+    subtext: "Android, Web, AI & AR",
     icon: Sparkles,
   },
   {
-    value: "4+",
-    label: "Years Coding",
-    subtext: "Continuous learning & building",
+    value: "3rd",
+    label: "Year CSE Undergrad",
+    subtext: "Computer Science & Engineering",
     icon: Code2,
   },
   {
     value: "100%",
-    label: "Joy & Detail",
-    subtext: "Pixel-perfect & silky smooth",
+    label: "Passion & Detail",
+    subtext: "Pixel-perfect & clean code",
     icon: Zap,
   },
   {
     value: "24/7",
     label: "Curious Mind",
-    subtext: "Always experimenting",
+    subtext: "Games, 3D & software",
     icon: Globe2,
   },
 ];
 
 const capabilities = [
   {
-    title: "Full-Stack Web Magic",
-    desc: "Next.js 15, React 19, Node.js & modern serverless backends",
+    title: "Web & CMS Solutions",
+    desc: "HTML, CSS, JavaScript, and responsive eCommerce platforms with WordPress",
+    icon: Globe2,
+    tag: "Web & CMS",
+  },
+  {
+    title: "Software & Mobile Engineering",
+    desc: "Android Studio apps, Java architecture, and intelligent Python tools",
     icon: Cpu,
-    tag: "Core Engine",
+    tag: "Software & Mobile",
   },
   {
-    title: "Playful Motion & UI",
-    desc: "GSAP ScrollTrigger, Framer Motion & delightful micro-animations",
-    icon: Sparkles,
-    tag: "Visual Joy",
-  },
-  {
-    title: "3D & Creative Canvas",
-    desc: "Three.js, WebGL & interactive GPU-accelerated playgrounds",
+    title: "Game Dev & 3D Media",
+    desc: "Unity, Unreal Engine 5, AR spaces, Blender 3D, and cinematic video editing",
     icon: Compass,
-    tag: "3D Fun",
+    tag: "Games & 3D",
   },
 ];
 
 const techStack = [
-  { name: "React 19", category: "Frontend" },
-  { name: "Next.js 15", category: "Frontend" },
-  { name: "TypeScript", category: "Core" },
-  { name: "Tailwind CSS v4", category: "Frontend" },
-  { name: "Framer Motion", category: "Motion" },
-  { name: "GSAP", category: "Motion" },
-  { name: "Three.js", category: "3D" },
-  { name: "Node.js", category: "Backend" },
-  { name: "Python", category: "Core" },
-  { name: "Git & GitHub", category: "Tools" },
+  { name: "Java", category: "Software & Mobile" },
+  { name: "Python", category: "Software & Mobile" },
+  { name: "Android Studio", category: "Software & Mobile" },
+  { name: "HTML & CSS", category: "Web & CMS" },
+  { name: "JavaScript", category: "Web & CMS" },
+  { name: "WordPress", category: "Web & CMS" },
+  { name: "Unity", category: "Game Dev & AR" },
+  { name: "Unreal Engine 5", category: "Game Dev & AR" },
+  { name: "AR (Augmented Reality)", category: "Game Dev & AR" },
+  { name: "Blender", category: "3D & Editing" },
+  { name: "Premiere Pro", category: "3D & Editing" },
+  { name: "DaVinci Resolve", category: "3D & Editing" },
 ];
 
 const consoleTabs = [
@@ -97,31 +99,37 @@ const consoleTabs = [
     content: `// Meet S Kaushall 👋
 const developer = {
   name: "S Kaushall",
-  role: "Full-Stack Developer & Creative Builder",
-  location: "Coimbatore, India",
-  loves: ["Clean Code", "Silky Animations", "Interactive 3D", "Coffee ☕"],
-  status: "Ready for exciting projects & fun collaborations 🚀",
+  education: "CSE 3rd Year Student",
+  interests: ["Web Dev", "Software Dev", "Game Dev", "3D Modeling", "Video Editing"],
+  skills: [
+    "Java", "Python", "HTML/CSS", "JavaScript",
+    "Android Studio", "WordPress", "Unity",
+    "Unreal Engine 5", "AR", "Blender",
+    "Premiere Pro", "DaVinci Resolve"
+  ],
+  status: "Ready for innovative projects & creative tech collaborations 🚀",
 };`,
   },
   {
     id: "stack",
     filename: "my_toolkit.json",
     content: `{
-  "frontend": ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS"],
-  "motion": ["Framer Motion", "GSAP ScrollTrigger", "Smooth Physics"],
-  "canvas": ["Three.js", "WebGL", "Refractive Materials"],
-  "focus": "Delivering fast, beautiful, and joyful user experiences"
+  "languages": ["Java", "Python", "JavaScript", "HTML/CSS"],
+  "mobile_and_web": ["Android Studio", "WordPress", "Responsive UI"],
+  "game_and_ar": ["Unity", "Unreal Engine 5 (UE5)", "Augmented Reality (AR)"],
+  "creative_3d_video": ["Blender 3D", "Adobe Premiere Pro", "DaVinci Resolve"]
 }`,
   },
   {
     id: "vision",
     filename: "my_passion.md",
     content: `# What Drives Me ✨
-> "Code is more than just instructions—it's crafting fun, memorable digital experiences that put a smile on people's faces."
+> "Bridging creative artistry, game mechanics, and robust software architecture into impactful digital products."
 
-- ⚡ Lightning-fast load times & silky 60fps
-- 🎨 Liquid Glass UI & intuitive tactile controls
-- 🚀 Writing clean, future-proof code every single day`,
+- 🎮 Immersive Game Development (Unity & UE5) + AR interactive spatial apps
+- 📱 Native Android Development with location awareness & smart sensors
+- 🌐 Responsive Web solutions & eCommerce storefronts with WordPress
+- 🎨 3D modeling in Blender & cinematic video editing in Premiere & DaVinci`,
   },
 ];
 
@@ -205,7 +213,7 @@ export default function About() {
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-[#bf0039]" />
                     </span>
                     <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-[#bf0039] dark:text-[#ffe880] font-bold">
-                      Full-Stack & Creative Explorer
+                      CSE 3rd Year • Developer & Creator
                     </span>
                   </div>
 
@@ -215,7 +223,7 @@ export default function About() {
                       src="/Images/profile.png"
                       alt="S Kaushall Profile"
                       fill
-                      priority
+                      loading="lazy"
                       sizes="(max-width: 768px) 100vw, 45vw"
                       className="object-cover object-top transition-transform duration-700 ease-out group-hover/avatar:scale-105"
                     />
@@ -239,7 +247,7 @@ export default function About() {
                     S Kaushall
                   </h3>
                   <p className="mt-3 text-foreground/70 text-base leading-relaxed">
-                    Passionate developer crafting modern, interactive web applications, playful user experiences, and 3D web adventures.
+                    3rd-year Computer Science & Engineering student passionate about Web development, Software engineering, Game development, 3D modeling, and Video editing.
                   </p>
                 </div>
 
@@ -348,7 +356,7 @@ export default function About() {
 
                   {/* Filter Pills */}
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {["All", "Frontend", "Motion", "3D", "Backend"].map((cat) => (
+                    {["All", "Web & CMS", "Software & Mobile", "Game Dev & AR", "3D & Editing"].map((cat) => (
                       <button
                         key={cat}
                         onClick={() => setActiveFilter(cat)}

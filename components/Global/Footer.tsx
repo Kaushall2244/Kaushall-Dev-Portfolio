@@ -11,13 +11,16 @@ const SYSTEM_LINKS = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  { label: "GitHub Lab", href: "#github" },
+  { label: "Fiverr Studio", href: "#fiverr" },
   { label: "Contact", href: "#contact" },
 ];
 
 const MATRIX_LINKS = [
-  { label: "GitHub", href: "https://github.com/Kaushall2244" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/kaushall22/" },
+  { label: "GitHub Profile", href: "https://github.com/Kaushall2244" },
   { label: "Fiverr Studio", href: "https://www.fiverr.com/sellers/kaushall_dev" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/kaushall22/" },
+  { label: "Email", href: "mailto:githeshkaushall@gmail.com" },
 ];
 
 export default function Footer() {

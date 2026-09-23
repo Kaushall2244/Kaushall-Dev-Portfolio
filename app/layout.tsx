@@ -38,33 +38,46 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://skaushall.dev"),
-  title: "S Kaushall | Full-Stack Developer & Creative UI Engineer",
+  title: "S Kaushall | CSE Student • Web, Software, Game Dev & 3D Creator",
   description:
-    "Portfolio of S Kaushall - Full-Stack Developer, Computer Science Student, and Creative UI Engineer building fast, beautiful, and interactive web applications with Next.js, React, Three.js, and Framer Motion.",
+    "Portfolio of S Kaushall - 3rd-year CSE student passionate about Web development, Software engineering, Game development (Unity, UE5), 3D modeling (Blender), and Video editing.",
   keywords: [
     "S Kaushall",
     "Kaushall",
-    "Full-Stack Developer",
-    "Software Engineer",
-    "Creative Developer",
+    "CSE Student",
     "Computer Science Student",
-    "Next.js 15 Developer",
-    "React Developer",
-    "Three.js 3D Web",
-    "Frontend Engineer",
-    "Interactive UI Portfolio",
-    "Web Developer Coimbatore India",
+    "Web Developer",
+    "Software Developer",
+    "Game Developer",
+    "Unity Developer",
+    "Unreal Engine 5",
+    "Blender 3D",
+    "Android Studio",
+    "Java",
+    "Python",
+    "WordPress",
+    "Video Editing",
   ],
   authors: [{ name: "S Kaushall", url: "https://skaushall.dev" }],
   creator: "S Kaushall",
   publisher: "S Kaushall",
+  applicationName: "S Kaushall Portfolio",
+  category: "technology",
   alternates: {
-    canonical: "/",
+    canonical: "https://skaushall.dev",
+  },
+  icons: {
+    icon: [
+      { url: "/icon", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icon", type: "image/png" },
+    ],
   },
   openGraph: {
-    title: "S Kaushall | Full-Stack Developer & Creative UI Engineer",
+    title: "S Kaushall | CSE Student • Web, Software, Game Dev & 3D Creator",
     description:
-      "Crafting fast, beautiful, and playful web experiences with Next.js, React, Three.js, and modern creative technology.",
+      "Crafting digital experiences across web, mobile software, immersive game worlds, and 3D modeling.",
     url: "https://skaushall.dev",
     siteName: "S Kaushall Portfolio",
     locale: "en_US",
@@ -80,9 +93,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "S Kaushall | Full-Stack Developer & Creative UI Engineer",
+    title: "S Kaushall | CSE Student • Web, Software, Game Dev & 3D Creator",
     description:
-      "Crafting fast, beautiful, and playful web experiences with Next.js, React, Three.js, and modern creative technology.",
+      "Crafting digital experiences across web, mobile software, immersive game worlds, and 3D modeling.",
     creator: "@skaushall",
     images: ["/Images/profile.png"],
   },
@@ -106,7 +119,7 @@ const jsonLd = {
       "@type": "Person",
       "@id": "https://skaushall.dev/#person",
       name: "S Kaushall",
-      jobTitle: "Full-Stack Developer & Creative UI Engineer",
+      jobTitle: "CSE 3rd Year Undergrad & Software/Web/Game Developer",
       url: "https://skaushall.dev",
       image: "https://skaushall.dev/Images/profile.png",
       email: "githeshkaushall@gmail.com",
@@ -116,14 +129,21 @@ const jsonLd = {
         "https://www.fiverr.com/sellers/kaushall_dev",
       ],
       knowsAbout: [
-        "Full-Stack Development",
+        "Java",
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "Python",
+        "Blender",
+        "Unreal Engine 5",
+        "Premiere Pro",
+        "DaVinci Resolve",
+        "Unity",
+        "Augmented Reality (AR)",
+        "Android Studio",
+        "WordPress",
         "Next.js",
         "React",
-        "TypeScript",
-        "Three.js",
-        "Tailwind CSS",
-        "Java",
-        "Python",
       ],
     },
     {
@@ -131,10 +151,56 @@ const jsonLd = {
       "@id": "https://skaushall.dev/#website",
       url: "https://skaushall.dev",
       name: "S Kaushall Portfolio",
-      description: "Creative Full-Stack Developer & UI Engineer Portfolio",
+      description: "Official portfolio of S Kaushall - CSE 3rd Year Student, Software, Web & Game Developer",
       publisher: {
         "@id": "https://skaushall.dev/#person",
       },
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://skaushall.dev/#profilepage",
+      url: "https://skaushall.dev",
+      name: "S Kaushall Developer Profile",
+      mainEntity: {
+        "@id": "https://skaushall.dev/#person",
+      },
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://skaushall.dev/#projects-list",
+      name: "Featured Projects by S Kaushall",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "DayFlow Android App",
+          description: "Context-aware habit tracking Android app that triggers routines based on geofenced physical locations.",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "VisionMate AI",
+          description: "Real-time obstacle and object detection system providing assistive audio guidance for visually impaired users.",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "SriJaiAgency eCommerce Website",
+          description: "Full-featured commercial eCommerce storefront developed on WordPress for SriJaiAgency.",
+        },
+        {
+          "@type": "ListItem",
+          position: 4,
+          name: "AR Furniture Visualizer",
+          description: "Augmented Reality space visualizer built with Unity for placing 3D furniture models at 1:1 true scale.",
+        },
+        {
+          "@type": "ListItem",
+          position: 5,
+          name: "TrackSphere Geolocation System",
+          description: "Real-time location tracking and telemetry pipeline built for live coordinate updates and routing.",
+        },
+      ],
     },
   ],
 };
@@ -154,7 +220,7 @@ const themeScript = `
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${displayFont.variable} ${monoFont.variable} scroll-smooth dark`} suppressHydrationWarning>
+    <html lang="en" className={`${displayFont.variable} ${monoFont.variable} dark`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script

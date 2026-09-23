@@ -16,108 +16,135 @@ import {
   Radio,
   Gamepad2,
   Terminal,
-  Play,
   RotateCw,
+  ShoppingBag,
+  MapPin,
+  Eye,
+  Box,
+  Layers,
 } from "lucide-react";
 import TextReveal from "../ui/TextReveal";
 import MagneticWrapper from "../ui/Magnetic";
 import ProjectModal, { ProjectDetail } from "../ui/ProjectModal";
 import { useTheme } from "../Global/ThemeProvider";
 
-const CATEGORIES = ["All", "Web Apps", "AI & Vision", "Mobile Apps", "3D & Creative"];
+const CATEGORIES = ["All", "Mobile & Android", "AI & Vision", "Web & WordPress", "Game Dev & AR"];
 
 const PROJECTS_DATA: ProjectDetail[] = [
   {
     id: "dayflow",
-    title: "DayFlow Platform",
-    subtitle: "Daily Productivity & Habit OS",
-    tagline: "Designed to make daily routines smooth, rewarding, and fun.",
-    category: "Web Apps",
+    title: "DayFlow Android App",
+    subtitle: "Location-Based Habit Tracker",
+    tagline: "Context-aware habit tracking that triggers routines based on where you are.",
+    category: "Mobile & Android",
     year: "2026",
-    role: "Full-Stack Engineer & UI Designer",
-    status: "Live & Active",
+    role: "Android Developer",
+    status: "Active Project",
     description:
-      "DayFlow is a comprehensive daily operating system built with Next.js 15, React 19, TypeScript, and Tailwind CSS. It combines smart habit streaks, timeline scheduling, and delightful completion micro-interactions.",
+      "DayFlow is a native Android application built with Android Studio and Java that connects daily habits with physical locations using geofencing. When you arrive at the library, gym, or study desk, DayFlow automatically prompts your designated routines.",
     story:
-      "I wanted to build a habit tracker that didn't feel like a chore to open. By combining buttery spring animations, tactile audio feedback, and high-performance serverless storage, DayFlow turns everyday task completion into a genuinely joyful experience.",
+      "Traditional habit trackers rely on static time-based notifications that are easily dismissed. DayFlow solves this by tying habits to physical context using location awareness, triggering actionable reminders when and where they matter most.",
     features: [
-      "Dynamic streak tracking with celebration confetti effects",
-      "Interactive drag-and-drop daily schedule timeline",
-      "Offline-first sync powered by IndexedDB and cloud backups",
-      "Liquid glass design system with responsive layouts",
+      "Geofencing boundary detection for contextual habit prompts",
+      "Dynamic habit streak tracking and visual progress statistics",
+      "Customizable radius triggers for locations (Gym, Campus, Home, Library)",
+      "Clean, responsive native Android UI designed for rapid daily check-ins",
     ],
-    tech: ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS v4", "Framer Motion", "Zustand"],
+    tech: ["Android Studio", "Java", "Location Services", "Geofencing API", "SQLite / Room"],
     github: "https://github.com/Kaushall2244",
-    demo: "https://skaushall.dev",
+    demo: "https://github.com/Kaushall2244",
   },
   {
     id: "visionmate",
     title: "VisionMate AI",
-    subtitle: "Real-Time Object Perception & Audio Guidance",
-    tagline: "Empowering visually impaired users through real-time Computer Vision.",
+    subtitle: "Blind Object Detection & Assistive App",
+    tagline: "Empowering visually impaired users through real-time object detection and audio guidance.",
     category: "AI & Vision",
     year: "2026",
-    role: "AI & Computer Vision Developer",
-    status: "In Prototype Testing",
+    role: "AI & Software Developer",
+    status: "Active Prototype",
     description:
-      "VisionMate is an assistive computer vision system using YOLOv8, OpenCV, and Python to identify spatial obstacles and objects in real-time, delivering immediate audio descriptions to users.",
+      "VisionMate AI is an assistive computer vision system designed to identify spatial obstacles and everyday objects in real-time, delivering immediate audio narration to visually impaired users.",
     story:
-      "Built with the vision of making independent navigation accessible to everyone. The system processes camera frames locally on lightweight hardware at 30+ FPS, converting spatial depth information into natural spatial audio cues.",
+      "Created to make independent navigation accessible and safe. The system processes visual camera frames locally with high speed, converting obstacle detections into intuitive spoken auditory cues.",
     features: [
-      "Sub-30ms real-time multi-object detection and tracking",
-      "Spatial directional audio cue synthesis",
-      "Lightweight edge deployment model optimized for mobile and Raspberry Pi",
-      "Voice commands and tactile vibration feedback modes",
+      "Real-time multi-object detection and spatial tracking",
+      "Instant spoken audio cues announcing detected objects and proximity",
+      "Lightweight edge deployment model optimized for mobile hardware",
+      "Accessibility-focused interface with clear audio feedback",
     ],
-    tech: ["Python", "YOLOv8", "OpenCV", "TensorFlow Lite", "PyTorch", "TTS Engine"],
+    tech: ["Python", "Computer Vision", "Object Detection", "Text-to-Speech (TTS)", "Mobile Integration"],
+    github: "https://github.com/Kaushall2244",
+    demo: "https://github.com/Kaushall2244",
+  },
+  {
+    id: "srijaiagency",
+    title: "SriJaiAgency",
+    subtitle: "eCommerce Website (WordPress)",
+    tagline: "Full-featured commercial eCommerce storefront tailored for business growth.",
+    category: "Web & WordPress",
+    year: "2025",
+    role: "WordPress & Web Developer",
+    status: "Live Production",
+    description:
+      "A comprehensive eCommerce website developed on WordPress for SriJaiAgency, featuring an interactive product catalog, custom branding, payment integration, and mobile responsiveness.",
+    story:
+      "Designed and deployed as a live commercial storefront for SriJaiAgency. The platform provides a smooth shopping experience, fast loading speeds, and seamless order management.",
+    features: [
+      "Full WooCommerce product catalog with categorization and search",
+      "Responsive mobile-first eCommerce UI customized for the brand",
+      "Secure payment gateway integration and order processing",
+      "SEO optimized architecture and fast caching configurations",
+    ],
+    tech: ["WordPress", "WooCommerce", "HTML", "CSS", "JavaScript", "PHP / MySQL"],
+    github: "https://github.com/Kaushall2244",
+    demo: "https://srijaiagency.in",
+  },
+  {
+    id: "ar-furniture",
+    title: "AR Furniture App",
+    subtitle: "Augmented Reality Space Visualizer (Unity)",
+    tagline: "Visualizing 3D furniture models directly in your room at true scale.",
+    category: "Game Dev & AR",
+    year: "2026",
+    role: "AR & Unity Developer",
+    status: "Under Development",
+    description:
+      "An Augmented Reality mobile application built with Unity that allows users to place, rotate, and customize 3D furniture assets in their real-world environment using surface plane detection.",
+    story:
+      "Buying furniture without knowing how it fits in a room leads to guesswork. This AR app lets users drop 3D furniture models onto the floor at true 1:1 scale, rotate them, inspect textures, and verify dimensions in real time.",
+    features: [
+      "Real-time horizontal plane detection for realistic floor placement",
+      "Accurate 1:1 real-world physical scale rendering of 3D models",
+      "Interactive touch gesture controls: drag, rotate, and swap materials",
+      "Environmental lighting estimation for realistic shadows and reflections",
+    ],
+    tech: ["Unity", "AR Foundation", "C#", "Blender (3D Modeling)", "PBR Textures"],
     github: "https://github.com/Kaushall2244",
     demo: "https://github.com/Kaushall2244",
   },
   {
     id: "tracksphere",
-    title: "TrackSphere Transit",
-    subtitle: "Live Fleet GPS Telemetry & Campus Tracking",
-    tagline: "High-accuracy live transport tracking with low-latency geofencing.",
-    category: "Mobile Apps",
+    title: "TrackSphere",
+    subtitle: "Real-Time Location Tracker",
+    tagline: "High-accuracy live transport tracking and coordinate telemetry.",
+    category: "Mobile & Android",
     year: "2025",
-    role: "Full-Stack & Mobile Developer",
+    role: "Software Developer",
     status: "Production Ready",
     description:
-      "A complete GPS telemetry platform connecting hardware IoT trackers on campus vehicles with a high-performance interactive mobile and web dashboard.",
+      "TrackSphere is a real-time location tracking system developed to stream geolocation telemetry, compute travel routes, and deliver instant boundary alerts with low latency.",
     story:
-      "Students often struggled with unpredictable bus schedules. I designed TrackSphere with WebSocket pub/sub streaming to provide millisecond-accurate bus positions, ETA predictions, and instant arrival alerts.",
+      "Built to address the problem of tracking transport and mobile assets with pinpoint precision. The platform logs coordinate waypoints, estimates arrival times, and delivers real-time spatial updates.",
     features: [
-      "Live WebSocket vehicle position interpolation at 60fps",
-      "Smart geofencing with push notification triggers",
-      "Traffic-aware route arrival time prediction",
-      "Interactive map overlays using Mapbox GL and custom vector pins",
+      "Live coordinate streaming and positional telemetry updates",
+      "Route waypoint history with speed and heading analytics",
+      "Smart geofencing with proximity notifications",
+      "High performance backend designed for low-latency updates",
     ],
-    tech: ["React Native", "Node.js", "WebSockets", "Mapbox GL", "MongoDB", "Express"],
+    tech: ["Java", "Python", "GPS Telemetry", "Mapping APIs", "Sockets / REST"],
     github: "https://github.com/Kaushall2244",
     demo: "https://github.com/Kaushall2244",
-  },
-  {
-    id: "cinematic3d",
-    title: "Cinematic Canvas 3D",
-    subtitle: "WebGL Shaders & Interactive 3D Playground",
-    tagline: "Where creative code meets high-performance 3D rendering.",
-    category: "3D & Creative",
-    year: "2026",
-    role: "Creative Technologist",
-    status: "Open Playground",
-    description:
-      "An experimental playground exploring WebGL physics, custom GLSL noise shaders, and interactive lighting environments in the browser.",
-    story:
-      "Exploring how far we can push browser 3D without draining battery or dropping frames. Features refractive glass materials, particle vortex dynamics, and gyro-reactive camera controls.",
-    features: [
-      "Custom GLSL chromatic dispersion shader materials",
-      "GPU-accelerated physics simulation for 10,000+ particles",
-      "Audio-reactive visual waveforms and frequency modulation",
-      "Optimized for smooth 60fps on mobile Safari and Chrome",
-    ],
-    tech: ["Three.js", "React Three Fiber", "GLSL Shaders", "Blender", "GSAP"],
-    github: "https://github.com/Kaushall2244",
-    demo: "https://skaushall.dev",
   },
 ];
 
@@ -127,11 +154,11 @@ export default function Projects() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  // Interactive Live Task State for Bento Card 1
+  // Interactive Live Task State for DayFlow Bento Card
   const [tasks, setTasks] = useState([
-    { id: 1, text: "Build silky smooth UI components", done: true },
-    { id: 2, text: "Optimize 3D shaders for 60fps", done: true },
-    { id: 3, text: "Review user experience with a coffee ☕", done: false },
+    { id: 1, location: "Campus Library 📚", text: "Read 2 chapters of Operating Systems", done: true },
+    { id: 2, location: "Campus Gym 🏋️", text: "30 min cardio & core workout", done: true },
+    { id: 3, location: "Study Desk 💻", text: "Code DayFlow geofence listener", done: false },
   ]);
 
   const toggleTask = (id: number) => {
@@ -164,20 +191,20 @@ export default function Projects() {
             >
               <div className="w-2.5 h-2.5 rounded-full animate-pulse bg-[#bf0039]" />
               <span className="font-mono text-xs uppercase tracking-[0.4em] font-bold text-[#bf0039]">
-                03 // BENTO PLAYGROUND 🚀
+                03 // FEATURED PROJECTS 🚀
               </span>
             </motion.div>
 
             <div className="mt-5 max-w-2xl">
               <TextReveal
-                text="Turning wild ideas into fast, playful, and interactive creations."
+                text="Crafting impactful apps across mobile, web, AI, and augmented reality."
                 variant="h2"
                 className="text-4xl sm:text-5xl md:text-6xl font-black leading-tight text-foreground"
               />
             </div>
           </div>
 
-          {/* Category Filter Pills: Solid Distinct Gold for Active */}
+          {/* Category Filter Pills */}
           <div className="flex flex-wrap gap-2 glass-card p-2 rounded-2xl self-start md:self-auto shadow-xl">
             {CATEGORIES.map((cat) => {
               const active = activeCategory === cat;
@@ -200,13 +227,13 @@ export default function Projects() {
         </div>
 
         {/* ======================================================== */}
-        {/* INTERACTIVE BENTO GRID (Apple Liquid Glass & Obsidian Glass) */}
+        {/* INTERACTIVE BENTO GRID */}
         {/* ======================================================== */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
           {/* ============================================== */}
-          {/* BENTO CARD 1: DAYFLOW PLATFORM */}
+          {/* BENTO CARD 1: DAYFLOW ANDROID APP */}
           {/* ============================================== */}
-          {(activeCategory === "All" || activeCategory === "Web Apps") && (
+          {(activeCategory === "All" || activeCategory === "Mobile & Android") && (
             <motion.div
               layout
               initial={{ opacity: 0, y: 30 }}
@@ -221,23 +248,23 @@ export default function Projects() {
                 <div className="flex items-center justify-between gap-4 flex-wrap mb-6">
                   <div className="flex items-center gap-2">
                     <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 dark:border-[#ffe880]/40 bg-[#bf0039]/10 dark:bg-[#ffe880]/15 text-[#bf0039] dark:text-[#ffe880]">
-                      🌟 Featured Web App
+                      📱 Android App
                     </span>
                     <span className="text-xs font-mono text-foreground/40">{"// 2026"}</span>
                   </div>
 
                   <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#bf0039]/15 border border-[#bf0039]/40 text-[#bf0039] dark:text-[#ffe880] font-mono text-xs font-bold">
-                    <Flame size={14} className="text-[#bf0039] animate-pulse" />
-                    <span>14-Day Streak</span>
+                    <MapPin size={14} className="text-[#bf0039] animate-pulse" />
+                    <span>Location Triggers Active</span>
                   </div>
                 </div>
 
                 {/* Title & Tagline */}
                 <h3 className="text-3xl sm:text-4xl font-black text-foreground tracking-tight">
-                  DayFlow Platform
+                  DayFlow Android App
                 </h3>
                 <p className="mt-3 text-foreground/70 text-base leading-relaxed max-w-xl">
-                  Smart habit tracking and delightful daily workflows. Try clicking the tasks below to experience the live micro-interaction!
+                  Location-based habit tracker. Automatically brings up your habits when you enter specific places like the gym, library, or study desk!
                 </p>
 
                 {/* Live Interactive Task Widget Simulation */}
@@ -245,10 +272,10 @@ export default function Projects() {
                   <div className="flex items-center justify-between mb-3 text-xs font-mono text-foreground/50 border-b border-black/10 dark:border-white/10 pb-2">
                     <span className="font-bold flex items-center gap-1.5 text-[#bf0039] dark:text-[#ffe880]">
                       <Sparkles size={12} />
-                      TODAY&apos;S FOCUS
+                      GEOFENCE DETECTED HABITS
                     </span>
                     <span>
-                      {tasks.filter((t) => t.done).length}/{tasks.length} Done
+                      {tasks.filter((t) => t.done).length}/{tasks.length} Checked
                     </span>
                   </div>
 
@@ -258,23 +285,28 @@ export default function Projects() {
                         key={task.id}
                         onClick={() => toggleTask(task.id)}
                         data-cursor-text="TOGGLE"
-                        className={`flex items-center gap-3 p-3 rounded-xl border transition-all duration-300 cursor-pointer ${
+                        className={`flex items-center justify-between p-3 rounded-xl border transition-all duration-300 cursor-pointer ${
                           task.done
                             ? "bg-[#ffe880]/20 border-[#ffe880]/50 text-foreground"
                             : "bg-black/[0.02] dark:bg-white/[0.03] border-black/10 dark:border-white/10 text-foreground/60 hover:bg-black/5 dark:hover:bg-white/10"
                         }`}
                       >
-                        {task.done ? (
-                          <CheckCircle2 size={17} className="text-[#bf0039] dark:text-[#ffe880]" />
-                        ) : (
-                          <Circle size={17} className="text-foreground/30" />
-                        )}
-                        <span
-                          className={`text-xs font-medium ${
-                            task.done ? "line-through opacity-70" : ""
-                          }`}
-                        >
-                          {task.text}
+                        <div className="flex items-center gap-3">
+                          {task.done ? (
+                            <CheckCircle2 size={17} className="text-[#bf0039] dark:text-[#ffe880]" />
+                          ) : (
+                            <Circle size={17} className="text-foreground/30" />
+                          )}
+                          <span
+                            className={`text-xs font-medium ${
+                              task.done ? "line-through opacity-70" : ""
+                            }`}
+                          >
+                            {task.text}
+                          </span>
+                        </div>
+                        <span className="text-[10px] font-mono text-foreground/50 hidden sm:inline">
+                          {task.location}
                         </span>
                       </div>
                     ))}
@@ -285,7 +317,7 @@ export default function Projects() {
               {/* Bottom Actions Row */}
               <div className="mt-10 pt-6 border-t border-black/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-4">
                 <div className="flex flex-wrap gap-2">
-                  {["React 19", "Next.js 15", "TypeScript", "Tailwind"].map((t) => (
+                  {["Android Studio", "Java", "Geofencing", "SQLite"].map((t) => (
                     <span
                       key={t}
                       className="px-3 py-1 rounded-lg text-[11px] font-mono border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-foreground/70"
@@ -302,7 +334,7 @@ export default function Projects() {
                       data-cursor-text="DETAILS"
                       className="px-6 py-2.5 rounded-full text-xs font-mono font-extrabold transition-all duration-300 shadow-lg bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_25px_#ffe880]"
                     >
-                      Explore Deep Dive ✨
+                      Explore Details ✨
                     </button>
                   </MagneticWrapper>
                 </div>
@@ -326,7 +358,7 @@ export default function Projects() {
               <div>
                 <div className="flex items-center justify-between gap-4 mb-6">
                   <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#bf0039] dark:text-[#ffe880]">
-                    🤖 AI & Vision Assistant
+                    👁️ Blind Object Detection
                   </span>
                   <span className="text-xs font-mono text-foreground/40">{"// 2026"}</span>
                 </div>
@@ -335,7 +367,7 @@ export default function Projects() {
                   VisionMate AI
                 </h3>
                 <p className="mt-3 text-foreground/70 text-sm leading-relaxed">
-                  Real-time object perception and audio narration empowering visually impaired users.
+                  Real-time object detection and audio narration empowering visually impaired individuals.
                 </p>
 
                 {/* Animated Real-Time Radar Scanner Viewport */}
@@ -353,11 +385,11 @@ export default function Projects() {
                   <div className="relative z-10 flex justify-between items-center text-[10px] font-mono text-white/50">
                     <span className="flex items-center gap-1 text-[#bf0039] font-bold">
                       <Scan size={12} className="text-[#bf0039]" />
-                      YOLOv8 CAMERA FEED
+                      OBJECT DETECTION FEED
                     </span>
                     <span className="flex items-center gap-1 text-green-400 font-bold">
                       <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                      LIVE
+                      ACTIVE
                     </span>
                   </div>
 
@@ -368,26 +400,26 @@ export default function Projects() {
                       transition={{ duration: 2, repeat: Infinity }}
                       className="px-2.5 py-1 rounded-md bg-[#ffe880]/20 border border-[#ffe880]/50 text-[#ffe880] font-mono text-[10px] font-bold"
                     >
-                      [ Laptop: 98% ]
+                      [ Obstacle: 0.9m ]
                     </motion.span>
                     <span className="px-2.5 py-1 rounded-md bg-[#bf0039]/20 border border-[#bf0039]/40 text-white/90 font-mono text-[10px]">
-                      [ Coffee: 95% ]
+                      [ Chair: 1.4m ]
                     </span>
                     <span className="px-2.5 py-1 rounded-md bg-white/10 border border-white/20 text-white/80 font-mono text-[10px]">
-                      [ Book: 91% ]
+                      [ Doorway: 2.5m ]
                     </span>
                   </div>
 
                   {/* Speech synthesis footer */}
                   <div className="relative z-10 flex items-center gap-2 text-[10px] font-mono text-white/70">
                     <Volume2 size={13} className="text-[#ffe880]" />
-                    <span className="italic truncate">&ldquo;Laptop detected 1.2m ahead on desk&rdquo;</span>
+                    <span className="italic truncate">&ldquo;Obstacle detected 0.9m ahead to your left&rdquo;</span>
                   </div>
                 </div>
               </div>
 
               <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
-                <span className="text-xs font-mono text-foreground/50">Python • OpenCV • Android</span>
+                <span className="text-xs font-mono text-foreground/50">Python • Computer Vision • TTS</span>
                 <MagneticWrapper range={25} actionFactor={0.25}>
                   <button
                     onClick={() => setSelectedProject(PROJECTS_DATA[1])}
@@ -403,9 +435,9 @@ export default function Projects() {
           )}
 
           {/* ============================================== */}
-          {/* BENTO CARD 3: TRACKSPHERE TRANSIT */}
+          {/* BENTO CARD 3: SRIJAIAGENCY ECOMMERCE (WORDPRESS) */}
           {/* ============================================== */}
-          {(activeCategory === "All" || activeCategory === "Mobile Apps") && (
+          {(activeCategory === "All" || activeCategory === "Web & WordPress") && (
             <motion.div
               layout
               initial={{ opacity: 0, y: 30 }}
@@ -417,42 +449,50 @@ export default function Projects() {
             >
               <div>
                 <div className="flex items-center justify-between gap-4 mb-6">
-                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#bf0039] dark:text-[#ffe880]">
-                    📍 Real-Time GPS Tracking
+                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-green-500/40 bg-green-500/10 text-green-400">
+                    🛍️ Live eCommerce Website
                   </span>
                   <span className="text-xs font-mono text-foreground/40">{"// 2025"}</span>
                 </div>
 
                 <h3 className="text-3xl font-black text-foreground tracking-tight">
-                  TrackSphere Transit
+                  SriJaiAgency
                 </h3>
                 <p className="mt-3 text-foreground/70 text-base leading-relaxed">
-                  Campus transport tracking with instant WebSocket telemetry and arrival forecasting.
+                  Full-featured eCommerce website developed with WordPress. Catalog management, responsive storefront, and fast online shopping.
                 </p>
 
-                {/* Radar Mockup Viewport */}
-                <div className="mt-6 p-5 rounded-2xl border border-black/10 dark:border-white/15 bg-black/5 dark:bg-black/50 backdrop-blur-xl relative overflow-hidden flex items-center justify-between gap-4">
+                {/* eCommerce Storefront Live Preview Mockup */}
+                <div className="mt-6 p-5 rounded-2xl border border-black/10 dark:border-white/15 bg-black/5 dark:bg-black/50 backdrop-blur-xl flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
-                    <div className="relative flex items-center justify-center w-12 h-12 rounded-xl bg-[#bf0039]/20 border border-[#bf0039]/40 text-[#bf0039]">
-                      <Radio size={22} className="animate-pulse" />
-                      <span className="absolute -top-1 -right-1 w-3 h-3 bg-[#bf0039] rounded-full animate-ping" />
+                    <div className="p-3 rounded-xl bg-green-500/20 border border-green-500/40 text-green-400">
+                      <ShoppingBag size={22} />
                     </div>
                     <div>
-                      <span className="font-mono text-xs font-bold text-foreground block">Campus Route A</span>
-                      <span className="font-mono text-[10px] text-foreground/50">Speed: 42 km/h • ETA: 3 min</span>
+                      <span className="font-mono text-xs font-bold text-foreground block">
+                        srijaiagency.in 🌐
+                      </span>
+                      <span className="font-mono text-[10px] text-foreground/50">
+                        WordPress • WooCommerce • Live Store
+                      </span>
                     </div>
                   </div>
 
-                  <div className="text-right">
-                    <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-green-500/15 border border-green-500/30 text-green-400">
-                      ON TIME
-                    </span>
-                  </div>
+                  <a
+                    href="https://srijaiagency.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cursor-text="STORE"
+                    className="flex items-center gap-1.5 text-xs font-mono font-bold px-3.5 py-2 rounded-xl bg-green-500/15 text-green-400 border border-green-500/30 hover:bg-green-500/25 transition-all"
+                  >
+                    <span>Visit Store</span>
+                    <ExternalLink size={13} />
+                  </a>
                 </div>
               </div>
 
               <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
-                <span className="text-xs font-mono text-foreground/50">React Native • WebSockets</span>
+                <span className="text-xs font-mono text-foreground/50">WordPress • WooCommerce • JS</span>
                 <MagneticWrapper range={25} actionFactor={0.25}>
                   <button
                     onClick={() => setSelectedProject(PROJECTS_DATA[2])}
@@ -468,9 +508,9 @@ export default function Projects() {
           )}
 
           {/* ============================================== */}
-          {/* BENTO CARD 4: CINEMATIC CANVAS 3D */}
+          {/* BENTO CARD 4: AR FURNITURE APP (UNITY) */}
           {/* ============================================== */}
-          {(activeCategory === "All" || activeCategory === "3D & Creative") && (
+          {(activeCategory === "All" || activeCategory === "Game Dev & AR") && (
             <motion.div
               layout
               initial={{ opacity: 0, y: 30 }}
@@ -482,47 +522,117 @@ export default function Projects() {
             >
               <div>
                 <div className="flex items-center justify-between gap-4 mb-6">
-                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#bf0039] dark:text-[#ffe880]">
-                    🎨 3D Creative Playground
+                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#ffe880]/40 bg-[#ffe880]/15 text-[#bf0039] dark:text-[#ffe880]">
+                    🪑 AR Furniture App (Under Dev)
                   </span>
                   <span className="text-xs font-mono text-foreground/40">{"// 2026"}</span>
                 </div>
 
                 <h3 className="text-3xl font-black text-foreground tracking-tight">
-                  Cinematic Canvas 3D
+                  AR Furniture App
                 </h3>
                 <p className="mt-3 text-foreground/70 text-base leading-relaxed">
-                  Refractive glass materials, particle fluid mechanics, and interactive WebGL shaders.
+                  Augmented reality furniture visualizer using Unity. Detects floor surfaces to preview 3D models at true 1:1 physical scale.
                 </p>
 
-                {/* Interactive Gyroscope Mockup */}
+                {/* AR Spatial Plane Detector Mockup */}
                 <div className="mt-6 p-5 rounded-2xl border border-black/10 dark:border-white/15 bg-black/5 dark:bg-black/50 backdrop-blur-xl flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
                     <motion.div
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                      transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
                       className="p-3 rounded-xl bg-[#ffe880]/15 border border-[#ffe880]/40 text-[#bf0039] dark:text-[#ffe880]"
                     >
-                      <RotateCw size={20} />
+                      <Box size={22} />
                     </motion.div>
                     <div>
-                      <span className="font-mono text-xs font-bold text-foreground block">Refractive Sphere Matrix</span>
-                      <span className="font-mono text-[10px] text-foreground/50">GLSL Noise • 60 FPS Lock</span>
+                      <span className="font-mono text-xs font-bold text-foreground block">
+                        Surface Plane Locked 📐
+                      </span>
+                      <span className="font-mono text-[10px] text-foreground/50">
+                        1:1 Scale Preview • Unity AR Foundation
+                      </span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1.5 font-mono text-[10px] text-foreground/70">
-                    <span className="w-2 h-2 rounded-full bg-[#bf0039] animate-pulse" />
-                    <span>GPU Active</span>
+                  <div className="flex items-center gap-1.5 font-mono text-[10px] text-[#ffe880] px-3 py-1 rounded-full bg-[#ffe880]/10 border border-[#ffe880]/30 font-bold">
+                    <span>IN DEV</span>
                   </div>
                 </div>
               </div>
 
               <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
-                <span className="text-xs font-mono text-foreground/50">Three.js • GLSL • Blender</span>
+                <span className="text-xs font-mono text-foreground/50">Unity • AR Foundation • C# • Blender</span>
                 <MagneticWrapper range={25} actionFactor={0.25}>
                   <button
                     onClick={() => setSelectedProject(PROJECTS_DATA[3])}
+                    data-cursor-text="VIEW"
+                    className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#bf0039] dark:text-[#ffe880] hover:underline transition-all"
+                  >
+                    <span>Details</span>
+                    <ArrowUpRight size={14} />
+                  </button>
+                </MagneticWrapper>
+              </div>
+            </motion.div>
+          )}
+
+          {/* ============================================== */}
+          {/* BENTO CARD 5: TRACKSPHERE LOCATION TRACKER */}
+          {/* ============================================== */}
+          {(activeCategory === "All" || activeCategory === "Mobile & Android") && (
+            <motion.div
+              layout
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              whileHover={{ y: -4 }}
+              className="md:col-span-12 glass-card saas-shimmer rounded-[36px] p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group hover:border-[#bf0039] dark:hover:border-[#ffe880]/50 transition-all duration-500 shadow-2xl"
+            >
+              <div>
+                <div className="flex items-center justify-between gap-4 mb-6">
+                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#bf0039] dark:text-[#ffe880]">
+                    🛰️ Location Tracker
+                  </span>
+                  <span className="text-xs font-mono text-foreground/40">{"// 2025"}</span>
+                </div>
+
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+                  <div>
+                    <h3 className="text-3xl font-black text-foreground tracking-tight">
+                      TrackSphere
+                    </h3>
+                    <p className="mt-2 text-foreground/70 text-base leading-relaxed max-w-2xl">
+                      Real-time location tracker designed for low-latency coordinate streaming, route telemetry, and geofence boundary monitoring.
+                    </p>
+                  </div>
+
+                  {/* Telemetry Indicator Widget */}
+                  <div className="p-4 rounded-2xl border border-black/10 dark:border-white/15 bg-black/5 dark:bg-black/50 backdrop-blur-xl flex items-center gap-4">
+                    <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-[#bf0039]/20 border border-[#bf0039]/40 text-[#bf0039]">
+                      <Radio size={20} className="animate-pulse" />
+                      <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#bf0039] rounded-full animate-ping" />
+                    </div>
+                    <div>
+                      <span className="font-mono text-xs font-bold text-foreground block">
+                        Live Telemetry Stream
+                      </span>
+                      <span className="font-mono text-[10px] text-foreground/50">
+                        Lat: 11.0168° N • Long: 76.9558° E
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-4">
+                <span className="text-xs font-mono text-foreground/50">
+                  Java • Python • GPS Telemetry • Mapping APIs
+                </span>
+                <MagneticWrapper range={25} actionFactor={0.25}>
+                  <button
+                    onClick={() => setSelectedProject(PROJECTS_DATA[4])}
                     data-cursor-text="VIEW"
                     className="flex items-center gap-1.5 text-xs font-mono font-bold text-[#bf0039] dark:text-[#ffe880] hover:underline transition-all"
                   >

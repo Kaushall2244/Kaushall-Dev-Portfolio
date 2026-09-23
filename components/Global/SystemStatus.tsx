@@ -29,7 +29,7 @@ export default function SystemStatus() {
 
       <div className="hidden lg:flex items-center gap-4">
         <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 dark:text-white/50 font-medium">
-          Currently Building: DayFlow Platform ✨
+          Currently Building: DayFlow & AR Apps ✨
         </span>
       </div>
       

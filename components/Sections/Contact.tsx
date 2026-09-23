@@ -2,7 +2,7 @@
 
 import { motion, Variants, AnimatePresence } from "framer-motion";
 import { useState, FormEvent } from "react";
-import { Send, Mail, FileText, ArrowRight, MessageSquare } from "lucide-react";
+import { Send, Mail, ArrowRight, MessageSquare, Linkedin, Github } from "lucide-react";
 import TextReveal from "../ui/TextReveal";
 import Magnetic from "../ui/Magnetic";
 import { useTheme } from "../Global/ThemeProvider";
@@ -68,7 +68,7 @@ export default function Contact() {
         <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-black/10 dark:border-white/10 pb-8">
           <div className="flex flex-col">
             <span className="text-xs uppercase tracking-[0.25em] block mb-4 font-mono font-bold text-[#bf0039]">
-              <TextReveal text="04 // LET'S CHAT 💬" variant="p" delayOffset={0} />
+              <TextReveal text="06 // LET'S CHAT 💬" variant="p" delayOffset={0} />
             </span>
             <h2 className="text-4xl md:text-6xl font-display font-black tracking-tight text-foreground flex flex-col md:flex-row flex-wrap gap-x-4">
               <TextReveal text="Got an idea?" variant="h2" delayOffset={0.1} />
@@ -96,7 +96,7 @@ export default function Contact() {
                 [ DIRECT REACH OUT ]
               </h3>
               <p className="text-sm text-foreground/70 leading-relaxed">
-                Have an exciting project, contract/freelance opportunity, or just want to chat about tech and creative ideas? Drop me a line directly or use the message form!
+                Have an exciting project, collaborative idea, or just want to chat about web, software, game dev, or 3D? Reach out directly or drop a message below!
               </p>
             </motion.div>
 
@@ -112,28 +112,48 @@ export default function Contact() {
                     <Mail size={16} />
                   </div>
                   <div>
-                    <span className="block font-mono text-[9px] text-[#bf0039] uppercase tracking-widest font-bold">Direct Email</span>
+                    <span className="block font-mono text-[9px] text-[#bf0039] uppercase tracking-widest font-bold">Email</span>
                     <span className="text-sm text-foreground/90 font-mono font-medium">githeshkaushall@gmail.com</span>
                   </div>
                 </div>
                 <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 text-[#bf0039] dark:text-[#ffe880] transition-all duration-300" />
               </a>
 
-              {/* Node 2: Fiverr */}
+              {/* Node 2: LinkedIn */}
               <a
-                href="https://www.fiverr.com/sellers/kaushall_dev"
+                href="https://www.linkedin.com/in/kaushall22/"
                 target="_blank"
                 rel="noopener noreferrer"
-                data-cursor-text="STUDIO"
+                data-cursor-text="LINKEDIN"
                 className="group flex items-center justify-between p-5 rounded-2xl glass-card saas-shimmer hover:border-[#bf0039] dark:hover:border-[#ffe880]/60 hover:translate-x-2 transition-all duration-300 shadow-xl"
               >
                 <div className="flex items-center gap-4">
                   <div className="p-3 rounded-xl bg-black/5 dark:bg-white/5 text-[#bf0039] dark:text-[#ffe880] group-hover:bg-[#ffe880]/10 transition-colors">
-                    <FileText size={16} />
+                    <Linkedin size={16} />
                   </div>
                   <div>
-                    <span className="block font-mono text-[9px] text-[#bf0039] uppercase tracking-widest font-bold">Fiverr Studio</span>
-                    <span className="text-sm text-foreground/90 font-mono font-medium">Fiverr // S KAUSHALL</span>
+                    <span className="block font-mono text-[9px] text-[#bf0039] uppercase tracking-widest font-bold">LinkedIn</span>
+                    <span className="text-sm text-foreground/90 font-mono font-medium">linkedin.com/in/kaushall22</span>
+                  </div>
+                </div>
+                <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 text-[#bf0039] dark:text-[#ffe880] transition-all duration-300" />
+              </a>
+
+              {/* Node 3: GitHub */}
+              <a
+                href="https://github.com/Kaushall2244"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor-text="GITHUB"
+                className="group flex items-center justify-between p-5 rounded-2xl glass-card saas-shimmer hover:border-[#bf0039] dark:hover:border-[#ffe880]/60 hover:translate-x-2 transition-all duration-300 shadow-xl"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="p-3 rounded-xl bg-black/5 dark:bg-white/5 text-[#bf0039] dark:text-[#ffe880] group-hover:bg-[#ffe880]/10 transition-colors">
+                    <Github size={16} />
+                  </div>
+                  <div>
+                    <span className="block font-mono text-[9px] text-[#bf0039] uppercase tracking-widest font-bold">GitHub</span>
+                    <span className="text-sm text-foreground/90 font-mono font-medium">github.com/Kaushall2244</span>
                   </div>
                 </div>
                 <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 text-[#bf0039] dark:text-[#ffe880] transition-all duration-300" />

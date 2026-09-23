@@ -15,36 +15,36 @@ export interface Skill {
 
 const skills: Skill[] = [
   {
-    title: "Core Engineering",
-    subtitle: "Building Strong Foundations",
+    title: "Web & CMS Development",
+    subtitle: "Responsive & Scalable Websites",
     description:
-      "Crafting backend logic, building REST APIs, database schemas, and solving real-world challenges with speed and precision.",
-    tag: "FOUNDATION",
-    tech: ["Java", "MySQL", "Python", "REST APIs", "Git"],
+      "Crafting modern, accessible web interfaces and customized eCommerce storefronts using clean HTML, CSS, JavaScript, and WordPress.",
+    tag: "WEB & CMS",
+    tech: ["HTML", "CSS", "JavaScript", "WordPress", "Responsive UI"],
   },
   {
-    title: "Frontend & Motion",
-    subtitle: "Design Meets Fluidity",
+    title: "Software & Mobile Development",
+    subtitle: "Native Apps & Core Logic",
     description:
-      "Creating modern, reactive interfaces using React 19, Next.js 15, Tailwind CSS, and delightful micro-interactions with Framer Motion.",
-    tag: "FRONTEND",
-    tech: ["React 19", "Next.js 15", "Tailwind CSS", "Framer Motion", "TypeScript"],
+      "Building robust mobile applications in Android Studio with location-based triggers, backed by structured object-oriented Java and Python scripts.",
+    tag: "SOFTWARE & MOBILE",
+    tech: ["Java", "Python", "Android Studio", "Geofencing APIs", "Algorithms"],
   },
   {
-    title: "Smart AI & Vision",
-    subtitle: "Learning Intelligent Systems",
+    title: "Game Dev & Augmented Reality",
+    subtitle: "Interactive Worlds & Spatial Computing",
     description:
-      "Exploring Computer Vision, OpenCV, and Machine Learning models to build automated and intelligent real-time tools.",
-    tag: "AI & VISION",
-    tech: ["Python", "OpenCV", "Machine Learning", "YOLO", "TensorFlow"],
+      "Creating engaging game mechanics and real-world augmented reality visualizers with Unity, Unreal Engine 5, and AR technologies.",
+    tag: "GAME DEV & AR",
+    tech: ["Unity", "Unreal Engine 5", "AR (Augmented Reality)", "C# / Blueprints", "Game Physics"],
   },
   {
-    title: "3D & Creative Arts",
-    subtitle: "Where Code Meets Imagination",
+    title: "3D Modeling & Creative Editing",
+    subtitle: "Cinematic Visuals & Motion",
     description:
-      "Experimenting with Three.js, Blender, and cinematic environments to build immersive digital worlds and interactive visuals.",
-    tag: "CREATIVE 3D",
-    tech: ["Three.js", "Blender", "Unreal Engine 5", "WebGL", "3D Design"],
+      "Sculpting 3D models and environments in Blender, paired with high-impact color grading and professional post-production video editing.",
+    tag: "3D & EDITING",
+    tech: ["Blender", "Premiere Pro", "DaVinci Resolve", "3D Modeling", "Video Editing"],
   },
 ];
 
