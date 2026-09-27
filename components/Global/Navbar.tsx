@@ -12,7 +12,7 @@ const NAV_ITEMS = [
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "GitHub", href: "#github" },
-  { label: "Fiverr", href: "#fiverr" },
+  { label: "LeetCode", href: "#leetcode" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -34,50 +34,30 @@ export default function Navbar() {
   return (
     <motion.nav
       aria-label="Primary Navigation"
-      className="fixed top-3 sm:top-5 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 select-none pointer-events-auto"
+      className="fixed top-5 left-0 right-0 z-50 flex justify-center px-4 select-none pointer-events-auto"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <motion.div
         layout
         animate={{
-          padding: isCollapsed ? "6px 14px" : "8px 18px",
+          padding: isCollapsed ? "8px 16px" : "10px 22px",
           scale: isCollapsed ? 0.95 : 1,
         }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className={`relative flex items-center gap-1.5 sm:gap-2 rounded-full transition-all duration-500 border overflow-hidden backdrop-blur-3xl ${
+        className={`flex items-center gap-2 backdrop-blur-2xl rounded-full transition-all duration-500 border shadow-2xl ${
           isDark
-            ? "bg-[#090b14]/85 border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.35),inset_0_-1px_1px_rgba(0,0,0,0.5)]"
-            : "bg-white/80 border-white/70 shadow-[0_20px_45px_-10px_rgba(15,23,42,0.14),0_6px_16px_-4px_rgba(15,23,42,0.06),inset_0_1.5px_1px_rgba(255,255,255,1),inset_0_-1px_1px_rgba(148,163,184,0.3)]"
+            ? "bg-[#090b14]/85 border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.3)]"
+            : "bg-white/85 border-black/10 shadow-[0_16px_40px_rgba(0,0,0,0.08),inset_0_1px_1px_rgba(255,255,255,0.9)]"
         }`}
       >
-        {/* Optical Liquid Glass Reflection Overlays */}
-        <div className="absolute inset-0 pointer-events-none rounded-full overflow-hidden">
-          {/* Top Specular Rim Reflection */}
-          <div className="absolute top-0 left-4 right-4 h-[1px] bg-gradient-to-r from-transparent via-white/90 dark:via-white/50 to-transparent" />
-          
-          {/* Curved Liquid Wave / Refraction Flare (matches reference liquid glass curvature) */}
-          <div
-            className={`absolute -top-10 -right-6 w-36 h-28 rounded-full pointer-events-none transform -rotate-12 blur-md transition-opacity duration-500 ${
-              isDark
-                ? "bg-gradient-to-bl from-white/20 via-white/5 to-transparent opacity-60"
-                : "bg-gradient-to-bl from-white/70 via-slate-200/40 to-transparent opacity-90"
-            }`}
-          />
+        {/* Brand / Logo */}
+        <motion.span layout className="font-bold text-foreground tracking-tight px-3 whitespace-nowrap flex items-center gap-2 text-sm">
+          <span className={`w-2.5 h-2.5 rounded-full animate-pulse ${isDark ? "bg-[#ffe880]" : "bg-[#bf0039]"}`} />
+          KAUSHALL
+        </motion.span>
 
-          {/* Bottom subtle edge illumination */}
-          <div className="absolute bottom-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-slate-300/40 dark:via-white/10 to-transparent" />
-        </div>
-
-        {/* Brand Logo */}
-        <a href="#home" className="relative z-10 flex items-center gap-2 px-2 sm:px-3">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#ffe880] ring-2 ring-slate-400/50 dark:ring-white/25 animate-pulse shadow-sm" />
-          <span className="font-display font-black text-sm sm:text-base text-slate-900 dark:text-white tracking-tight">
-            KAUSHALL
-          </span>
-        </a>
-
-        {/* Desktop / Tablet Navigation Items */}
+        {/* Collapsible Nav Links with Apple spring animation */}
         <motion.div
           animate={{
             opacity: isCollapsed ? 0 : 1,
@@ -85,7 +65,7 @@ export default function Navbar() {
             overflow: "hidden",
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="hidden md:flex items-center gap-1 relative z-10"
+          className="flex items-center gap-1"
         >
           {NAV_ITEMS.map((item) => (
             <Magnetic key={item.label} range={40} actionFactor={0.25}>
@@ -93,12 +73,18 @@ export default function Navbar() {
                 href={item.href}
                 onMouseEnter={() => setHoveredLink(item.label)}
                 onMouseLeave={() => setHoveredLink(null)}
-                className="relative px-3 py-1.5 text-xs lg:text-sm font-medium text-slate-600 hover:text-slate-950 dark:text-white/70 dark:hover:text-white transition-colors duration-300 z-10 whitespace-nowrap"
+                className={`relative px-3.5 py-1.5 text-xs sm:text-sm font-medium transition-colors duration-300 z-10 whitespace-nowrap ${
+                  hoveredLink === item.label
+                    ? isDark ? "text-white" : "text-black font-bold"
+                    : isDark ? "text-white/70 hover:text-white" : "text-slate-600 hover:text-slate-950"
+                }`}
               >
                 {hoveredLink === item.label && (
                   <motion.div
                     layoutId="nav-pill"
-                    className="absolute inset-0 rounded-full bg-slate-900/5 border border-slate-900/10 dark:bg-white/10 dark:border-white/15 shadow-sm"
+                    className={`absolute inset-0 rounded-full ${
+                      isDark ? "bg-white/10 border border-white/10" : "bg-black/5 border border-black/5"
+                    }`}
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
@@ -108,12 +94,16 @@ export default function Navbar() {
           ))}
         </motion.div>
 
-        {/* Direct Action Button: Distinct Solid Gold */}
+        {/* Action CTA Button */}
         <Magnetic range={50} actionFactor={0.3}>
           <a
             href="#contact"
             data-cursor-text="HI"
-            className="relative z-10 ml-1 sm:ml-2 flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-black font-mono transition-all duration-300 whitespace-nowrap shadow-md bg-[#ffe880] text-black hover:bg-[#ffdf4d] hover:shadow-[0_0_20px_rgba(255,232,128,0.6)]"
+            className={`ml-1 sm:ml-2 flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold transition-all duration-300 whitespace-nowrap shadow-lg ${
+              isDark
+                ? "bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_20px_#ffe880]"
+                : "bg-[#bf0039] text-white hover:bg-black hover:shadow-[0_0_20px_rgba(191,0,57,0.4)]"
+            }`}
           >
             <span>Let&apos;s Chat</span>
             <ArrowUpRight size={13} />

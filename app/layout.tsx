@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, Geist_Mono } from "next/font/google";
+import { Syne, Geist, Geist_Mono } from "next/font/google";
 import SidebarDecorations from "@/components/ui/SidebarDecorations";
 import Navbar from "@/components/Global/Navbar";
 import Footer from "@/components/Global/Footer";
@@ -13,6 +13,12 @@ import "./globals.css";
 
 import { Analytics } from "@vercel/analytics/next";
 
+const sansFont = Geist({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
 const displayFont = Syne({
   subsets: ["latin"],
   weight: ["500", "700", "800"],
@@ -22,7 +28,7 @@ const displayFont = Syne({
 
 const monoFont = Geist_Mono({
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["400", "500"],
   variable: "--font-mono",
   display: "swap",
 });
@@ -220,7 +226,7 @@ const themeScript = `
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${displayFont.variable} ${monoFont.variable} dark`} suppressHydrationWarning>
+    <html lang="en" className={`${sansFont.variable} ${displayFont.variable} ${monoFont.variable} font-sans dark`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script

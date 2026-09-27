@@ -8,11 +8,11 @@ interface PreloaderProps {
 }
 
 const BOOT_LOGS = [
-  "INITIALIZING DIGITAL PLAYGROUND ✨",
-  "BREWING FRESH CODE & COFFEE ☕",
-  "CHARGING 60FPS SPRING MOTION ⚡",
-  "POLISHING GLASS & 3D SHADERS 🎨",
-  "WELCOME, HUMAN! LET'S BUILD 🚀"
+  "PREPARING DIGITAL EXPERIENCES ✨",
+  "CRAFTING SLEEK DESIGNS & MOTION 🎨",
+  "COMPOSING INTERACTIVE INTERFACES ⚡",
+  "POLISHING LIGHTING & 3D SHADERS ✦",
+  "WELCOME TO MY CREATIVE LAB 🚀"
 ];
 
 export default function Preloader({ onComplete }: PreloaderProps) {
@@ -150,23 +150,23 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none z-10" />
 
       {/* Top Header Information Bar */}
-      <div className="relative z-20 pt-6 sm:pt-8 px-6 sm:px-10 flex justify-between items-center font-mono text-[9px] sm:text-[10px] text-white/50 hud-element tracking-widest">
+      <div className="relative z-20 pt-6 sm:pt-8 px-6 sm:px-10 flex justify-between items-center text-[10px] sm:text-[11px] text-white/60 hud-element tracking-wider">
         <span className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-[#ffe880] animate-pulse" />
-          <strong className="text-white">S KAUSHALL</strong> {"// CREATIVE LAB"}
+          <strong className="text-white font-bold">S KAUSHALL</strong> <span className="opacity-60">• CREATIVE PORTFOLIO</span>
         </span>
-        <span className="hidden sm:inline-block text-[#ffe880] font-bold">
-          [ SYSTEM BOOT v2.6 ]
+        <span className="hidden sm:inline-block text-[#ffe880] font-bold tracking-widest text-[10px]">
+          [ STUDIO EDITION // 2026 ]
         </span>
       </div>
 
       {/* Centered Scramble Decoding Title */}
       <div className="relative z-20 my-auto flex flex-col items-center justify-center px-4 text-center">
         <div className="preloader-title max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-white/20 bg-white/10 backdrop-blur-xl mb-4 sm:mb-6 hud-element">
+          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-white/20 bg-white/10 backdrop-blur-xl mb-4 sm:mb-6 hud-element">
             <span className="w-1.5 h-1.5 rounded-full bg-[#ffe880] animate-pulse" />
-            <span className="font-mono text-[10px] sm:text-xs text-[#ffe880] tracking-[0.3em] uppercase font-bold">
-              WELCOME TO MY CREATIVE SPACE
+            <span className="text-[10px] sm:text-xs text-[#ffe880] tracking-[0.25em] uppercase font-bold">
+              WELCOME TO MY DIGITAL SPACE
             </span>
           </div>
 
@@ -186,23 +186,23 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         </div>
       </div>
 
-      {/* Bottom HUD Metrics & Telemetry */}
+      {/* Bottom HUD Metrics */}
       <div className="relative z-20 pb-8 sm:pb-12 px-6 sm:px-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 hud-element">
         {/* Animated Boot Logs */}
-        <div className="font-mono text-[10px] sm:text-xs text-white/50 tracking-wider flex flex-col gap-1.5 max-w-sm">
-          <span className="text-[#ffe880] font-bold">{"// INITIALIZING MODULES"}</span>
-          <span className="text-white/90 font-medium transition-all duration-200">
+        <div className="text-[11px] sm:text-xs text-white/60 tracking-wide flex flex-col gap-1.5 max-w-sm">
+          <span className="text-[#ffe880] font-bold uppercase tracking-wider text-[10px]">✦ LOADING PROGRESS</span>
+          <span className="text-white/95 font-medium transition-all duration-200">
             {BOOT_LOGS[logIndex]}
           </span>
-          <span className="text-white/30 text-[9px] uppercase tracking-widest">
-            NEXT.JS 15 • REACT 19 • THREE.JS • 60FPS
+          <span className="text-white/40 text-[10px] tracking-wider uppercase font-semibold">
+            WEB DEV • 3D SPACES • MOBILE ENGINEERING
           </span>
         </div>
 
         {/* Massive Dynamic Numerical Counter */}
         <div className="flex items-baseline gap-1.5 font-display text-6xl sm:text-8xl md:text-9xl font-black text-[#ffe880] tracking-tighter leading-none select-none drop-shadow-[0_0_35px_rgba(255,232,128,0.3)]">
           <span>{String(progress).padStart(3, "0")}</span>
-          <span className="text-xl sm:text-3xl font-mono text-white/60 font-bold">%</span>
+          <span className="text-xl sm:text-3xl font-display text-white/60 font-bold">%</span>
         </div>
       </div>
     </div>
