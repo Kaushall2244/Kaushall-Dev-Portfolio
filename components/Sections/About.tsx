@@ -150,7 +150,7 @@ export default function About() {
       ref={containerRef}
       id="about"
       aria-label="About Me and Experience"
-      className="relative overflow-hidden bg-transparent py-32 md:py-44 px-6 md:px-10 lg:px-20 border-t border-black/5 dark:border-white/5"
+      className="relative z-10 overflow-hidden bg-background/95 dark:bg-[#06070a]/95 backdrop-blur-3xl py-28 sm:py-36 md:py-44 px-6 md:px-10 lg:px-20 border-t border-black/10 dark:border-white/15 rounded-t-[36px] sm:rounded-t-[48px] lg:rounded-t-[56px] shadow-[0_-30px_80px_rgba(0,0,0,0.7)]"
     >
       {/* Watermark Backdrop Title */}
       <div className="pointer-events-none absolute left-1/2 top-12 -translate-x-1/2 text-[22vw] font-black tracking-[-0.08em] text-black/[0.035] dark:text-white/[0.04] select-none">

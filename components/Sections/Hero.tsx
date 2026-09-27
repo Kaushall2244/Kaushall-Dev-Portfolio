@@ -39,37 +39,61 @@ export default function Hero() {
     offset: ["start start", "end start"],
   });
 
-  // Pure Center Zoom-Out (Scale down towards center, NO up/down translation)
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.85, 0.72]);
-  const opacity = useTransform(scrollYProgress, [0, 0.75, 1], [1, 0.95, 0.2]);
-  const borderRadius = useTransform(scrollYProgress, [0, 0.4, 1], ["0px", "28px", "44px"]);
+  // Pure Center Zoom-Out (Scale down towards center, staying pinned in place)
+  const scale = useTransform(scrollYProgress, [0, 0.55, 1], [1, 0.84, 0.84]);
+  const borderRadius = useTransform(scrollYProgress, [0, 0.45, 1], ["0px", "32px", "40px"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.75, 1], [1, 0.95, 0.35]);
+  const heroBg = useTransform(
+    scrollYProgress,
+    [0, 0.3],
+    [
+      "rgba(0, 0, 0, 0)",
+      isDark ? "rgba(6, 7, 10, 0.85)" : "rgba(237, 242, 247, 0.88)"
+    ]
+  );
+  const heroBorder = useTransform(
+    scrollYProgress,
+    [0, 0.25],
+    [
+      "rgba(255, 255, 255, 0)",
+      isDark ? "rgba(255, 255, 255, 0.12)" : "rgba(15, 23, 42, 0.12)"
+    ]
+  );
   const boxShadow = useTransform(
     scrollYProgress,
     [0, 0.4, 1],
     [
       "0px 0px 0px rgba(0,0,0,0)",
-      isDark ? "0px 20px 60px rgba(0,0,0,0.8)" : "0px 20px 40px rgba(15,23,42,0.1)",
-      isDark ? "0px 30px 90px rgba(255,232,128,0.15)" : "0px 30px 60px rgba(191,0,57,0.15)",
+      isDark
+        ? "0px 25px 80px rgba(0,0,0,0.85), 0 0 40px rgba(255,232,128,0.08)"
+        : "0px 25px 60px rgba(15,23,42,0.12), 0 0 30px rgba(191,0,57,0.06)",
+      isDark
+        ? "0px 35px 100px rgba(0,0,0,0.95), 0 0 50px rgba(255,232,128,0.12)"
+        : "0px 30px 80px rgba(15,23,42,0.18), 0 0 40px rgba(191,0,57,0.1)",
     ]
   );
 
   return (
-    <div ref={heroRef} className="relative w-full">
-      <motion.section
-        id="home"
-        aria-label="Introduction and Overview"
-        style={{
-          scale,
-          opacity,
-          borderRadius,
-          boxShadow,
-          transformOrigin: "center center",
-        }}
-        className="relative min-h-screen overflow-hidden flex items-center pt-28 sm:pt-36 md:pt-40 lg:pt-44 px-6 md:px-10 lg:px-20 border-b border-black/5 dark:border-white/5 transition-all duration-300 origin-center bg-transparent transform-gpu"
-      >
-        {/* Structural subtle grid lines */}
-        <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-black/5 dark:bg-white/5 z-20 pointer-events-none hidden md:block" />
-        <div className="absolute right-4 sm:right-8 top-0 bottom-0 w-px bg-black/5 dark:bg-white/5 z-20 pointer-events-none hidden md:block" />
+    <div ref={heroRef} className="relative w-full h-[175vh] z-0">
+      {/* Sticky Viewport Stage: Keeps Hero locked in place while scrolling */}
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden p-2 sm:p-4 md:p-6 lg:p-8 pointer-events-auto">
+        <motion.section
+          id="home"
+          aria-label="Introduction and Overview"
+          style={{
+            scale,
+            opacity,
+            borderRadius,
+            boxShadow,
+            backgroundColor: heroBg,
+            borderColor: heroBorder,
+            transformOrigin: "center center",
+          }}
+          className="relative w-full h-full max-h-[96vh] sm:max-h-[92vh] max-w-[1440px] flex items-center justify-center pt-24 sm:pt-28 md:pt-32 pb-8 sm:pb-12 px-6 md:px-10 lg:px-16 overflow-hidden border transition-all duration-150 origin-center transform-gpu backdrop-blur-2xl"
+        >
+          {/* Structural subtle grid lines */}
+          <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-black/5 dark:bg-white/5 z-20 pointer-events-none hidden md:block" />
+          <div className="absolute right-4 sm:right-8 top-0 bottom-0 w-px bg-black/5 dark:bg-white/5 z-20 pointer-events-none hidden md:block" />
 
         <div className="max-w-7xl mx-auto w-full relative z-10">
           <motion.div
@@ -205,7 +229,8 @@ export default function Hero() {
             </motion.div>
           </motion.div>
         </div>
-      </motion.section>
+        </motion.section>
+      </div>
     </div>
   );
 }

@@ -91,29 +91,29 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       tl.to(".hud-element", {
         opacity: 0,
         y: -15,
-        duration: 0.25,
-        stagger: 0.03,
+        duration: 0.15,
+        stagger: 0.02,
         ease: "power2.in",
       })
       .to(
         ".preloader-title",
         {
-          scale: 1.04,
+          scale: 1.03,
           opacity: 0,
           y: -10,
-          duration: 0.35,
+          duration: 0.2,
           ease: "power2.inOut",
         },
-        "-=0.15"
+        "-=0.1"
       )
       .to(
         curtainsRef.current?.children || [],
         {
           scaleY: 0,
           transformOrigin: "top",
-          duration: 0.5,
-          stagger: 0.04,
-          ease: "power4.inOut",
+          duration: 0.28,
+          stagger: 0.02,
+          ease: "power4.out",
         },
         "-=0.1"
       )
@@ -121,10 +121,10 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         containerRef.current,
         {
           opacity: 0,
-          duration: 0.15,
+          duration: 0.1,
           pointerEvents: "none",
         },
-        "-=0.1"
+        "-=0.08"
       );
     }
   }, [progress, onComplete]);
@@ -134,16 +134,16 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       ref={containerRef}
       className="fixed inset-0 z-[100] flex flex-col justify-between bg-black select-none pointer-events-auto overflow-hidden"
     >
-      {/* 5-Column Split Curtain Animation Panels */}
+      {/* 5-Column Split Curtain Animation Panels - Fast Light Speed */}
       <div
         ref={curtainsRef}
         className="absolute inset-0 grid grid-cols-5 pointer-events-none z-0"
       >
-        <div className="bg-[#050608] w-full h-full border-r border-white/5 origin-top" />
-        <div className="bg-[#08090d] w-full h-full border-r border-white/5 origin-top" />
-        <div className="bg-[#050608] w-full h-full border-r border-white/5 origin-top" />
-        <div className="bg-[#08090d] w-full h-full border-r border-white/5 origin-top" />
-        <div className="bg-[#050608] w-full h-full origin-top" />
+        <div className="bg-[#050608] w-full h-full border-r border-white/5 origin-top transform-gpu will-change-transform" />
+        <div className="bg-[#08090d] w-full h-full border-r border-white/5 origin-top transform-gpu will-change-transform" />
+        <div className="bg-[#050608] w-full h-full border-r border-white/5 origin-top transform-gpu will-change-transform" />
+        <div className="bg-[#08090d] w-full h-full border-r border-white/5 origin-top transform-gpu will-change-transform" />
+        <div className="bg-[#050608] w-full h-full origin-top transform-gpu will-change-transform" />
       </div>
 
       {/* Cyber Grid Overlay background */}
