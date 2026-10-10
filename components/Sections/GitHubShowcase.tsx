@@ -296,14 +296,6 @@ export default function GitHubShowcase() {
       aria-label="GitHub Open Source Lab"
       className="relative overflow-hidden py-32 md:py-44 px-6 md:px-10 lg:px-20 bg-transparent border-t border-black/5 dark:border-white/5"
     >
-      {/* Watermark Title */}
-      <div
-        className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-black/[0.035] dark:text-white/[0.04] select-none"
-        aria-hidden="true"
-      >
-        GITHUB
-      </div>
-
       <div className="max-w-7xl mx-auto relative z-10 w-full">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
@@ -314,9 +306,9 @@ export default function GitHubShowcase() {
               viewport={{ once: true }}
               className="flex items-center gap-3"
             >
-              <div className="w-2.5 h-2.5 rounded-full animate-pulse bg-[#ffe880]" />
-              <span className="font-mono text-xs uppercase tracking-[0.4em] font-bold text-[#bf0039] dark:text-[#ffe880]">
-                04 // OPEN SOURCE & CODE LAB 🐙
+              <div className="w-2.5 h-2.5 rounded-full bg-[#ffe880]" />
+              <span className="font-mono text-xs uppercase tracking-[0.35em] font-bold text-[#bf0039] dark:text-[#ffe880]">
+                04 // OPEN SOURCE REPOSITORIES
               </span>
             </motion.div>
 
@@ -329,20 +321,19 @@ export default function GitHubShowcase() {
             </div>
           </div>
 
-          {/* GitHub Header Profile Pill */}
+          {/* GitHub Header Profile Button */}
           <MagneticWrapper>
             <a
               href="https://github.com/Kaushall2244"
               target="_blank"
               rel="noopener noreferrer"
-              data-cursor-text="GITHUB"
-              className="flex items-center gap-3 px-6 py-3.5 rounded-full border border-black/10 dark:border-white/15 bg-black/5 dark:bg-white/5 backdrop-blur-2xl transition-all duration-300 hover:border-[#ffe880] shadow-lg text-foreground hover:text-[#ffe880] self-start md:self-auto"
+              className="flex items-center gap-2.5 px-5 py-2.5 rounded-lg border border-black/10 dark:border-white/15 bg-black/5 dark:bg-white/5 backdrop-blur-2xl transition-all duration-300 hover:border-[#ffe880] shadow-sm text-foreground hover:text-[#ffe880] self-start md:self-auto"
             >
-              <Github size={18} className="text-[#ffe880]" />
+              <Github size={16} className="text-[#ffe880]" />
               <span className="font-mono text-xs font-bold tracking-wider">
                 @Kaushall2244
               </span>
-              <ExternalLink size={14} className="opacity-60" />
+              <ExternalLink size={13} className="opacity-60" />
             </a>
           </MagneticWrapper>
         </div>
@@ -555,10 +546,9 @@ export default function GitHubShowcase() {
                 href="https://github.com/Kaushall2244"
                 target="_blank"
                 rel="noopener noreferrer"
-                data-cursor-text="VISIT"
-                className="flex items-center gap-2 px-6 py-3 rounded-full font-mono text-xs font-extrabold bg-[#ffe880] text-black shadow-lg hover:bg-white hover:shadow-[0_0_20px_#ffe880] transition-all"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-mono text-xs font-bold bg-[#ffe880] text-black shadow-md hover:bg-white transition-all"
               >
-                <span>Visit GitHub Profile 🚀</span>
+                <span>Visit GitHub Profile</span>
                 <ExternalLink size={14} />
               </a>
             </MagneticWrapper>

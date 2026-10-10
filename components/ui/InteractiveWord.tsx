@@ -19,7 +19,7 @@ export default function InteractiveWord({ word, isAccent = false }: InteractiveW
   const glowColor = isAccent ? (isDark ? "255, 232, 128" : "191, 0, 57") : isDark ? "255, 232, 128" : "191, 0, 57";
 
   return (
-    <span className="inline-block cursor-none select-none">
+    <span className="inline-block select-none">
       {letters.map((letter, idx) => (
         <motion.span
           key={idx}

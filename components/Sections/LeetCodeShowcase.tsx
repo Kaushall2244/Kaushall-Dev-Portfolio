@@ -152,14 +152,6 @@ export default function LeetCodeShowcase() {
       aria-label="LeetCode Profile & Algorithms"
       className="relative overflow-hidden py-32 md:py-44 px-6 md:px-10 lg:px-20 bg-transparent border-t border-black/5 dark:border-white/5"
     >
-      {/* Watermark Title */}
-      <div
-        className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-black/[0.035] dark:text-white/[0.04] select-none"
-        aria-hidden="true"
-      >
-        ALGO
-      </div>
-
       <div className="max-w-7xl mx-auto relative z-10 w-full">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
@@ -170,15 +162,15 @@ export default function LeetCodeShowcase() {
               viewport={{ once: true }}
               className="flex items-center gap-3"
             >
-              <div className="w-2.5 h-2.5 rounded-full animate-pulse bg-[#ffa116]" />
-              <span className="font-mono text-xs uppercase tracking-[0.4em] font-bold text-[#bf0039] dark:text-[#ffe880]">
-                05 // ALGORITHMIC VAULT & LEETCODE ⚡
+              <div className="w-2.5 h-2.5 rounded-full bg-[#ffa116]" />
+              <span className="font-mono text-xs uppercase tracking-[0.35em] font-bold text-[#bf0039] dark:text-[#ffe880]">
+                05 // ALGORITHMIC PRACTICE & LEETCODE
               </span>
             </motion.div>
 
             <div className="mt-5 max-w-3xl">
               <TextReveal
-                text="Data structures, algorithmic efficiency, and competitive problem-solving."
+                text="Data structures, algorithmic efficiency, and problem-solving patterns."
                 variant="h2"
                 className="text-4xl sm:text-5xl md:text-6xl font-black leading-tight text-foreground"
               />
@@ -191,8 +183,7 @@ export default function LeetCodeShowcase() {
               href="https://leetcode.com/u/Kauhsall/"
               target="_blank"
               rel="noopener noreferrer"
-              data-cursor-text="LEETCODE"
-              className="flex items-center gap-3 px-6 py-3.5 rounded-full border border-black/10 dark:border-white/15 bg-black/5 dark:bg-white/5 backdrop-blur-2xl transition-all duration-300 hover:border-[#ffa116] shadow-lg text-foreground hover:text-[#ffa116] self-start md:self-auto group"
+              className="flex items-center gap-2.5 px-5 py-2.5 rounded-lg border border-black/10 dark:border-white/15 bg-black/5 dark:bg-white/5 backdrop-blur-2xl transition-all duration-300 hover:border-[#ffa116] shadow-sm text-foreground hover:text-[#ffa116] self-start md:self-auto group"
             >
               <div className="w-5 h-5 flex items-center justify-center font-black rounded bg-[#ffa116] text-black text-xs font-mono">
                 L
@@ -346,7 +337,7 @@ export default function LeetCodeShowcase() {
           <div className="flex items-center gap-2 mb-6">
             <Code2 size={18} className="text-[#bf0039] dark:text-[#ffe880]" />
             <h3 className="font-mono text-xs uppercase tracking-[0.25em] text-[#bf0039] dark:text-[#ffe880] font-bold">
-              Core Algorithmic Competencies 🧠
+              Core Algorithmic Competencies
             </h3>
           </div>
 
@@ -472,8 +463,8 @@ export default function LeetCodeShowcase() {
                     {sol.summary}
                   </p>
 
-                  <div className="mt-4 inline-block font-mono text-[10px] px-2.5 py-1 rounded-lg bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-foreground/80 font-semibold">
-                    ⚡ {sol.complexity}
+                  <div className="mt-4 inline-block font-mono text-[10px] px-2.5 py-1 rounded bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 text-foreground/80 font-semibold">
+                    Time: {sol.complexity}
                   </div>
                 </div>
 
@@ -513,10 +504,9 @@ export default function LeetCodeShowcase() {
                 href="https://leetcode.com/u/Kauhsall/"
                 target="_blank"
                 rel="noopener noreferrer"
-                data-cursor-text="LEETCODE"
-                className="flex items-center gap-2 px-6 py-3 rounded-full font-mono text-xs font-extrabold bg-[#ffa116] text-black shadow-lg hover:bg-white hover:shadow-[0_0_20px_#ffa116] transition-all"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-mono text-xs font-bold bg-[#ffa116] text-black shadow-md hover:bg-white transition-all"
               >
-                <span>Visit LeetCode Profile ⚡</span>
+                <span>Visit LeetCode Profile</span>
                 <ExternalLink size={14} />
               </a>
             </MagneticWrapper>

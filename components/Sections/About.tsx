@@ -1,488 +1,170 @@
 "use client";
 
-import { motion, Variants } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import {
-  Code2,
-  Sparkles,
-  Zap,
-  Cpu,
-  Globe2,
-  CheckCircle2,
-  FolderGit2,
-  UserCheck,
-  ArrowUpRight,
-  Terminal,
-  Compass,
-} from "lucide-react";
-import TextReveal from "../ui/TextReveal";
+import { User, MapPin, GraduationCap, Code, ArrowRight, Laptop, Gamepad2, Video, Server } from "lucide-react";
 import MagneticWrapper from "../ui/Magnetic";
-import { useTheme } from "../Global/ThemeProvider";
+import TextReveal from "../ui/TextReveal";
 
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
-  },
-};
-
-const stats = [
+const skillCategories = [
   {
-    value: "5+",
-    label: "Featured Projects",
-    subtext: "Android, Web, AI & AR",
-    icon: Sparkles,
+    title: "Software & Mobile",
+    icon: Laptop,
+    skills: ["Java", "Python", "Android Studio", "SQLite / Room", "REST APIs"],
   },
   {
-    value: "3rd",
-    label: "Year CSE Undergrad",
-    subtext: "Computer Science & Engineering",
-    icon: Code2,
+    title: "Web & CMS",
+    icon: Server,
+    skills: ["HTML5", "CSS3", "JavaScript", "React", "Next.js", "WordPress"],
   },
   {
-    value: "100%",
-    label: "Passion & Detail",
-    subtext: "Pixel-perfect & clean code",
-    icon: Zap,
+    title: "Game Dev & AR",
+    icon: Gamepad2,
+    skills: ["Unity", "Unreal Engine 5", "C#", "AR Foundation", "Spatial Detection"],
   },
   {
-    value: "24/7",
-    label: "Curious Mind",
-    subtext: "Games, 3D & software",
-    icon: Globe2,
-  },
-];
-
-const capabilities = [
-  {
-    title: "Web & CMS Solutions",
-    desc: "HTML, CSS, JavaScript, and responsive eCommerce platforms with WordPress",
-    icon: Globe2,
-    tag: "Web & CMS",
-  },
-  {
-    title: "Software & Mobile Engineering",
-    desc: "Android Studio apps, Java architecture, and intelligent Python tools",
-    icon: Cpu,
-    tag: "Software & Mobile",
-  },
-  {
-    title: "Game Dev & 3D Media",
-    desc: "Unity, Unreal Engine 5, AR spaces, Blender 3D, and cinematic video editing",
-    icon: Compass,
-    tag: "Games & 3D",
-  },
-];
-
-const techStack = [
-  { name: "Java", category: "Software & Mobile" },
-  { name: "Python", category: "Software & Mobile" },
-  { name: "Android Studio", category: "Software & Mobile" },
-  { name: "HTML & CSS", category: "Web & CMS" },
-  { name: "JavaScript", category: "Web & CMS" },
-  { name: "WordPress", category: "Web & CMS" },
-  { name: "Unity", category: "Game Dev & AR" },
-  { name: "Unreal Engine 5", category: "Game Dev & AR" },
-  { name: "AR (Augmented Reality)", category: "Game Dev & AR" },
-  { name: "Blender", category: "3D & Editing" },
-  { name: "Premiere Pro", category: "3D & Editing" },
-  { name: "DaVinci Resolve", category: "3D & Editing" },
-];
-
-const consoleTabs = [
-  {
-    id: "profile",
-    filename: "hello_kaushall.ts",
-    content: `// Meet S Kaushall 👋
-const developer = {
-  name: "S Kaushall",
-  education: "CSE 3rd Year Student",
-  interests: ["Web Dev", "Software Dev", "Game Dev", "3D Modeling", "Video Editing"],
-  skills: [
-    "Java", "Python", "HTML/CSS", "JavaScript",
-    "Android Studio", "WordPress", "Unity",
-    "Unreal Engine 5", "AR", "Blender",
-    "Premiere Pro", "DaVinci Resolve"
-  ],
-  status: "Ready for innovative projects & creative tech collaborations 🚀",
-};`,
-  },
-  {
-    id: "stack",
-    filename: "my_toolkit.json",
-    content: `{
-  "languages": ["Java", "Python", "JavaScript", "HTML/CSS"],
-  "mobile_and_web": ["Android Studio", "WordPress", "Responsive UI"],
-  "game_and_ar": ["Unity", "Unreal Engine 5 (UE5)", "Augmented Reality (AR)"],
-  "creative_3d_video": ["Blender 3D", "Adobe Premiere Pro", "DaVinci Resolve"]
-}`,
-  },
-  {
-    id: "vision",
-    filename: "my_passion.md",
-    content: `# What Drives Me ✨
-> "Bridging creative artistry, game mechanics, and robust software architecture into impactful digital products."
-
-- 🎮 Immersive Game Development (Unity & UE5) + AR interactive spatial apps
-- 📱 Native Android Development with location awareness & smart sensors
-- 🌐 Responsive Web solutions & eCommerce storefronts with WordPress
-- 🎨 3D modeling in Blender & cinematic video editing in Premiere & DaVinci`,
+    title: "3D & Post-Production",
+    icon: Video,
+    skills: ["Blender (3D Modeling)", "PBR Texturing", "Adobe Premiere Pro", "DaVinci Resolve"],
   },
 ];
 
 export default function About() {
-  const containerRef = useRef<HTMLElement>(null);
-  const [activeTab, setActiveTab] = useState(0);
-  const [activeFilter, setActiveFilter] = useState("All");
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
-  const filteredTech =
-    activeFilter === "All"
-      ? techStack
-      : techStack.filter((t) => t.category === activeFilter || activeFilter === "All");
-
   return (
     <section
-      ref={containerRef}
       id="about"
-      aria-label="About Me and Experience"
-      className="relative overflow-hidden bg-transparent py-32 md:py-44 px-6 md:px-10 lg:px-20 border-t border-black/5 dark:border-white/5"
+      aria-label="About S Kaushall"
+      className="relative overflow-hidden bg-transparent py-28 md:py-36 px-6 md:px-10 lg:px-20 border-t border-black/5 dark:border-white/5"
     >
-      {/* Watermark Backdrop Title */}
-      <div className="pointer-events-none absolute left-1/2 top-12 -translate-x-1/2 text-[22vw] font-black tracking-[-0.08em] text-black/[0.035] dark:text-white/[0.04] select-none">
-        STORY
-      </div>
+      <div className="max-w-7xl mx-auto relative z-10 w-full">
+        {/* Section Header */}
+        <div className="mb-14">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-3"
+          >
+            <div className="w-2.5 h-2.5 rounded-full bg-[#bf0039] dark:bg-[#ffe880]" />
+            <span className="font-mono text-xs uppercase tracking-[0.35em] font-bold text-[#bf0039] dark:text-[#ffe880]">
+              01 // ABOUT ME
+            </span>
+          </motion.div>
 
-      {/* Main Section Header */}
-      <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Section Indicator Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex items-center gap-3"
-        >
-          <div className="w-2.5 h-2.5 rounded-full bg-[#bf0039] animate-pulse" />
-          <span className="font-mono text-xs uppercase tracking-[0.4em] text-[#bf0039] font-bold">
-            01 // GET TO KNOW ME 👋
-          </span>
-        </motion.div>
-
-        {/* Section Title */}
-        <div className="mt-6 max-w-4xl">
-          <TextReveal
-            text="Crafting digital experiences that feel effortless, exciting, and full of life."
-            variant="h2"
-            className="text-4xl sm:text-5xl md:text-6xl font-black leading-[1.1] text-foreground tracking-tight"
-          />
+          <div className="mt-4 max-w-3xl">
+            <TextReveal
+              text="Computer Science student dedicated to building robust software, web systems, and interactive media."
+              variant="h2"
+              className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground leading-tight tracking-tight"
+            />
+          </div>
         </div>
 
-        {/* Accent Line */}
-        <motion.div
-          initial={{ width: 0 }}
-          whileInView={{ width: 180 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="mt-8 h-[2px] bg-[#bf0039] dark:bg-[#ffe880]"
-        />
+        {/* 2-Column Clean Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          {/* Left Column: Profile Card & Quick Info */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-5 flex flex-col gap-6"
+          >
+            <div className="rounded-2xl border border-black/10 dark:border-white/15 bg-white/60 dark:bg-white/[0.03] backdrop-blur-xl p-6 shadow-xl">
+              <div className="relative h-80 w-full rounded-xl overflow-hidden border border-black/10 dark:border-white/10 bg-black/10">
+                <Image
+                  src="/Images/profile.png"
+                  alt="S Kaushall"
+                  fill
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  className="object-cover object-top"
+                />
+              </div>
 
-        {/* ======================================================== */}
-        {/* RESTRUCTURED BALANCED GRID LAYOUT */}
-        {/* ======================================================== */}
-        <div className="mt-20 flex flex-col gap-8">
-          {/* ROW 1: PROFILE BIO & PHILOSOPHY */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* CARD 1: Profile & Status Card */}
-            <motion.div
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-40px" }}
-              className="lg:col-span-5 group relative"
-            >
-              <div className="glass-card saas-shimmer rounded-[32px] p-8 h-full flex flex-col justify-between overflow-hidden transition-all duration-500 hover:border-[#bf0039] dark:hover:border-[#ffe880]/60 shadow-2xl">
-                <div>
-                  {/* Status Pill */}
-                  <div className="inline-flex items-center gap-2.5 rounded-full border border-[#bf0039]/40 bg-[#bf0039]/15 px-4 py-1.5 backdrop-blur-xl">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#bf0039] opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#bf0039]" />
-                    </span>
-                    <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-[#bf0039] dark:text-[#ffe880] font-bold">
-                      CSE 3rd Year • Developer & Creator
-                    </span>
-                  </div>
-
-                  {/* Profile Avatar Image Showcase */}
-                  <div className="mt-8 relative h-72 sm:h-80 md:h-[340px] w-full rounded-2xl overflow-hidden border border-black/10 dark:border-white/20 bg-gradient-to-b from-white/20 to-black/20 dark:from-white/10 dark:to-black/40 group/avatar shadow-2xl">
-                    <Image
-                      src="/Images/profile.png"
-                      alt="S Kaushall Profile"
-                      fill
-                      loading="lazy"
-                      sizes="(max-width: 768px) 100vw, 45vw"
-                      className="object-cover object-top transition-transform duration-700 ease-out group-hover/avatar:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none z-10" />
-
-                    <div className="absolute bottom-4 left-4 right-4 z-20 flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <UserCheck size={16} className="text-[#ffe880]" />
-                        <span className="text-xs font-mono tracking-widest text-white uppercase font-semibold">
-                          S KAUSHALL
-                        </span>
-                      </div>
-                      <span className="text-[10px] font-mono px-2.5 py-0.5 rounded border border-[#bf0039]/40 bg-[#bf0039]/30 text-white font-bold">
-                        OPEN FOR WORK
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Bio Text */}
-                  <h3 className="mt-6 text-3xl font-black text-foreground tracking-tight">
-                    S Kaushall
-                  </h3>
-                  <p className="mt-3 text-foreground/70 text-base leading-relaxed">
-                    3rd-year Computer Science & Engineering student passionate about Web development, Software engineering, Game development, 3D modeling, and Video editing.
-                  </p>
-                </div>
-
-                {/* Direct Action Footer */}
-                <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
-                  <span className="text-xs font-mono text-foreground/50">
-                    Coimbatore, India 📍
+              <div className="mt-6 flex flex-col gap-3">
+                <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-3">
+                  <span className="font-display font-black text-xl text-foreground">S Kaushall</span>
+                  <span className="font-mono text-[11px] font-bold px-2.5 py-1 rounded bg-[#bf0039]/10 dark:bg-[#ffe880]/15 text-[#bf0039] dark:text-[#ffe880] border border-[#bf0039]/20 dark:border-[#ffe880]/30">
+                    OPEN FOR ROLES
                   </span>
+                </div>
 
-                  <MagneticWrapper>
-                    <a
-                      href="../resume.pdf"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-mono text-[#bf0039] dark:text-[#ffe880] hover:underline font-bold"
-                    >
-                      View Resume <ArrowUpRight size={14} />
-                    </a>
-                  </MagneticWrapper>
+                <div className="flex items-center gap-2.5 text-xs text-foreground/75 font-mono">
+                  <GraduationCap size={15} className="text-[#bf0039] dark:text-[#ffe880] shrink-0" />
+                  <span>3rd Year B.E. Computer Science & Engineering</span>
+                </div>
+
+                <div className="flex items-center gap-2.5 text-xs text-foreground/75 font-mono">
+                  <MapPin size={15} className="text-[#bf0039] dark:text-[#ffe880] shrink-0" />
+                  <span>Coimbatore, Tamil Nadu, India</span>
                 </div>
               </div>
-            </motion.div>
+            </div>
+          </motion.div>
 
-            {/* CARD 2: Passion & Philosophy */}
-            <motion.div
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-40px" }}
-              className="lg:col-span-7 group relative"
-            >
-              <div className="glass-card saas-shimmer rounded-[32px] p-8 h-full flex flex-col justify-between transition-all duration-500 hover:border-[#bf0039] dark:hover:border-[#ffe880]/50 shadow-2xl">
-                <div>
-                  <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl border border-[#bf0039]/30 bg-[#bf0039]/10 text-[#bf0039]">
-                      <Sparkles size={18} />
+          {/* Right Column: Clean Story & Technical Disciplines */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="lg:col-span-7 flex flex-col gap-8"
+          >
+            {/* Story Paragraphs */}
+            <div className="flex flex-col gap-4 text-base sm:text-lg text-foreground/80 leading-relaxed">
+              <p>
+                I am a 3rd-year Computer Science and Engineering undergraduate with a strong foundation in core software engineering, object-oriented programming, and full-stack web development.
+              </p>
+              <p>
+                My projects range from building native Android apps with Java and location-aware geofencing to deploying production WordPress eCommerce platforms and engineering assistive computer vision tools in Python.
+              </p>
+              <p>
+                Alongside software development, I build immersive game worlds in Unity and Unreal Engine 5, create 3D assets in Blender, and handle professional video post-production in Adobe Premiere Pro and DaVinci Resolve.
+              </p>
+            </div>
+
+            {/* Technical Disciplines Grid */}
+            <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {skillCategories.map((cat) => {
+                const IconComponent = cat.icon;
+                return (
+                  <div
+                    key={cat.title}
+                    className="p-5 rounded-xl border border-black/10 dark:border-white/10 bg-white/40 dark:bg-white/[0.02] backdrop-blur-md"
+                  >
+                    <div className="flex items-center gap-2.5 text-[#bf0039] dark:text-[#ffe880] font-mono text-xs uppercase font-bold tracking-wider mb-3">
+                      <IconComponent size={15} />
+                      <span>{cat.title}</span>
                     </div>
-                    <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#bf0039] dark:text-[#ffe880] font-bold">
-                      WHAT DRIVES ME ✨
-                    </span>
-                  </div>
-
-                  <h3 className="mt-6 text-2xl sm:text-3xl font-bold text-foreground leading-snug">
-                    &ldquo;Great software shouldn&apos;t just work—it should feel delightful, fast, and a joy to use.&rdquo;
-                  </h3>
-
-                  <p className="mt-4 text-foreground/70 leading-relaxed text-base">
-                    Every project is an adventure in pushing visual ideas without sacrificing speed or simplicity. I love creating web apps that are responsive, accessible, and fun to interact with.
-                  </p>
-
-                  {/* Capabilities Grid */}
-                  <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    {capabilities.map((cap, i) => {
-                      const Icon = cap.icon;
-                      return (
-                        <div
-                          key={i}
-                          className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] p-4 transition-all duration-300 hover:border-[#bf0039] dark:hover:border-[#ffe880]/50 hover:bg-white/10"
+                    <div className="flex flex-wrap gap-1.5">
+                      {cat.skills.map((skill) => (
+                        <span
+                          key={skill}
+                          className="font-mono text-xs px-2.5 py-1 rounded bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-foreground/85"
                         >
-                          <div className="flex items-center justify-between">
-                            <Icon size={18} className="text-[#bf0039] dark:text-[#ffe880]" />
-                            <span className="text-[10px] font-mono text-[#bf0039] dark:text-[#ffe880] px-2 py-0.5 rounded bg-[#bf0039]/15 border border-[#bf0039]/30 font-semibold">
-                              {cap.tag}
-                            </span>
-                          </div>
-                          <h4 className="mt-3 text-sm font-bold text-foreground">
-                            {cap.title}
-                          </h4>
-                          <p className="mt-1.5 text-xs text-foreground/60 leading-relaxed">
-                            {cap.desc}
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10 flex items-center justify-between text-xs font-mono text-foreground/50">
-                  <span>Passionate about Clean Architecture</span>
-                  <span>60 FPS Motion</span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* ROW 2: TOOLKIT MATRIX & DEVELOPER CONSOLE */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* CARD 3: Tech Toolkit Filterable Matrix */}
-            <motion.div
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-40px" }}
-              className="lg:col-span-5 group relative"
-            >
-              <div className="glass-card saas-shimmer rounded-[32px] p-8 h-full flex flex-col justify-between transition-all duration-500 hover:border-[#bf0039] dark:hover:border-[#ffe880]/50 shadow-2xl">
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-2.5">
-                      <FolderGit2 size={18} className="text-[#bf0039]" />
-                      <h4 className="font-mono text-xs uppercase tracking-[0.25em] text-[#bf0039] dark:text-[#ffe880] font-bold">
-                        My Toolkit & Playground 🛠️
-                      </h4>
-                    </div>
-                  </div>
-
-                  {/* Filter Pills */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {["All", "Web & CMS", "Software & Mobile", "Game Dev & AR", "3D & Editing"].map((cat) => (
-                      <button
-                        key={cat}
-                        onClick={() => setActiveFilter(cat)}
-                        className={`text-[11px] font-mono px-3.5 py-1 rounded-full transition-all duration-300 ${
-                          activeFilter === cat
-                            ? "bg-[#ffe880] text-black font-bold shadow-[0_0_15px_rgba(255,232,128,0.4)]"
-                            : "border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-foreground/60 hover:text-foreground"
-                        }`}
-                      >
-                        {cat}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Tech Items Pills */}
-                  <div className="flex flex-wrap gap-2.5">
-                    {filteredTech.map((tech) => (
-                      <motion.span
-                        key={tech.name}
-                        layout
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        transition={{ duration: 0.2 }}
-                        className="inline-flex items-center gap-1.5 text-xs font-mono px-3.5 py-1.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.04] text-foreground/80 transition-colors hover:border-[#bf0039] dark:hover:border-[#ffe880]/60 hover:text-[#bf0039] dark:hover:text-[#ffe880] font-medium"
-                      >
-                        <CheckCircle2 size={12} className="text-[#bf0039]" />
-                        {tech.name}
-                      </motion.span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mt-8 pt-4 border-t border-black/10 dark:border-white/10 text-xs font-mono text-foreground/50">
-                  {filteredTech.length} technologies active in stack
-                </div>
-              </div>
-            </motion.div>
-
-            {/* CARD 4: Interactive Developer Snippet Console */}
-            <motion.div
-              variants={cardVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-40px" }}
-              className="lg:col-span-7 group relative"
-            >
-              <div className="glass-card rounded-[32px] p-6 h-full flex flex-col justify-between transition-all duration-500 hover:border-[#bf0039] dark:hover:border-[#ffe880]/40 shadow-2xl">
-                <div>
-                  {/* Console Header Bar */}
-                  <div className="flex items-center justify-between border-b border-black/10 dark:border-white/10 pb-4 flex-wrap gap-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-[#bf0039]" />
-                      <div className="w-3 h-3 rounded-full bg-[#ffe880]" />
-                      <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                    </div>
-
-                    {/* Tab Selection */}
-                    <div className="flex items-center gap-1 bg-black/5 dark:bg-white/5 p-1 rounded-xl border border-black/10 dark:border-white/10">
-                      {consoleTabs.map((tab, idx) => (
-                        <button
-                          key={tab.id}
-                          onClick={() => setActiveTab(idx)}
-                          className={`flex items-center gap-1.5 px-3 py-1 rounded-lg font-mono text-xs transition-all ${
-                            activeTab === idx
-                              ? "bg-[#ffe880] text-black font-bold shadow-sm"
-                              : "text-foreground/60 hover:text-foreground hover:bg-white/10"
-                          }`}
-                        >
-                          <Terminal size={12} />
-                          <span>{tab.filename}</span>
-                        </button>
+                          {skill}
+                        </span>
                       ))}
                     </div>
                   </div>
+                );
+              })}
+            </div>
 
-                  {/* Interactive Code Window */}
-                  <div className="mt-4 p-5 rounded-2xl bg-black/90 text-green-400 font-mono text-xs sm:text-sm overflow-x-auto leading-relaxed border border-white/10 shadow-inner min-h-[200px]">
-                    <pre className="text-white/90">
-                      <code>{consoleTabs[activeTab].content}</code>
-                    </pre>
-                  </div>
-                </div>
-
-                <div className="mt-4 pt-3 border-t border-black/10 dark:border-white/10 flex justify-between items-center text-[10px] font-mono text-foreground/40">
-                  <span>UTF-8 // TypeScript React</span>
-                  <span>Ln 1, Col 1</span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* BOTTOM STATS GRID */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-          {stats.map((st, idx) => {
-            const Icon = st.icon;
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="glass-card saas-shimmer p-6 rounded-3xl flex flex-col justify-between hover:scale-105 transition-all duration-300"
-              >
-                <div className="flex items-center justify-between">
-                  <Icon size={20} className="text-[#bf0039] dark:text-[#ffe880]" />
-                  <span className="text-[10px] font-mono text-foreground/40 font-bold uppercase">
-                    0{idx + 1}
-                  </span>
-                </div>
-                <div className="mt-6">
-                  <div className="text-3xl sm:text-4xl font-black text-foreground tracking-tight">
-                    {st.value}
-                  </div>
-                  <div className="text-sm font-bold text-foreground/90 mt-1">
-                    {st.label}
-                  </div>
-                  <div className="text-xs text-foreground/60 mt-0.5">
-                    {st.subtext}
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+            {/* Direct Link Action */}
+            <div className="pt-2 flex items-center gap-4">
+              <MagneticWrapper>
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 rounded-lg px-6 py-3 text-xs sm:text-sm font-bold bg-[#ffe880] text-black hover:bg-white transition-all duration-300 shadow-md"
+                >
+                  <span>Get in Touch</span>
+                  <ArrowRight size={15} />
+                </a>
+              </MagneticWrapper>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

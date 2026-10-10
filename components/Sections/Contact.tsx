@@ -55,29 +55,21 @@ export default function Contact() {
       <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-px bg-black/5 dark:bg-white/5 z-20 pointer-events-none hidden md:block" />
       <div className="absolute right-4 sm:right-8 top-0 bottom-0 w-px bg-black/5 dark:bg-white/5 z-20 pointer-events-none hidden md:block" />
 
-      {/* Watermark Title */}
-      <div
-        className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-black/[0.035] dark:text-white/[0.04] select-none"
-        aria-hidden="true"
-      >
-        CONNECT
-      </div>
-
       <div className="max-w-5xl w-full flex flex-col gap-16 relative z-10">
         {/* Header Panel */}
         <div className="w-full flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-black/10 dark:border-white/10 pb-8">
           <div className="flex flex-col">
             <span className="text-xs uppercase tracking-[0.25em] block mb-4 font-mono font-bold text-[#bf0039]">
-              <TextReveal text="06 // LET'S CHAT 💬" variant="p" delayOffset={0} />
+              <TextReveal text="07 // CONTACT & COLLABORATION" variant="p" delayOffset={0} />
             </span>
             <h2 className="text-4xl md:text-6xl font-display font-black tracking-tight text-foreground flex flex-col md:flex-row flex-wrap gap-x-4">
-              <TextReveal text="Got an idea?" variant="h2" delayOffset={0.1} />
-              <TextReveal text="Let's make it happen." className="text-foreground/40" delayOffset={0.25} />
+              <TextReveal text="Have a project in mind?" variant="h2" delayOffset={0.1} />
+              <TextReveal text="Let's build together." className="text-foreground/40" delayOffset={0.25} />
             </h2>
           </div>
-          <div className="flex items-center gap-2 font-mono text-[10px] text-foreground/70 uppercase tracking-wider glass-pill px-4 py-2 rounded-full font-bold">
-            <MessageSquare size={13} className="animate-pulse text-[#bf0039]" />
-            <span>Always happy to connect! ✨</span>
+          <div className="flex items-center gap-2 font-mono text-[10px] text-foreground/70 uppercase tracking-wider px-3.5 py-1.5 rounded-md border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 font-bold">
+            <MessageSquare size={13} className="text-[#bf0039]" />
+            <span>Open for Opportunities</span>
           </div>
         </div>
 
@@ -177,7 +169,7 @@ export default function Contact() {
                     focusedField === "name" ? "text-[#bf0039] dark:text-[#ffe880]" : "text-foreground/40"
                   }`}
                 >
-                  Your Name ✨
+                  Your Name
                 </label>
                 <input
                   type="text"
@@ -186,7 +178,7 @@ export default function Contact() {
                   onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                   onFocus={() => setFocusedField("name")}
                   onBlur={() => setFocusedField(null)}
-                  placeholder="What should I call you?"
+                  placeholder="Enter your name"
                   className="bg-transparent text-sm text-foreground placeholder:text-foreground/30 py-1 outline-hidden"
                 />
                 <motion.div
@@ -203,7 +195,7 @@ export default function Contact() {
                     focusedField === "email" ? "text-[#bf0039] dark:text-[#ffe880]" : "text-foreground/40"
                   }`}
                 >
-                  Your Email ✉️
+                  Your Email
                 </label>
                 <input
                   type="email"
@@ -229,7 +221,7 @@ export default function Contact() {
                     focusedField === "message" ? "text-[#bf0039] dark:text-[#ffe880]" : "text-foreground/40"
                   }`}
                 >
-                  Your Message 💬
+                  Your Message
                 </label>
                 <textarea
                   rows={4}
@@ -254,14 +246,14 @@ export default function Contact() {
                   <AnimatePresence mode="wait">
                     {isSubmitting ? (
                       <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-[#bf0039] dark:text-[#ffe880] animate-pulse font-bold">
-                        Sending your note... 🚀
+                        Sending your message...
                       </motion.span>
                     ) : isSent ? (
                       <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-green-500 font-bold">
-                        ✓ Message sent! Thanks for reaching out 🎉
+                        Message sent successfully. Thank you for reaching out.
                       </motion.span>
                     ) : (
-                      <span>Ready when you are!</span>
+                      <span>Replies typically sent within 24 hours.</span>
                     )}
                   </AnimatePresence>
                 </div>
@@ -270,7 +262,7 @@ export default function Contact() {
                   <button
                     type="submit"
                     disabled={isSubmitting || isSent}
-                    className="flex items-center gap-2 font-mono text-xs font-black px-8 py-4 rounded-full hover:scale-105 active:scale-95 transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none shadow-xl bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_25px_#ffe880]"
+                    className="flex items-center gap-2 font-mono text-xs font-bold px-7 py-3.5 rounded-lg hover:scale-[1.02] active:scale-98 transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none shadow-md bg-[#ffe880] text-black hover:bg-white"
                   >
                     <span>Send Message</span>
                     <Send size={13} className={isSubmitting ? "animate-ping" : "text-black"} />

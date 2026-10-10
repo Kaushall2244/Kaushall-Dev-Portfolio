@@ -128,7 +128,7 @@ function SkillCard({ index, skill }: { index: number; skill: Skill }) {
               y: -3,
               scale: 1.05,
             }}
-            className="font-mono text-[10px] text-foreground/80 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full px-4 py-1.5 transition-all duration-300 font-medium hover:border-[#bf0039] dark:hover:border-[#ffe880] hover:text-[#bf0039] dark:hover:text-[#ffe880]"
+            className="font-mono text-[10px] text-foreground/80 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-md px-3.5 py-1.5 transition-all duration-300 font-medium hover:border-[#bf0039] dark:hover:border-[#ffe880] hover:text-[#bf0039] dark:hover:text-[#ffe880]"
           >
             {tech}
           </motion.span>
@@ -145,11 +145,6 @@ export default function Skills() {
       aria-label="Skills and Superpowers"
       className="relative overflow-hidden py-36 px-6 md:px-10 lg:px-20 bg-transparent border-t border-black/5 dark:border-white/5"
     >
-      {/* Watermark Backdrop Title */}
-      <div className="pointer-events-none absolute left-1/2 top-10 -translate-x-1/2 text-[20vw] font-black tracking-[-0.08em] text-black/[0.035] dark:text-white/[0.04] select-none" aria-hidden="true">
-        SKILLS
-      </div>
-
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Indicator Badge */}
         <motion.div
@@ -158,17 +153,17 @@ export default function Skills() {
           viewport={{ once: true }}
           className="flex items-center gap-3"
         >
-          <div className="w-2.5 h-2.5 rounded-full animate-pulse bg-[#bf0039] dark:bg-[#ffe880]" />
-          <span className="font-mono text-xs uppercase tracking-[0.4em] font-bold text-[#bf0039] dark:text-[#ffe880]">
-            02 // MY SUPERPOWERS ⚡
+          <div className="w-2.5 h-2.5 rounded-full bg-[#bf0039] dark:bg-[#ffe880]" />
+          <span className="font-mono text-xs uppercase tracking-[0.35em] font-bold text-[#bf0039] dark:text-[#ffe880]">
+            02 // TECHNICAL TOOLKIT
           </span>
         </motion.div>
 
         <div className="mt-5 max-w-5xl">
           <TextReveal
-            text="Tools, technologies & playground toys I love creating with."
+            text="Core tools, frameworks, and technical stacks applied across projects."
             variant="h2"
-            className="text-4xl sm:text-5xl md:text-7xl font-black text-foreground leading-tight"
+            className="text-4xl sm:text-5xl md:text-6xl font-black text-foreground leading-tight tracking-tight"
           />
         </div>
 

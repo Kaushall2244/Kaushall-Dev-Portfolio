@@ -81,15 +81,6 @@
 }
 
 /* =====================================================
-   SYSTEM CURSOR SUPPRESSION (Desktop/Mouse Devices Only)
-   ===================================================== */
-@media (hover: hover) and (pointer: fine) {
-  *, *::before, *::after {
-    cursor: none !important;
-  }
-}
-
-/* =====================================================
    GLOBAL BACKGROUND GRID
    ===================================================== */
 .bg-grid-pattern {

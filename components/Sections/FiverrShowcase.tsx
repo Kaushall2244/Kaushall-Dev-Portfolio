@@ -101,14 +101,6 @@ export default function FiverrShowcase() {
       aria-label="Fiverr Freelance Studio"
       className="relative overflow-hidden py-32 md:py-44 px-6 md:px-10 lg:px-20 bg-transparent border-t border-black/5 dark:border-white/5"
     >
-      {/* Watermark Title */}
-      <div
-        className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-black/[0.035] dark:text-white/[0.04] select-none"
-        aria-hidden="true"
-      >
-        STUDIO
-      </div>
-
       <div className="max-w-7xl mx-auto relative z-10 w-full">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
@@ -119,15 +111,15 @@ export default function FiverrShowcase() {
               viewport={{ once: true }}
               className="flex items-center gap-3"
             >
-              <div className="w-2.5 h-2.5 rounded-full animate-pulse bg-[#ffe880]" />
-              <span className="font-mono text-xs uppercase tracking-[0.4em] font-bold text-[#bf0039] dark:text-[#ffe880]">
-                05 // FREELANCE STUDIO & SERVICES ⚡
+              <div className="w-2.5 h-2.5 rounded-full bg-[#ffe880]" />
+              <span className="font-mono text-xs uppercase tracking-[0.35em] font-bold text-[#bf0039] dark:text-[#ffe880]">
+                06 // FREELANCE SERVICES
               </span>
             </motion.div>
 
             <div className="mt-5 max-w-3xl">
               <TextReveal
-                text="Collaborate & hire on Fiverr for high-impact web, 3D, and software solutions."
+                text="Client solutions for web, 3D modeling, and custom software development."
                 variant="h2"
                 className="text-4xl sm:text-5xl md:text-6xl font-black leading-tight text-foreground"
               />
@@ -140,8 +132,7 @@ export default function FiverrShowcase() {
               href="https://www.fiverr.com/sellers/kaushall_dev"
               target="_blank"
               rel="noopener noreferrer"
-              data-cursor-text="FIVERR"
-              className="flex items-center gap-3 px-6 py-3.5 rounded-full border border-green-500/40 bg-green-500/10 backdrop-blur-2xl transition-all duration-300 hover:border-green-400 hover:bg-green-500/20 shadow-lg text-foreground self-start md:self-auto"
+              className="flex items-center gap-2.5 px-5 py-2.5 rounded-lg border border-green-500/40 bg-green-500/10 backdrop-blur-2xl transition-all duration-300 hover:border-green-400 hover:bg-green-500/20 shadow-sm text-foreground self-start md:self-auto"
             >
               <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
               <span className="font-mono text-xs font-bold tracking-wider text-green-400">
@@ -269,10 +260,9 @@ export default function FiverrShowcase() {
                 href="https://www.fiverr.com/sellers/kaushall_dev"
                 target="_blank"
                 rel="noopener noreferrer"
-                data-cursor-text="HIRE"
-                className="flex items-center gap-2 px-7 py-3.5 rounded-full font-mono text-xs font-extrabold bg-[#ffe880] text-black shadow-lg hover:bg-white hover:shadow-[0_0_25px_#ffe880] transition-all"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-mono text-xs font-bold bg-[#ffe880] text-black shadow-md hover:bg-white transition-all"
               >
-                <span>Hire on Fiverr Studio ✨</span>
+                <span>Hire on Fiverr</span>
                 <ExternalLink size={14} />
               </a>
             </MagneticWrapper>

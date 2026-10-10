@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Sparkles, KeyRound, ArrowDown } from "lucide-react";
+import { KeyRound, ArrowDown, Code2, Layers } from "lucide-react";
 import { useTheme } from "../Global/ThemeProvider";
 
 export default function PortalDoor() {
@@ -15,29 +15,29 @@ export default function PortalDoor() {
     offset: ["start start", "end end"],
   });
 
-  // Camera scale: holds steady at 1.0 so doors opening is clearly visible, then zooms into the open vault
-  const chamberScale = useTransform(scrollYProgress, [0, 0.45, 0.72, 0.92], [1, 1, 3.2, 8.5]);
-  const chamberOpacity = useTransform(scrollYProgress, [0.72, 0.9], [1, 0]);
+  // Camera scale: holds steady at 1.0 so doors opening is clearly visible in place, then zooms into the open vault
+  const chamberScale = useTransform(scrollYProgress, [0, 0.48, 0.76, 0.95], [1, 1, 3.5, 9]);
+  const chamberOpacity = useTransform(scrollYProgress, [0.76, 0.93], [1, 0]);
 
-  // Doors rotate outward in 3D in clear view of the user
-  const leftDoorRotate = useTransform(scrollYProgress, [0.08, 0.45], [0, -112]);
-  const rightDoorRotate = useTransform(scrollYProgress, [0.08, 0.45], [0, 112]);
+  // Doors rotate outward in 3D in clear view of the user while stationary
+  const leftDoorRotate = useTransform(scrollYProgress, [0.1, 0.48], [0, -115]);
+  const rightDoorRotate = useTransform(scrollYProgress, [0.1, 0.48], [0, 115]);
 
   // Central glow and beam intensity increases as doors open
-  const glowOpacity = useTransform(scrollYProgress, [0.1, 0.45, 0.7], [0.15, 0.85, 1]);
+  const glowOpacity = useTransform(scrollYProgress, [0.12, 0.48, 0.75], [0.1, 0.9, 1]);
 
   // White flash burst: flares up near zoom threshold, then resolves
-  const flashOpacity = useTransform(scrollYProgress, [0.65, 0.82, 0.96], [0, 0.95, 0]);
+  const flashOpacity = useTransform(scrollYProgress, [0.7, 0.85, 0.98], [0, 0.95, 0]);
 
   // Prompt opacity
-  const cueOpacity = useTransform(scrollYProgress, [0, 0.18], [1, 0]);
+  const cueOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[185vh] bg-transparent select-none z-0"
+      className="relative w-full h-[220vh] bg-transparent select-none z-10"
     >
-      {/* Sticky Viewport Stage with 3D Perspective */}
+      {/* Sticky Viewport Stage with 3D Perspective - Stays fixed in place */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden [perspective:1200px]">
         {/* Ambient Chamber Background - Theme Adaptive */}
         <div
@@ -53,15 +53,6 @@ export default function PortalDoor() {
           }`}
         />
 
-        {/* Cinematic Watermark Behind Chamber */}
-        <div
-          className={`pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[20vw] font-black tracking-[-0.08em] select-none ${
-            isDark ? "text-white/[0.035]" : "text-black/[0.045]"
-          }`}
-        >
-          PORTAL
-        </div>
-
         {/* White Flash Transition Layer */}
         <motion.div
           style={{ opacity: flashOpacity, willChange: "opacity" }}
@@ -74,7 +65,7 @@ export default function PortalDoor() {
           className="absolute top-10 sm:top-12 z-30 flex flex-col items-center gap-2 pointer-events-none"
         >
           <div
-            className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border backdrop-blur-xl text-[11px] font-mono font-bold tracking-widest uppercase shadow-lg transition-colors ${
+            className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-lg border backdrop-blur-xl text-[11px] font-mono font-bold tracking-widest uppercase shadow-lg transition-colors ${
               isDark
                 ? "border-[#ffe880]/40 bg-black/70 text-[#ffe880] shadow-[0_0_20px_rgba(255,232,128,0.15)]"
                 : "border-[#bf0039]/30 bg-white/90 text-[#bf0039] shadow-[0_4px_20px_rgba(191,0,57,0.15)]"
@@ -123,13 +114,13 @@ export default function PortalDoor() {
             {/* Glowing Interior Archive Text Preview */}
             <div className="relative z-10 flex flex-col items-center text-center p-6">
               <span
-                className={`font-mono text-xs uppercase tracking-[0.4em] font-extrabold px-3.5 py-1 rounded-full shadow-lg ${
+                className={`font-mono text-xs uppercase tracking-[0.4em] font-extrabold px-3.5 py-1 rounded-md shadow-lg ${
                   isDark
                     ? "bg-[#ffe880] text-black shadow-[0_0_20px_rgba(255,232,128,0.5)]"
                     : "bg-[#bf0039] text-white shadow-[0_0_20px_rgba(191,0,57,0.4)]"
                 }`}
               >
-                STUDIO REALM UNLOCKED ✨
+                STUDIO REALM UNLOCKED
               </span>
               <h4
                 className={`mt-4 font-display font-black text-2xl sm:text-4xl tracking-tight drop-shadow-md ${
@@ -204,13 +195,13 @@ export default function PortalDoor() {
               {/* Left Top Seal */}
               <div className="relative z-10">
                 <div
-                  className={`w-8 h-8 rounded-xl border flex items-center justify-center transition-colors ${
+                  className={`w-8 h-8 rounded-lg border flex items-center justify-center transition-colors ${
                     isDark
                       ? "border-white/15 bg-white/5 text-[#ffe880]"
                       : "border-slate-300 bg-white/80 text-[#bf0039] shadow-sm"
                   }`}
                 >
-                  <Sparkles size={16} />
+                  <Code2 size={16} />
                 </div>
                 <div className={`mt-4 font-mono text-[10px] sm:text-xs uppercase tracking-widest font-semibold ${
                   isDark ? "text-white/60" : "text-slate-600"
@@ -235,7 +226,7 @@ export default function PortalDoor() {
 
               {/* Left Handle */}
               <div
-                className={`absolute right-3 top-1/2 -translate-y-1/2 w-2 sm:w-2.5 h-16 sm:h-20 rounded-full ${
+                className={`absolute right-3 top-1/2 -translate-y-1/2 w-2 sm:w-2.5 h-16 sm:h-20 rounded-md ${
                   isDark
                     ? "bg-gradient-to-b from-[#ffe880] to-yellow-600 shadow-[0_0_15px_#ffe880]"
                     : "bg-gradient-to-b from-[#bf0039] to-red-700 shadow-[0_0_15px_rgba(191,0,57,0.6)]"
@@ -275,13 +266,13 @@ export default function PortalDoor() {
               {/* Right Top Seal */}
               <div className="relative z-10 text-right flex justify-end">
                 <div
-                  className={`w-8 h-8 rounded-xl border flex items-center justify-center transition-colors ${
+                  className={`w-8 h-8 rounded-lg border flex items-center justify-center transition-colors ${
                     isDark
                       ? "border-white/15 bg-white/5 text-[#ffe880]"
                       : "border-slate-300 bg-white/80 text-[#bf0039] shadow-sm"
                   }`}
                 >
-                  <Sparkles size={16} />
+                  <Layers size={16} />
                 </div>
               </div>
 
@@ -295,13 +286,13 @@ export default function PortalDoor() {
                 <div className={`font-mono text-[10px] tracking-widest uppercase font-bold mt-1 ${
                   isDark ? "text-[#ffe880]" : "text-[#bf0039]"
                 }`}>
-                  SERVICES
+                  VAULT
                 </div>
               </div>
 
               {/* Right Handle */}
               <div
-                className={`absolute left-3 top-1/2 -translate-y-1/2 w-2 sm:w-2.5 h-16 sm:h-20 rounded-full ${
+                className={`absolute left-3 top-1/2 -translate-y-1/2 w-2 sm:w-2.5 h-16 sm:h-20 rounded-md ${
                   isDark
                     ? "bg-gradient-to-b from-[#ffe880] to-yellow-600 shadow-[0_0_15px_#ffe880]"
                     : "bg-gradient-to-b from-[#bf0039] to-red-700 shadow-[0_0_15px_rgba(191,0,57,0.6)]"

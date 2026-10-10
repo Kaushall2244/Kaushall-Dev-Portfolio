@@ -11,7 +11,7 @@ export default function SidebarDecorations() {
         </span>
 
         <div className="text-[9px] font-mono tracking-[0.25em] text-slate-400 dark:text-white/30 transform rotate-90 origin-center whitespace-nowrap my-auto font-medium">
-          KAUSHALL // CREATIVE STUDIO ✨
+          KAUSHALL // DEVELOPER PORTFOLIO
         </div>
 
         <span className="absolute -right-3 -bottom-6 text-[9px] font-mono tracking-wider text-slate-400 dark:text-white/30 uppercase font-semibold">

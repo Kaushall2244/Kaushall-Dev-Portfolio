@@ -156,9 +156,9 @@ export default function Projects() {
 
   // Interactive Live Task State for DayFlow Bento Card
   const [tasks, setTasks] = useState([
-    { id: 1, location: "Campus Library 📚", text: "Read 2 chapters of Operating Systems", done: true },
-    { id: 2, location: "Campus Gym 🏋️", text: "30 min cardio & core workout", done: true },
-    { id: 3, location: "Study Desk 💻", text: "Code DayFlow geofence listener", done: false },
+    { id: 1, location: "Campus Library", text: "Read 2 chapters of Operating Systems", done: true },
+    { id: 2, location: "Campus Gym", text: "30 min cardio and core workout", done: true },
+    { id: 3, location: "Study Desk", text: "Code DayFlow geofence listener", done: false },
   ]);
 
   const toggleTask = (id: number) => {
@@ -168,17 +168,9 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      aria-label="Featured Projects and Bento Playground"
+      aria-label="Featured Projects and Portfolio Works"
       className="relative overflow-hidden py-32 md:py-44 px-6 md:px-10 lg:px-20 bg-transparent border-t border-black/5 dark:border-white/5"
     >
-      {/* Watermark Title */}
-      <div
-        className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 text-[18vw] font-black tracking-[-0.08em] text-black/[0.035] dark:text-white/[0.04] select-none"
-        aria-hidden="true"
-      >
-        WORKS
-      </div>
-
       <div className="max-w-7xl mx-auto relative z-10 w-full">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
@@ -189,9 +181,9 @@ export default function Projects() {
               viewport={{ once: true }}
               className="flex items-center gap-3"
             >
-              <div className="w-2.5 h-2.5 rounded-full animate-pulse bg-[#bf0039]" />
-              <span className="font-mono text-xs uppercase tracking-[0.4em] font-bold text-[#bf0039]">
-                03 // FEATURED PROJECTS 🚀
+              <div className="w-2.5 h-2.5 rounded-full bg-[#bf0039]" />
+              <span className="font-mono text-xs uppercase tracking-[0.35em] font-bold text-[#bf0039]">
+                03 // FEATURED PROJECTS
               </span>
             </motion.div>
 
@@ -247,13 +239,13 @@ export default function Projects() {
                 {/* Header Row */}
                 <div className="flex items-center justify-between gap-4 flex-wrap mb-6">
                   <div className="flex items-center gap-2">
-                    <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 dark:border-[#ffe880]/40 bg-[#bf0039]/10 dark:bg-[#ffe880]/15 text-[#bf0039] dark:text-[#ffe880]">
-                      📱 Android App
+                    <span className="px-3.5 py-1 rounded-md text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 dark:border-[#ffe880]/40 bg-[#bf0039]/10 dark:bg-[#ffe880]/15 text-[#bf0039] dark:text-[#ffe880]">
+                      Android Application
                     </span>
                     <span className="text-xs font-mono text-foreground/40">{"// 2026"}</span>
                   </div>
 
-                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#bf0039]/15 border border-[#bf0039]/40 text-[#bf0039] dark:text-[#ffe880] font-mono text-xs font-bold">
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-md bg-[#bf0039]/15 border border-[#bf0039]/40 text-[#bf0039] dark:text-[#ffe880] font-mono text-xs font-bold">
                     <MapPin size={14} className="text-[#bf0039] animate-pulse" />
                     <span>Location Triggers Active</span>
                   </div>
@@ -331,10 +323,9 @@ export default function Projects() {
                   <MagneticWrapper range={30} actionFactor={0.25}>
                     <button
                       onClick={() => setSelectedProject(PROJECTS_DATA[0])}
-                      data-cursor-text="DETAILS"
-                      className="px-6 py-2.5 rounded-full text-xs font-mono font-extrabold transition-all duration-300 shadow-lg bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_25px_#ffe880]"
+                      className="px-5 py-2.5 rounded-lg text-xs font-mono font-bold transition-all duration-300 shadow-md bg-[#ffe880] text-black hover:bg-white"
                     >
-                      Explore Details ✨
+                      View Details
                     </button>
                   </MagneticWrapper>
                 </div>
@@ -357,8 +348,8 @@ export default function Projects() {
             >
               <div>
                 <div className="flex items-center justify-between gap-4 mb-6">
-                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#bf0039] dark:text-[#ffe880]">
-                    👁️ Blind Object Detection
+                  <span className="px-3.5 py-1 rounded-md text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#bf0039] dark:text-[#ffe880]">
+                    Assistive Computer Vision
                   </span>
                   <span className="text-xs font-mono text-foreground/40">{"// 2026"}</span>
                 </div>
@@ -449,8 +440,8 @@ export default function Projects() {
             >
               <div>
                 <div className="flex items-center justify-between gap-4 mb-6">
-                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-green-500/40 bg-green-500/10 text-green-400">
-                    🛍️ Live eCommerce Website
+                  <span className="px-3.5 py-1 rounded-md text-[11px] font-mono font-bold uppercase tracking-wider border border-green-500/40 bg-green-500/10 text-green-400">
+                    Live Production Web Platform
                   </span>
                   <span className="text-xs font-mono text-foreground/40">{"// 2025"}</span>
                 </div>
@@ -470,7 +461,7 @@ export default function Projects() {
                     </div>
                     <div>
                       <span className="font-mono text-xs font-bold text-foreground block">
-                        srijaiagency.in 🌐
+                        srijaiagency.in
                       </span>
                       <span className="font-mono text-[10px] text-foreground/50">
                         WordPress • WooCommerce • Live Store
@@ -483,7 +474,7 @@ export default function Projects() {
                     target="_blank"
                     rel="noopener noreferrer"
                     data-cursor-text="STORE"
-                    className="flex items-center gap-1.5 text-xs font-mono font-bold px-3.5 py-2 rounded-xl bg-green-500/15 text-green-400 border border-green-500/30 hover:bg-green-500/25 transition-all"
+                    className="flex items-center gap-1.5 text-xs font-mono font-bold px-3.5 py-2 rounded-lg bg-green-500/15 text-green-400 border border-green-500/30 hover:bg-green-500/25 transition-all"
                   >
                     <span>Visit Store</span>
                     <ExternalLink size={13} />
@@ -522,8 +513,8 @@ export default function Projects() {
             >
               <div>
                 <div className="flex items-center justify-between gap-4 mb-6">
-                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#ffe880]/40 bg-[#ffe880]/15 text-[#bf0039] dark:text-[#ffe880]">
-                    🪑 AR Furniture App (Under Dev)
+                  <span className="px-3.5 py-1 rounded-md text-[11px] font-mono font-bold uppercase tracking-wider border border-[#ffe880]/40 bg-[#ffe880]/15 text-[#bf0039] dark:text-[#ffe880]">
+                    AR Furniture Visualizer
                   </span>
                   <span className="text-xs font-mono text-foreground/40">{"// 2026"}</span>
                 </div>
@@ -547,7 +538,7 @@ export default function Projects() {
                     </motion.div>
                     <div>
                       <span className="font-mono text-xs font-bold text-foreground block">
-                        Surface Plane Locked 📐
+                        Surface Plane Locked
                       </span>
                       <span className="font-mono text-[10px] text-foreground/50">
                         1:1 Scale Preview • Unity AR Foundation
@@ -555,7 +546,7 @@ export default function Projects() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1.5 font-mono text-[10px] text-[#ffe880] px-3 py-1 rounded-full bg-[#ffe880]/10 border border-[#ffe880]/30 font-bold">
+                  <div className="flex items-center gap-1.5 font-mono text-[10px] text-[#ffe880] px-3 py-1 rounded-md bg-[#ffe880]/10 border border-[#ffe880]/30 font-bold">
                     <span>IN DEV</span>
                   </div>
                 </div>
@@ -592,8 +583,8 @@ export default function Projects() {
             >
               <div>
                 <div className="flex items-center justify-between gap-4 mb-6">
-                  <span className="px-3.5 py-1 rounded-full text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#bf0039] dark:text-[#ffe880]">
-                    🛰️ Location Tracker
+                  <span className="px-3.5 py-1 rounded-md text-[11px] font-mono font-bold uppercase tracking-wider border border-[#bf0039]/40 bg-[#bf0039]/15 text-[#bf0039] dark:text-[#ffe880]">
+                    GPS Location Tracker
                   </span>
                   <span className="text-xs font-mono text-foreground/40">{"// 2025"}</span>
                 </div>

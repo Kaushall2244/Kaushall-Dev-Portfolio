@@ -3,7 +3,6 @@ import { Syne, Geist, Geist_Mono } from "next/font/google";
 import SidebarDecorations from "@/components/ui/SidebarDecorations";
 import Navbar from "@/components/Global/Navbar";
 import Footer from "@/components/Global/Footer";
-import CustomCursor from "@/components/ui/CustomCursor";
 import SystemStatus from "@/components/Global/SystemStatus";
 import GlobalMouseGlow from "@/components/ui/GlobalMouseGlow";
 import ConstellationBackground from "@/components/ui/ConstellationBackground";
@@ -234,7 +233,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="antialiased bg-background text-foreground selection:bg-[#ffe880] selection:text-black overflow-x-hidden transition-colors duration-500">
+      <body className="antialiased bg-background text-foreground selection:bg-[#ffe880] selection:text-black overflow-x-clip transition-colors duration-500">
         <ThemeProvider>
           <GlobalMouseGlow />
           
@@ -244,17 +243,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="absolute inset-0 bg-grid-glow opacity-15" />
           </div>
 
-          {/* Layer 2: Global Background Watermark "KAUSHALL" */}
-          <div className="fixed inset-0 flex items-center justify-center pointer-events-none overflow-hidden z-0 select-none" aria-hidden="true">
-            <div className="text-[20vw] font-black uppercase tracking-[-0.08em] text-white/[0.04] select-none">
-              KAUSHALL
-            </div>
-          </div>
-
-          {/* Layer 3: Global Interactive Constellation Particles */}
+          {/* Layer 2: Global Interactive Constellation Particles */}
           <ConstellationBackground />
-
-          <CustomCursor />
           
           <header>
             <Navbar />

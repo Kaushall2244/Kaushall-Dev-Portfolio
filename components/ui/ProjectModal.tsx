@@ -106,9 +106,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* Tab Navigation: Solid Distinct Gold for Active Tab */}
           <div className="mt-8 flex gap-2 border-b border-black/10 dark:border-white/10 pb-4">
             {[
-              { id: "overview", label: "Overview ✨", icon: Sparkles },
-              { id: "features", label: "Key Features 🚀", icon: Layers },
-              { id: "tech", label: "Architecture 🛠️", icon: Cpu },
+              { id: "overview", label: "Overview", icon: Sparkles },
+              { id: "features", label: "Key Features", icon: Layers },
+              { id: "tech", label: "Architecture", icon: Cpu },
             ].map((tab) => {
               const Icon = tab.icon;
               const active = activeTab === tab.id;
@@ -227,8 +227,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    data-cursor-text="CODE"
-                    className="flex items-center gap-2 px-5 py-3 rounded-full border border-[#bf0039]/50 bg-[#bf0039]/10 text-foreground text-xs font-mono font-bold hover:border-[#bf0039] hover:bg-[#bf0039]/20 transition-all duration-300"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-[#bf0039]/50 bg-[#bf0039]/10 text-foreground text-xs font-mono font-bold hover:border-[#bf0039] hover:bg-[#bf0039]/20 transition-all duration-300"
                   >
                     <Github size={15} className="text-[#bf0039]" />
                     <span>Source Code</span>
@@ -242,10 +241,9 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     href={project.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    data-cursor-text="LAUNCH"
-                    className="flex items-center gap-2 px-6 py-3 rounded-full text-xs font-mono font-extrabold transition-all duration-300 shadow-lg bg-[#ffe880] text-black hover:bg-white hover:shadow-[0_0_25px_#ffe880]"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs font-mono font-bold transition-all duration-300 shadow-md bg-[#ffe880] text-black hover:bg-white"
                   >
-                    <span>Live Preview 🚀</span>
+                    <span>Live Preview</span>
                     <ExternalLink size={14} />
                   </a>
                 </MagneticWrapper>

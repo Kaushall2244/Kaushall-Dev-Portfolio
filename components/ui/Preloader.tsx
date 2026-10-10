@@ -8,11 +8,11 @@ interface PreloaderProps {
 }
 
 const BOOT_LOGS = [
-  "PREPARING DIGITAL EXPERIENCES ✨",
-  "CRAFTING SLEEK DESIGNS & MOTION 🎨",
-  "COMPOSING INTERACTIVE INTERFACES ⚡",
-  "POLISHING LIGHTING & 3D SHADERS ✦",
-  "WELCOME TO MY CREATIVE LAB 🚀"
+  "PREPARING DIGITAL EXPERIENCES",
+  "CRAFTING SLEEK DESIGNS AND MOTION",
+  "COMPOSING INTERACTIVE INTERFACES",
+  "POLISHING LIGHTING AND 3D SHADERS",
+  "INITIALIZING PORTFOLIO EXPERIENCE"
 ];
 
 export default function Preloader({ onComplete }: PreloaderProps) {
@@ -190,7 +190,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       <div className="relative z-20 pb-8 sm:pb-12 px-6 sm:px-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 hud-element">
         {/* Animated Boot Logs */}
         <div className="text-[11px] sm:text-xs text-white/60 tracking-wide flex flex-col gap-1.5 max-w-sm">
-          <span className="text-[#ffe880] font-bold uppercase tracking-wider text-[10px]">✦ LOADING PROGRESS</span>
+          <span className="text-[#ffe880] font-bold uppercase tracking-wider text-[10px]">LOADING PROGRESS</span>
           <span className="text-white/95 font-medium transition-all duration-200">
             {BOOT_LOGS[logIndex]}
           </span>

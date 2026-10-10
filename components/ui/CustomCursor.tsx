@@ -149,7 +149,7 @@ export default function CustomCursor() {
                     : "bg-white/95 border-[#bf0039]/40 text-[#bf0039] shadow-[0_4px_16px_rgba(191,0,57,0.15)]"
                 }`}
               >
-                <span>✨</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-current" />
                 {hoverText}
               </motion.div>
             )}
