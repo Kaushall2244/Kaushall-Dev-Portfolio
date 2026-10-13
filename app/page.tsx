@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
 import dynamic from "next/dynamic";
-import Preloader from "@/components/ui/Preloader";
 
 const SmoothScroll = dynamic(() => import("@/components/ui/SmoothScroll"), { ssr: false });
 
@@ -19,12 +17,8 @@ const GitHubShowcase = dynamic(() => import("@/components/Sections/GitHubShowcas
 const LeetCodeShowcase = dynamic(() => import("@/components/Sections/LeetCodeShowcase"), { ssr: false });
 
 export default function Home() {
-  const [showPreloader, setShowPreloader] = useState(true);
-
   return (
     <div className="relative min-h-screen bg-transparent text-foreground">
-      {showPreloader && <Preloader onComplete={() => setShowPreloader(false)} />}
-
       <SmoothScroll>
         <div className="bg-transparent">
           <Hero />

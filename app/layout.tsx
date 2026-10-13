@@ -8,6 +8,7 @@ import GlobalMouseGlow from "@/components/ui/GlobalMouseGlow";
 import ConstellationBackground from "@/components/ui/ConstellationBackground";
 import ThemeLever from "@/components/ui/ThemeLever";
 import { ThemeProvider } from "@/components/Global/ThemeProvider";
+import Preloader from "@/components/ui/Preloader";
 import "./globals.css";
 
 import { Analytics } from "@vercel/analytics/next";
@@ -261,6 +262,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SystemStatus />
           <Footer />
           <Analytics />
+          <Preloader />
         </ThemeProvider>
       </body>
     </html>
