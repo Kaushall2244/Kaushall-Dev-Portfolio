@@ -1,210 +1,117 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import gsap from "gsap";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
-const BOOT_LOGS = [
-  "PREPARING DIGITAL EXPERIENCES",
-  "CRAFTING SLEEK DESIGNS AND MOTION",
-  "COMPOSING INTERACTIVE INTERFACES",
-  "POLISHING LIGHTING AND 3D SHADERS",
-  "INITIALIZING PORTFOLIO EXPERIENCE"
-];
-
 export default function Preloader({ onComplete }: PreloaderProps) {
-  const [progress, setProgress] = useState(0);
-  const [scrambledText, setScrambledText] = useState("K_______");
-  const [logIndex, setLogIndex] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const curtainsRef = useRef<HTMLDivElement>(null);
+  const [isDone, setIsDone] = useState(false);
 
-  const targetWord = "KAUSHALL";
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
-
-  // Snappy, brisk progress counter (finishes in ~600ms)
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          return 100;
-        }
-        const step = Math.floor(Math.random() * 18) + 14;
-        return Math.min(prev + step, 100);
-      });
-    }, 28);
+    // Elegant, minimal timing: displays for ~1.3s then triggers smooth slide-up exit
+    const timer = setTimeout(() => {
+      setIsDone(true);
+    }, 1300);
 
-    return () => clearInterval(timer);
+    return () => clearTimeout(timer);
   }, []);
-
-  // Boot log sequence
-  useEffect(() => {
-    if (progress < 100) {
-      const idx = Math.min(Math.floor((progress / 100) * BOOT_LOGS.length), BOOT_LOGS.length - 1);
-      setLogIndex(idx);
-    } else {
-      setLogIndex(BOOT_LOGS.length - 1);
-    }
-  }, [progress]);
-
-  // Character scramble animation
-  useEffect(() => {
-    let animationFrameId: number;
-    let iteration = 0;
-
-    const runScramble = () => {
-      setScrambledText(
-        targetWord
-          .split("")
-          .map((char, index) => {
-            if (index < iteration) {
-              return targetWord[index];
-            }
-            return chars[Math.floor(Math.random() * chars.length)];
-          })
-          .join("")
-      );
-
-      if (iteration < targetWord.length) {
-        iteration += 1 / 2;
-        animationFrameId = requestAnimationFrame(runScramble);
-      }
-    };
-
-    runScramble();
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []);
-
-  // Exit Animation when 100% is reached (High performance, GPU composited)
-  useEffect(() => {
-    if (progress === 100) {
-      const tl = gsap.timeline({
-        onComplete: () => {
-          onComplete();
-        },
-      });
-
-      tl.to(".hud-element", {
-        opacity: 0,
-        y: -15,
-        duration: 0.15,
-        stagger: 0.02,
-        ease: "power2.in",
-      })
-      .to(
-        ".preloader-title",
-        {
-          scale: 1.03,
-          opacity: 0,
-          y: -10,
-          duration: 0.2,
-          ease: "power2.inOut",
-        },
-        "-=0.1"
-      )
-      .to(
-        curtainsRef.current?.children || [],
-        {
-          scaleY: 0,
-          transformOrigin: "top",
-          duration: 0.28,
-          stagger: 0.02,
-          ease: "power4.out",
-        },
-        "-=0.1"
-      )
-      .to(
-        containerRef.current,
-        {
-          opacity: 0,
-          duration: 0.1,
-          pointerEvents: "none",
-        },
-        "-=0.08"
-      );
-    }
-  }, [progress, onComplete]);
 
   return (
-    <div
-      ref={containerRef}
-      className="fixed inset-0 z-[100] flex flex-col justify-between bg-black select-none pointer-events-auto overflow-hidden"
-    >
-      {/* 5-Column Split Curtain Animation Panels - Fast Light Speed */}
-      <div
-        ref={curtainsRef}
-        className="absolute inset-0 grid grid-cols-5 pointer-events-none z-0"
-      >
-        <div className="bg-[#050608] w-full h-full border-r border-white/5 origin-top transform-gpu will-change-transform" />
-        <div className="bg-[#08090d] w-full h-full border-r border-white/5 origin-top transform-gpu will-change-transform" />
-        <div className="bg-[#050608] w-full h-full border-r border-white/5 origin-top transform-gpu will-change-transform" />
-        <div className="bg-[#08090d] w-full h-full border-r border-white/5 origin-top transform-gpu will-change-transform" />
-        <div className="bg-[#050608] w-full h-full origin-top transform-gpu will-change-transform" />
-      </div>
-
-      {/* Cyber Grid Overlay background */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none z-10" />
-
-      {/* Top Header Information Bar */}
-      <div className="relative z-20 pt-6 sm:pt-8 px-6 sm:px-10 flex justify-between items-center text-[10px] sm:text-[11px] text-white/60 hud-element tracking-wider">
-        <span className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#ffe880] animate-pulse" />
-          <strong className="text-white font-bold">S KAUSHALL</strong> <span className="opacity-60">• CREATIVE PORTFOLIO</span>
-        </span>
-        <span className="hidden sm:inline-block text-[#ffe880] font-bold tracking-widest text-[10px]">
-          [ STUDIO EDITION // 2026 ]
-        </span>
-      </div>
-
-      {/* Centered Scramble Decoding Title */}
-      <div className="relative z-20 my-auto flex flex-col items-center justify-center px-4 text-center">
-        <div className="preloader-title max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-white/20 bg-white/10 backdrop-blur-xl mb-4 sm:mb-6 hud-element">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#ffe880] animate-pulse" />
-            <span className="text-[10px] sm:text-xs text-[#ffe880] tracking-[0.25em] uppercase font-bold">
-              WELCOME TO MY DIGITAL SPACE
-            </span>
+    <AnimatePresence onExitComplete={onComplete}>
+      {!isDone && (
+        <motion.div
+          key="minimal-preloader"
+          initial={{ y: 0 }}
+          exit={{
+            y: "-100%",
+            transition: {
+              duration: 0.75,
+              ease: [0.76, 0, 0.24, 1],
+            },
+          }}
+          className="fixed inset-0 z-[9999] flex flex-col justify-between items-center bg-[#bf0039] select-none pointer-events-auto overflow-hidden px-6 py-10"
+        >
+          {/* Top subtle spacer for balance */}
+          <div className="w-full flex justify-between items-center opacity-0 pointer-events-none">
+            <span className="text-xs">TOP</span>
           </div>
 
-          <h1 className="font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight text-white drop-shadow-[0_0_40px_rgba(255,232,128,0.2)]">
-            {scrambledText}
-          </h1>
-
-          {/* Glowing Energy Progress Bar */}
-          <div className="mt-6 sm:mt-8 w-48 sm:w-72 md:w-96 mx-auto h-[3px] bg-white/10 rounded-full overflow-hidden relative hud-element">
-            <div
-              className="h-full bg-gradient-to-r from-[#ffe880] via-[#ffd700] to-white transition-all duration-100 ease-out relative shadow-[0_0_15px_#ffe880]"
-              style={{ width: `${progress}%` }}
+          {/* Centered Minimal Animated Logo Mark */}
+          <div className="flex flex-col items-center justify-center gap-6 my-auto">
+            <motion.div
+              initial={{ scale: 0.75, opacity: 0 }}
+              animate={{
+                scale: [0.75, 1.08, 1],
+                opacity: 1,
+              }}
+              transition={{
+                duration: 0.85,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="relative flex items-center justify-center"
             >
-              <span className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#ffe880] shadow-[0_0_10px_#ffe880]" />
-            </div>
+              {/* Minimal Stylized Geometric Emblem in Solid Black */}
+              <svg
+                className="w-16 h-16 sm:w-20 sm:h-20 text-black drop-shadow-sm"
+                viewBox="0 0 100 100"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {/* Left Angled Stem */}
+                <motion.path
+                  d="M36 22L24 78H48L52 64H38L44 40H54L58 22H36Z"
+                  fill="#000000"
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.15 }}
+                />
+                {/* Right Angled S/K Facets */}
+                <motion.path
+                  d="M62 38L76 38L64 78H50L62 38Z"
+                  fill="#000000"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.25 }}
+                />
+                <motion.path
+                  d="M66 22L80 22L73 34H59L66 22Z"
+                  fill="#000000"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.35 }}
+                />
+              </svg>
+            </motion.div>
+
+            {/* Minimal Pulse Indicator */}
+            <motion.div
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: 36, opacity: 0.7 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="h-[2px] bg-black rounded-full"
+            />
           </div>
-        </div>
-      </div>
 
-      {/* Bottom HUD Metrics */}
-      <div className="relative z-20 pb-8 sm:pb-12 px-6 sm:px-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 hud-element">
-        {/* Animated Boot Logs */}
-        <div className="text-[11px] sm:text-xs text-white/60 tracking-wide flex flex-col gap-1.5 max-w-sm">
-          <span className="text-[#ffe880] font-bold uppercase tracking-wider text-[10px]">LOADING PROGRESS</span>
-          <span className="text-white/95 font-medium transition-all duration-200">
-            {BOOT_LOGS[logIndex]}
-          </span>
-          <span className="text-white/40 text-[10px] tracking-wider uppercase font-semibold">
-            WEB DEV • 3D SPACES • MOBILE ENGINEERING
-          </span>
-        </div>
-
-        {/* Massive Dynamic Numerical Counter */}
-        <div className="flex items-baseline gap-1.5 font-display text-6xl sm:text-8xl md:text-9xl font-black text-[#ffe880] tracking-tighter leading-none select-none drop-shadow-[0_0_35px_rgba(255,232,128,0.3)]">
-          <span>{String(progress).padStart(3, "0")}</span>
-          <span className="text-xl sm:text-3xl font-display text-white/60 font-bold">%</span>
-        </div>
-      </div>
-    </div>
+          {/* Bottom Centered Name */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.6,
+              delay: 0.2,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="pb-4 sm:pb-6 text-center"
+          >
+            <span className="font-display font-black text-xs sm:text-sm tracking-[0.35em] text-black uppercase select-none">
+              S KAUSHALL
+            </span>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
